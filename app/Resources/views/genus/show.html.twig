@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Mon titre ! {% endblock %}
+
+{% block body %}
+    
+    <h1>The genus : {{ name }}</h1>
+    <ul>    
+    {% for ligne in tableau %}
+        <li> {{ ligne }} </li>
+    {% endfor %}
+    </ul>
+    <div class='alert alert-info alert-dismissible'>
+        Salut c'est ma 1ère page avec symfony et mon layout Unicaen ! 
+    </div>
+    <span class="glyphicon glyphicon-trash"> </span>
+    <span class="glyphicon glyphicon-pencil"> </span>
+
+{% endblock %}

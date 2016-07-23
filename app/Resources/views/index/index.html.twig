@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    
+    <h1> Bonjour le peuple ! </h1>
+        <p>{{ message }}</p>
+        
+        Gestion des <strong>Collections</strong> : <a href="{{ path('genus', {'genusName' : 'moi'})}}"> <button class="btn btn-primary"> Click ! </button></a>
+
+        
+{% endblock %}
