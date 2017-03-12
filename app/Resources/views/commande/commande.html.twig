@@ -1,0 +1,351 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    
+    <h2> Commandes </h2>
+    
+    <!-- AJOUT COMMANDE -->
+    <div>
+        <p class="row"> 
+            <span class="col-sm-4">Nouvelle Commande : </span>
+             <!--path('ajout-article-pop') <a href="" class="btn btn-primary ajax-modal" data-submit-reload='true' > <span class="glyficon glyficon-plus"></span> Ajouter un Article ! </a>-->
+            <button type="button" class="btn btn-primary col-sm-3" data-toggle="modal" data-target="#modalAjout">
+                <span class="glyphicon glyphicon-plus"></span> nouvelle Commande
+            </button>
+        </p>
+        <p class="row MODAL"> 
+            <span class="col-sm-4">Voir les commandes archivées : </span>
+            <a href="#" 
+               class="col-sm-3 btn btn-info"
+               id="modifModal"
+               data-toggle="modal" 
+               data-target="#modalTest" 
+               data-url="{{path('voir-commandes-archivees')}}"
+            >
+                <span class="glyphicon glyphicon-book"></span> Commandes archivées
+            </a>
+        </p>
+    </div>
+    
+    <!-- FLASH MESSAGE -->
+    {% for flash_message in app.session.flashBag.get('feedback') %} 
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ flash_message }}
+        </div>
+    {% endfor %}
+    {% for flash_message in app.session.flashBag.get('alert') %} 
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ flash_message }}
+        </div>
+    {% endfor %}
+    
+    
+    {% if commandes == null %}
+        <p>Il n'y à pas encore de commande</p>
+    {% else %}
+        
+        
+        <!-- TABLE ARTICLE -->
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <th> Utilisateur </th>
+                    {% endif %}
+                    <th> Commande </th>
+                    <th> Evenement </th>
+                    <th> Articles </th>
+                    <th> Total </th>
+                    <th> Date </th>
+                    <th> Client </th>
+                    <th> Actions </th>
+                </tr>
+            </thead> 
+            <tbody class="row">
+            {% for commande in commandes %}
+                
+                {% set compteArticle = 0 %}
+                {% set total = 0 %}
+                {% set locationCommande = 0 %}
+                {% set retourArticle = 1 %}
+                
+                <tr>
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <td> <strong>{{ commande.getUtilisateur().getUsername() }}</strong> </td>
+                    {% endif %}
+                    
+                    <td class="col-sm-1">
+                        {{commande.getLibelle()}}<hr/>
+                        <strong>Commande N° {{commande.getId()}}</strong> 
+                    </td>
+                    
+                    <td class="col-sm-1">
+                        {{commande.getTypeEvenement()}}
+                    </td>
+                    
+                    <td class="col-sm-4"> 
+                        <ul>
+                            
+                            <!-- Boucle ARTICLE -->
+                            {% for commandeArticle in commandesArticles %}
+                                {% if(commandeArticle.getCommande() == commande) %}
+                                    <li>
+                                        <!-- Libelle article -->
+                                        {{commandeArticle.getArticle}}
+                                        
+                                        <!-- Quantité article -->
+                                        (x{{commandeArticle.getQuantite()}})
+                                        
+                                        {% set compteArticle = commandeArticle.getArticle.getPrix()*commandeArticle.getQuantite() %}
+                                        
+                                        = {{compteArticle}}<span class="glyphicon glyphicon-euro"></span>
+                                        
+                                        <!-- Action article -->
+                                        <strong>{{commandeArticle.getAction()}}</strong>
+                                        
+                                        <!-- si un article est loué on met locationCommande à 1 pour afficher le lien de retour d'article -->
+                                        {%if(commandeArticle.getAction() and commandeArticle.getAction().getId() == 1)%}
+                                            
+                                            {% set locationCommande = 1 %}
+                                            
+                                            {%if(commandeArticle.getRetour() == 0)%}
+                                                {% set retourArticle = 0 %}
+                                            {%endif%}
+                                            
+                                        {%endif%}
+                                        
+                                        {%if(commande.getPaye() == false)%}
+                                            <a href="{{path('suppression-article-commande',{'idArticle': commandeArticle.getArticle.getId(),'idCommande': commande.getId()})}}">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </a>
+                                        {%endif%}
+                                        
+                                        {% set total = total+compteArticle %}
+                                    </li>
+                                {%endif%}
+                            {% endfor %}
+                            
+                            
+                            <!-- Boucle LOT -->
+                            {% for commandeLot in commandesLots %}
+                                {% if(commandeLot.getCommande() == commande) %}
+                                    <li>
+                                        <!-- Libelle article -->
+                                        {{commandeLot.getLot()}}
+                                        
+                                        <!-- Quantité article -->
+                                        (x{{commandeLot.getQuantite()}})
+                                        
+                                        {% set compteLot = commandeLot.getLot().getPrix()*commandeLot.getQuantite() %}
+                                        
+                                        <!-- Action article -->
+                                        <strong>{{commandeLot.getAction()}}</strong>
+                                        
+                                        <!-- si un article est loué on met locationCommande à 1 pour afficher le lien de retour d'article -->
+                                        {%if(commandeLot.getAction() and commandeLot.getAction().getId() == 1)%}
+                                            
+                                            {% set locationCommande = 1 %}
+                                            
+                                            {%if(commandeLot.getRetour() == 0)%}
+                                                {% set retourArticle = 0 %}
+                                            {%endif%}
+                                            
+                                        {%endif%}
+                                           
+                                        
+                                        {%if(commande.getPaye() == false)%}
+                                            <a href="{{path('suppression-lot-commande',{'idLot': commandeLot.getLot().getId(),'idCommande': commande.getId()})}}">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </a>
+                                        {%endif%}
+                                        
+                                            
+                                        
+                                        
+                                        {% set total = total+compteLot %}
+                                        
+                                        
+                                    </li>
+                                {%endif%}
+                            
+                                
+                            
+                            {% endfor %}
+                            
+                            
+                            
+                            <!-- Ajout ARTICLE -->
+                            {%if(commande.getPaye() == false)%}
+                                <li class="POPOVER">
+                                    <a 
+                                        href="{{ path('ajout-article-commande-pop', {'idCommande': commande.getId()})}}"
+                                        class="pop-ajax"
+                                        data-submit-close='true'
+                                        data-submit-reload='true'
+                                    >
+                                        <span class="glyphicon glyphicon-plus"></span> Ajouter un article 
+                                    </a>
+                                </li>
+                                <li class="POPOVER">
+                                    <a 
+                                        href="{{ path('ajout-lot-commande-pop', {'idCommande': commande.getId()})}}"
+                                        class="pop-ajax"
+                                        data-submit-close='true'
+                                        data-submit-reload='true'
+                                    >
+                                        <span class="glyphicon glyphicon-plus"></span> Ajouter un lot
+                                    </a>
+                                </li>
+                                
+                            {%endif%}
+                        </ul>
+                    </td>
+                    
+                    <td class="col-sm-2">
+                        {{total}}<span class="glyphicon glyphicon-euro"></span><br/>
+                        {% if(commande.getAcompte() != 0) %}
+                            Acompte : {{commande.getAcompte()}} <span class="glyphicon glyphicon-euro"></span>
+                            <br/>
+                            {% set reste = total-commande.getAcompte() %}
+                            <hr/>
+                            Reste : {{reste}} <span class="glyphicon glyphicon-euro"></span>
+                        {% endif %}
+                    </td>
+                    
+                   
+                    
+                    <td class="col-sm-1">Date commande <br/>{{commande.getDate()|date('d/m/Y')}}<hr/> Date Evenement {{commande.getDateEvenement()|date('d/m/Y')}}<br/> </td>
+                    <td class="col-sm-1">
+                        {{commande.getClient().getNom()}}
+                        {{commande.getClient().getPrenom()}}
+                        {% if(commande.getPartenaire())%}
+                            <hr/>
+                            {{commande.getPartenaire()}}
+                        {% endif %}
+                        
+                    </td>
+                    
+                    <!-- ACTIONS -->
+                    <td class="row TEST col-sm-3"> 
+                        
+                        <!-- Commande payée -->
+                        {% if(commande.getPaye() == true)%}
+                            <span class="col-sm-12 label label-success">
+                                <span class="glyphicon glyphicon-ok-circle"></span> Commande payée !
+                            </span>
+                            
+                        {% elseif(commande.getPaye() == false) %}
+                            <a href="{{path('commande-paye', {'idCommande': commande.getId()})}}" class="col-sm-12">
+                                <span class="glyphicon glyphicon-ok-circle"></span> Commande payée
+                            </a>
+                                
+                            <!-- Versement acompte --> 
+                            {% if(commande.getAcompte() == 0)%}
+                                <a 
+                                    href="{{ path('versement-acompte-pop', {'idCommande': commande.getId()})}}"
+                                    class="pop-ajax col-sm-12"
+                                    data-submit-close='true'
+                                    data-submit-reload='true'
+                                >
+                                    <span class="glyphicon glyphicon-piggy-bank"></span> Acompte versé 
+                                </a>
+                            {% endif %}
+                            
+                        {% endif %}
+                        
+                        <!-- Retour des articles -->
+                        {% if(locationCommande == 1 and retourArticle == 1) %}
+                            <a href="{{path('depart-location', {'idCommande': commande.getId()})}}" class="col-sm-12">
+                                <span class="glyphicon glyphicon-transfer"></span> Depart des articles
+                            </a>
+                            
+                        {% elseif(locationCommande == 1 and retourArticle ==  0)%}
+                            <a href="{{path('retour-location', {'idCommande': commande.getId()})}}" class="col-sm-12">
+                                <span class="glyphicon glyphicon-transfer"></span> Retour des articles
+                            </a>
+                        {% endif %}
+                        
+
+                        <!-- Génération de la facture -->       
+                        <div class="col-sm-12">
+                            <a href="{{path('générer-facture',{'idCommande': commande.getId()})}}">
+                                <span class="glyphicon glyphicon-copy"></span> Génerer facture
+                            </a>
+
+                            <!-- Génération du devis -->       
+                            <a href="{{path('générer-devis',{'idCommande': commande.getId()})}}">
+                               / devis
+                            </a>
+                        </div>
+                               
+                        <!-- Archiver une commande -->   
+                        <a href="{{path('archiver-commande', {'idCommande': commande.getId()})}}" 
+                           class="col-sm-12"
+                        >
+                            <span class="glyphicon glyphicon-folder-open"></span> Archiver la commande
+                        </a>
+                           
+                        <!-- Suppression de la commande -->
+                        <a class=" col-sm-12 popconfirm" 
+                               href="{{path('suppression-commande', {'idCommande': commande.getId()})}}"
+                               data-confirm-title="Attention" 
+                               data-confirm-content="Etes vous sur de vouloir supprimer la commande '{{commande.getLibelle()}}'"
+                               data-confirm-placement="bottom"
+                               data-confirm-yesBtn="<span class='glyphicon glyphicon-ok'></span> Oui"
+                               data-confirm-noBtn="<span class='glyphicon glyphicon-remove'></span> Non"
+                        >
+                            <span class=" glyphicon glyphicon-trash"></span> Supprimer 
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        
+        
+        
+    {% endif %}
+
+    <div class="navigation">
+        {{ knp_pagination_render(commandes) }}
+    </div>
+    
+    <!-- FENETRE MODAL MODIFICATION -->
+        <div class="modal fade" id="modalTest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 class="modal-title" id="myModalLabel">Commandes Archivées</h3>
+                    </div>
+                    <div class="modal-body" id="cible">
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    
+    <!-- FENETRE MODAL AJOUT-->
+        <div class="modal fade" id="modalAjout" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 class="modal-title" id="myModalLabel">Creation de commande</h3>
+                    </div>
+                    <div class="modal-body">
+                        {{ form_start(form) }}
+                        {{ form_widget(form) }}
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div> 
+
+    
+    
+
+{% endblock %}

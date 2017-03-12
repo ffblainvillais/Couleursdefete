@@ -1,0 +1,133 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    
+    <h2> Utilisateurs de <strong>AGC</strong></h2>
+    
+    <div>
+        <p>
+            Ajouter un Utilisateur 
+            <a href="{{ path('fos_user_registration_register') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Ajouter Utilisateur</a>
+        </p>
+    </div>
+        
+        
+        
+        
+    <!-- FLASH MESSAGE -->
+    {% for flash_message in app.session.flashBag.get('feedback') %} 
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ flash_message }}
+        </div>
+    {% endfor %}
+    {% for flash_message in app.session.flashBag.get('alert') %} 
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ flash_message }}
+        </div>
+    {% endfor %}
+    
+    
+    
+    
+    <!-- TABLE UTILISATEUR -->
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th> Login </th>
+                    <th> Mail </th>
+                    <th> Connection </th>
+                    <th> Roles </th>
+                    <th> Activé </th>
+                    <th> Actions </th>
+                </tr>
+            </thead> 
+            <tbody>
+            {% for utilisateur in utilisateurs %}
+                <tr>
+                    <td>{{utilisateur.getUsername()}} </td>
+                    <td> {{utilisateur.getEmail()}}</td>
+                    <td> {{utilisateur.getLastlogin()|date('j/m/Y')}} </td>
+                    <td> 
+                        <ul>
+                            {% for role in utilisateur.getRoles() %}
+                                <li>{{role}}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td> 
+                        {%if(utilisateur.isEnabled() == 1)%}
+                            Oui
+                        {%else%}
+                            Non
+                        {%endif%}
+                    </td>
+                    
+                    <td class="row MODAL"> 
+
+                        
+                        
+                        
+                               
+                                 <!-- A changer ! il faut desactiver les actions pour les 
+                                 utilisateur n'ayant pas de parent (le super admin seulement)-->   
+                                
+                                    <a href="#" 
+                                        class="col-sm-12"
+                                        id="modifModal"
+                                        data-toggle="modal" 
+                                        data-target="#modalTest" 
+                                        data-url="{{path('index')}}"
+                                    >
+                                        <span class="glyphicon glyphicon-pencil"></span> Modifier
+                                    </a>
+
+                                    <a class=" col-sm-12 popconfirm" 
+                                        href="{{path('suppression-utilisateur', {'idUtilisateur' : utilisateur.getId()})}}"
+                                        data-confirm-title="Attention" 
+                                        data-confirm-content="Etes vous sur de vouloir supprimer l'utilisateur '{{utilisateur.getUsername()}}'"
+                                        data-confirm-placement="bottom"
+                                        data-confirm-yesBtn="<span class='glyphicon glyphicon-ok'></span> Oui"
+                                        data-confirm-noBtn="<span class='glyphicon glyphicon-remove'></span> Non"
+                                    >
+                                        <span class=" glyphicon glyphicon-trash"></span> Supprimer 
+                                    </a>
+                                            
+                                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                        <a href="{{path('nommer-super-admin', {'idUtilisateur' : utilisateur.getId()})}}" class="col-sm-12">
+                                            <span class="glyphicon glyphicon-arrow-up"></span> Promouvoir Super Admin 
+                                        </a>
+                                    {% endif %}
+
+                                    <a href="{{path('nommer-admin', {'idUtilisateur' : utilisateur.getId()})}}" class="col-sm-12">
+                                        <span class="glyphicon glyphicon-arrow-up"></span> Promouvoir Administrateur 
+                                    </a>
+
+                                    <a href="{{path('remove-admin', {'idUtilisateur' : utilisateur.getId()})}}" class="col-sm-12">
+                                        <span class="glyphicon glyphicon-arrow-down"></span> Retrograder Utilisateur 
+                                    </a>
+
+                                    {%if(utilisateur.isEnabled() == 1)%}
+                                        <a href="{{path('desactiver', {'idUtilisateur' : utilisateur.getId()})}}" class="col-sm-12">
+                                            <span class="glyphicon glyphicon-remove"></span> Desactiver Utilisateur 
+                                        </a>
+                                    {%else%}
+                                        <a href="{{path('activer', {'idUtilisateur' : utilisateur.getId()})}}" class="col-sm-12">
+                                            <span class="glyphicon glyphicon-ok"></span> Activer Utilisateur 
+                                        </a>
+                                    {%endif%}
+      
+                            
+                        
+                        
+                            
+                        
+
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        
+{% endblock %}

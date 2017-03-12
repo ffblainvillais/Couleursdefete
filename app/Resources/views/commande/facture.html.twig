@@ -1,0 +1,182 @@
+<page style="margin-left: 150px;"> 
+    <page_header> 
+       <link href="/vendor/css/bootstrap.min.css" rel="stylesheet">
+       <link href="/vendor/css/bootstrap-theme.min.css" rel="stylesheet">     
+       <link href="/css/facture.css" rel="stylesheet">
+    </page_header> 
+
+    
+   
+    <div class="corp" style="
+         margin-left: 50px;
+         margin-right: 50px;
+         margin-top: 40px;
+         
+    ">
+        
+        <img src="./images/cdf.png" width="160" height="100" alt="caré" /><br/>
+        
+        <strong style="margin-left: 495px; font-size: 22px;">{{commande.getTypeEvenement()}}</strong>
+        
+        <p><em>Décoratrice évènementiel</em></p>
+        <p>
+            SAS Couleurs de Fête<br/>
+            7 rue Alfred Kastler<br/>
+            14000 Caen<br/>
+            Téléphone: 06 89 47 02 19<br/>
+            www.couleursdefete.fr<span style="margin-left: 374px;">{{commande.getDate()|date('d/m/Y')}}</span><br/>
+        </p>
+        
+        <strong><u>A l'attention de :</u></strong> {{commande.getClient.getNom()}} {{commande.getClient.getPrenom()}} <br/>
+        <span style="margin-left: 110px;">{{commande.getClient.getAdresse()}}</span><br/>
+        
+        <span style="margin-left: 510px;">Objet :</span><br/>
+        <span style="margin-left: 508px;"> Mariage le {{commande.getDateEvenement()|date('d/m/Y')}}</span><br/>
+        <span style="margin-left: 508px;"> {{commande.getPartenaire()}}</span>
+        
+        
+        <br/>
+        <br/>
+        
+        
+        <p><strong style="margin-left: 510px;">{{document|upper}} N° {{commande.getId()}}</strong></p>
+        
+        <p> <strong>Demande de location de matériel pour votre évènement</strong></p>
+        
+       
+
+        <!-- TABLE ARTICLE -->
+        <table style="border: solid black 1px;  width:600px;">
+
+                <tr>
+                    <th style="width: 400px;  border: solid black 2px; text-align:center;"> Designation </th>
+                    <th style="border: solid black 2px;"> Nombre </th>
+                    <th style="border: solid black 2px;"> Montant unitaire</th>
+                    <th style="border: solid black 2px;"> Montant TTC </th>
+                </tr>
+
+                {% set total = 0 %}
+                
+
+                {%for commandeArticle in commandesArticles%}
+                    {% if(commandeArticle.getCommande() == commande)%}
+                    <tr>
+                        <td style="width: 400px;"> {{commandeArticle.getArticle()}} </td>
+                        <td style="text-align: right;"> {{commandeArticle.getQuantite()}} </td>
+                        <td style="text-align: right;"> {{commandeArticle.getArticle().getPrix()}} €</td>
+
+                        {% set compteArticle = commandeArticle.getArticle.getPrix()*commandeArticle.getQuantite() %}
+                        {% set total = total+compteArticle %}
+                        <td style="text-align: right;"> {{compteArticle}} €</td>
+                    </tr>
+                    {% endif%}
+                {%endfor%}
+                
+                {%for commandeLot in commandesLot%}
+                    {% if(commandeLot.getCommande() == commande)%}
+                    <tr>
+                        <td style="width: 400px;"> {{commandeLot.getLot()}} </td>
+                        <td style="text-align: right;"> {{commandeLot.getQuantite()}} </td>
+                        <td style="text-align: right;"> {{commandeLot.getLot().getPrix()}} €</td>
+
+                        {% set compteArticle = commandeLot.getLot().getPrix()*commandeLot.getQuantite() %}
+                        {% set total = total+compteArticle %}
+                        <td style="text-align: right;"> {{compteArticle}} €</td>
+                    </tr>
+                    {% endif%}
+                {%endfor%}
+                
+                <tr><td><br/></td><td></td><td></td><td></td></tr> 
+                
+                {% if(document == "Devis")%}
+                    <tr style="margin-top: 100px;">
+                        <td style="width: 400px;">
+                            Afin de valider votre réservation, il vous est demandé un acompte représentant 40 % de la commande totale.<br/>
+
+                            Une caution par chèque vous sera demandée lors de l'enlevement mais NON ENCAISSEE.
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    
+                    <tr>
+                        <td style="width: 400px;">
+                            Devis valable 1 mois.
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                {% elseif(document == "Facture") %}
+                    
+                    
+                {% endif %}
+                <tr><td><br/></td><td></td><td></td><td></td></tr>
+                <tr>
+                    <td style="width: 400px; text-align: right;">
+                        TOTAL TTC
+                    </td>
+                    <td colspan="3" style=" text-align: right; border: 1px solid black;"> {{total}} €</td>
+                </tr>
+                
+                {% if(document == "Devis")%}
+                    {% set acompteLogique = total*0.40 %}
+                    <tr>
+                        <td style="width: 400px; text-align: right;">
+                            <strong>Acompte:</strong>
+                        </td>
+                        <td colspan="3" style=" text-align: right; border: 1px solid black;"> {{acompteLogique}} €</td>
+                    </tr>
+                
+                    
+                    {% set restant = total-acompteLogique %}
+                
+                    <tr>
+                        <td style="width: 400px; text-align: right;">
+                            <strong>Solde restant:</strong>
+                        </td>
+                        <td colspan="3" style=" text-align: right; border: 1px solid black;"> {{restant}} €</td>
+                    </tr>
+                {% elseif(document == "Facture") %}
+                    <tr>
+                        <td style="width: 400px; text-align: right;">
+                            <strong>Acompte versé:</strong>
+                        </td>
+                        <td colspan="3" style=" text-align: right; border: 1px solid black;">
+                            {% if(commande.getAcompte() == 0)%}
+                                0 €
+                            {% else %}
+                                {{commande.getAcompte()}} €
+                            {% endif %}
+                            
+                        </td>
+                    </tr>
+                
+                    
+                    {% set restant = total-commande.getAcompte() %}
+                
+                    <tr>
+                        <td style="width: 400px; text-align: right;">
+                            <strong>Solde restant:</strong>
+                        </td>
+                        <td colspan="3" style=" text-align: right; border: 1px solid black;"> {{restant}} €</td>
+                    </tr>
+                
+                
+                {% endif %}
+        </table>
+                
+                <p style="margin-left:250px;">Siret 824 661 292 R.C.S. Caen</p>
+                
+                <p style="margin-left:100px;">
+                    Veuillez établir les chèques à l'ordre de <strong>Couleurs de Fête</strong><br/><br/>
+                    Non assujetti à la TVA.<br/><br/>
+                    <strong>Avec mes remerciements.</strong><br/><br/>
+                </p> 
+                {% if(document == "Devis")%}
+                    <div style="width:250px; padding-bottom:80px; margin-left: 420px; text-align:center; border:solid black 1px;"><strong>Bon pour accord</strong></div>
+                {% endif %}
+         
+    </div>
+</page> 

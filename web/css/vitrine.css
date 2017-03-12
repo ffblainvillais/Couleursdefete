@@ -1,0 +1,211 @@
+/* ##### POLICES ##### */
+@font-face{
+    font-family: 'Open Sans';
+    src: url('../fonts/OpenSans-Light.ttf') format('truetype');
+}
+@font-face{
+    font-family: 'ubuntu';
+    src: url('../fonts/Ubuntu-L.ttf') format('truetype');
+}
+
+html > body {
+    font-family: 'ubuntu', arial, sans-serif;
+    background-color: #AEB6B5;
+}
+/* FIN polices */
+
+
+/* ##### Personnalisation de l'affichage en fonction de l'état du l'application (dev, test, production) ##### */
+
+body .navbar-inverse {
+    background-image: linear-gradient(to bottom, #B9121B 0px, #B9121B 100%);
+    border-color: #660000;
+}
+
+body .navbar-inverse .navbar-nav .active a {
+    background-image: linear-gradient(to bottom, #B9121B 0px, #B9121B 100%);
+}
+/* FIN */
+
+/* ##### Menu ##### */
+
+/* Couleurs de fete */
+.bleu{
+    color: #6495ED;
+}
+.rose{
+    color: #FFC0CB;
+}
+.vert{
+    color: #90EE90;
+}
+.jaune{
+    color: #FFD700;
+}
+.mot{
+    margin-right: 4px;
+}
+a.navbar-brand {
+    letter-spacing: -3px;
+    font-size: 19px;
+    
+}
+
+/* fin couleurs de fete */
+
+/* supprime l'espace sous le menu de bootstrap */
+body > .navbar{
+    margin-bottom: 0px;
+    padding-top: 5em;
+}
+/* FIN Menu */
+
+
+/* ##### Corp de l'application ##### */
+#contenu-principal h1, #contenu-principal h2{
+    font-family: "Open Sans",Helvetica,Arial,sans-serif;
+    font-weight: 200;
+    font-size: 50px;
+}
+
+#contenu-principal{
+    font-family: "ubuntu",Helvetica,Arial,sans-serif;
+    font-size: 18px;
+    color: #046380;
+}
+
+div#contenu-principal {
+    box-shadow: 0px 15px 15px rgba(0, 0, 0, 0.25);
+    background-color:white;
+    padding-left : 40px;
+    padding-right : 40px;
+    margin-left : auto;
+    margin-right : auto;
+}
+
+div#contenu-principal > * {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.center{
+    text-align: center;
+}
+
+.images{
+    list-style:none;
+    display:flex;
+    justify-content:space-around;
+    flex-wrap:wrap;
+}
+
+div .image{
+    width: 80%;
+    margin-bottom: 15px;
+    
+}
+
+.img-index{
+    width: 100%;
+    border: 0.3em solid #046380;
+    
+}
+
+
+
+@media (max-width:500px) {
+    div .image, img{
+        width: 100%;
+    }
+    
+    input, textarea{
+        width:100%
+    }
+    
+    #contenu-principal ul {
+        padding: 0;
+    }
+    
+    div .image{
+        width: 100%;
+    }
+	
+}
+
+.formulaire > *{
+    margin-bottom: 20px;
+}
+
+/* Centrage des images du carousel */
+.carousel-inner > .item > img {
+    margin: 0 auto;
+}
+
+#myCarousel {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+#contenu-principal li{
+    margin-bottom: 15px; 
+}
+.decorationOut{
+    list-style: none;
+}
+
+p {
+    line-height: 2em;
+}
+/* FIN Corp */
+
+
+/* ##### Footer ##### */
+#footer {
+    background-color: black;
+    color: white;
+    line-height: 80px;
+}
+
+#footer ul {
+    width: 75%;
+    margin: auto;
+    text-align: center;
+    padding: 0;
+}
+
+#footer ul li {
+    display: inline;
+    padding: 0 1em;
+    border-left: 1px gray solid;
+}
+
+#footer ul > li:first-child {
+    border: none;
+}
+
+#footer > p{
+    display : flex;
+    justify-content: space-around;
+}
+
+.icone{
+    width: 30px;
+    height: 30px;
+}
+
+@media (max-width:500px) {
+    
+    #footer ul{
+        padding: 0;
+    }
+    
+    #footer ul li{
+        white-space: nowrap;
+        display: block;
+        border: none;
+        line-height: 45px;
+    }
+	
+}
+/* FIN Footer */
+

@@ -1,0 +1,162 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    
+    <h2> Dépenses </h2>
+    
+    <!-- AJOUT ARTICLE -->
+    <div>
+        <p class="row"> 
+            <span class="col-sm-3">Ajouter une Dépenses : </span>
+             <!--path('ajout-article-pop') <a href="" class="btn btn-primary ajax-modal" data-submit-reload='true' > <span class="glyficon glyficon-plus"></span> Ajouter un Article ! </a>-->
+            <button type="button" class="btn btn-primary col-sm-3" data-toggle="modal" data-target="#modalAjout">
+                <span class="glyphicon glyphicon-plus"></span> ajouter Dépense
+            </button>
+
+        </p>
+    </div>
+    
+    <!-- FLASH MESSAGE -->
+    {% for flash_message in app.session.flashBag.get('feedback') %} 
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ flash_message }}
+        </div>
+    {% endfor %}
+    {% for flash_message in app.session.flashBag.get('alert') %} 
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ flash_message }}
+        </div>
+    {% endfor %}
+    
+    
+    {% if depenses == null %}
+        <p>Il n'y à pas encore de dépenses enregistrées</p>
+    {% else %}
+        {% set total = 0 %}
+        
+        
+            <!-- ACCORDEON -->
+            <div class="panel panel-group" id="accordion" role="tablist" aria-multiselectable="false" >
+                {% for categorie in categories %}
+                    {% set totalCategorie = 0 %}
+                    
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role ="tab" id="{{categorie.getId()}}Titre">
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#{{categorie.getId()}}Corp" aria-expanded="true" aria-controls="{{categorie.getId()}}">
+                                    {{categorie.getLibelle()}}
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="{{categorie.getId()}}Corp" class="panel-collapse collapse" role="tabpanel" aria-labelledby="{{categorie.getId()}}Titre">
+                            <div class="panel-body">
+                                
+                                
+                                <!-- TABLE DEPENSE -->
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                                <th> Utilisateur </th>
+                                            {%endif%}
+                                            <th> Dépense </th>
+                                            <th> Montant </th>
+                                            <th> Date </th>
+                                            <th> Catégorie </th>
+                                            <th> Actions </th>
+                                        </tr>
+                                    </thead> 
+                                    <tbody>
+                                    {% for depense in depenses %}
+                                        {% if(depense.getCategorie().getId() == categorie.getId())%}
+                                            <tr>
+                                                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                                    <th> {{depense.getUtilisateur().getUsername()}} </th>
+                                                {%endif%}
+                                                <td>{{depense.getLibelle()}} </td>
+                                                <td> {{depense.getMontant()}}<span class="glyphicon glyphicon-euro"></span></td>
+                                                {% set totalCategorie = totalCategorie+depense.getMontant() %}
+                                                <td> {{depense.getDate()|date('d/m/Y')}}</td>
+                                                <td> {{depense.getCategorie()}}</td>
+                                                <td class="row MODAL"> 
+
+                                                    <a href="#" 
+                                                       class="col-sm-6"
+                                                       id="modifModal"
+                                                       data-toggle="modal" 
+                                                       data-target="#modalTest" 
+                                                       data-url="{{path('modification-pop-depense', {'idDepense': depense.getId()})}}"
+                                                    >
+                                                        <span class="glyphicon glyphicon-pencil"></span> Modifier
+                                                    </a>
+
+                                                    <a class=" col-sm-6 popconfirm" 
+                                                           href="{{path('suppression-depense', {'idDepense': depense.getId()})}}"
+                                                           data-confirm-title="Attention" 
+                                                           data-confirm-content="Etes vous sur de vouloir supprimer la dépense '{{depense.getLibelle()}}'"
+                                                           data-confirm-placement="bottom"
+                                                           data-confirm-yesBtn="<span class='glyphicon glyphicon-ok'></span> Oui"
+                                                           data-confirm-noBtn="<span class='glyphicon glyphicon-remove'></span> Non"
+                                                    >
+                                                        <span class=" glyphicon glyphicon-trash"></span> Supprimer 
+                                                    </a>
+                                                </td>
+                                            </tr>
+
+
+                                        {% endif %}
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                                
+                                <p class="alert alert-warning">Le total des dépenses de cette catégorie est de : <strong>{{totalCategorie}}<span class="glyphicon glyphicon-euro"></span></strong></p>
+                            
+                            </div>
+                        </div>
+                    </div>
+                    {% set total = total+totalCategorie %}
+                {% endfor %}
+            </div> 
+            
+
+            <p class="alert alert-info">Le total des dépenses est de : <strong>{{total}}<span class="glyphicon glyphicon-euro"></span></strong></p>
+            
+        <!-- FENETRE MODAL MODIFICATION -->
+        <div class="modal fade" id="modalTest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 class="modal-title" id="myModalLabel">Modification de dépense</h3>
+                    </div>
+                    <div class="modal-body" id="cible">
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+     
+                
+    <!-- FENETRE MODAL AJOUT-->
+        <div class="modal fade" id="modalAjout" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 class="modal-title" id="myModalLabel">Creation de dépense</h3>
+                    </div>
+                    <div class="modal-body">
+                        {{ form_start(form) }}
+                        {{ form_widget(form) }}
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>         
+               
+
+
+        
+{% endblock %}

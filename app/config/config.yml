@@ -7,11 +7,12 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: en
+    locale: fr
+    logos_directory: '%kernel.root_dir%/../web/uploads/logos'
 
 framework:
     #esi:             ~
-    #translator:      { fallbacks: ["%locale%"] }
+    translator:      { fallbacks: ["%locale%"] }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -42,11 +43,11 @@ twig:
 doctrine:
     dbal:
         driver:   pdo_mysql
-        host:     "%database_host%"
-        port:     "%database_port%"
-        dbname:   "%database_name%"
-        user:     "%database_user%"
-        password: "%database_password%"
+        host:     "localhost"
+        port:     "3306"
+        dbname:   "Symfony"
+        user:     "root"
+        password: "root"
         charset:  UTF8
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
@@ -59,11 +60,51 @@ doctrine:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
+    
+    
+fos_user:
+    # Le type de BDD à utiliser, nous utilisons l'ORM Doctrine depuis le début
+    db_driver:     orm                       
+    # Le nom du firewall derrière lequel on utilisera ces utilisateurs
+    firewall_name: main                      
+    # La classe de l'entité User que nous utilisons
+    user_class:    UserBundle\Entity\User
+     
+    registration:
+        confirmation:
+            enabled:    true
+            from_email:
+                address:        siempre14@hotmail.fr
+                sender_name:    Application AGC
+      
+    service:
+        mailer: fos_user.mailer.twig_swift
+    resetting:
+        email:
+            template: email/registration.email.twig
+            
+  
+knp_paginator:
+    page_range: 5                      # default page range used in pagination control
+    default_options:
+        page_name: page                # page query parameter name
+        sort_field_name: sort          # sort field query parameter name
+        sort_direction_name: direction # sort direction query parameter name
+        distinct: true                 # ensure distinct results, useful when ORM queries are using GROUP BY statements
+    template:
+        pagination: KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig     # sliding pagination controls template
+        sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig # sort link template
+            
+    
+           
 
+    
+    
+    
 # Swiftmailer Configuration
-swiftmailer:
-    transport: "%mailer_transport%"
-    host:      "%mailer_host%"
-    username:  "%mailer_user%"
-    password:  "%mailer_password%"
-    spool:     { type: memory }
+#swiftmailer:
+#   transport: "smtp"
+#   host:      "smtp.unicaen.fr"
+#   username:  "lavieillef"
+#   password:  "Blainville01"
+#   spool:     { type: memory }

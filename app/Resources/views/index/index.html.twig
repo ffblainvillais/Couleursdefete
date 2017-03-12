@@ -2,10 +2,63 @@
 
 {% block body %}
     
-    <h1> Bonjour le peuple ! </h1>
-        <p>{{ message }}</p>
+    <h2> <strong>A</strong>pplication de <strong>G</strong>estion <strong>C</strong>ommerciale </h2>
+        <p>Bienvenue dans l'application de gestion commerciale de Couleurs de Fête
+            
+        {% if(app.user == false) %}
+            <a href="{{ path('fos_user_security_login') }}" class="btn btn-success">Connectez vous !</a>
+        {% else %}
+            <br/>
+            <br/>
+            <a href="{{ path('fos_user_change_password') }}" class="btn btn-primary">Changer mot de passe</a></p>
         
-        Gestion des <strong>Collections</strong> : <a href="{{ path('genus', {'genusName' : 'moi'})}}"> <button class="btn btn-primary"> Click ! </button></a>
-
+            <h2>Mises à jour de l'application</h2>
+            
+            
+            <h4><strong>Le 12/10/16 :</strong></h4>
+            <ul>
+                <li>La création/modification/suppression de "Lots d'artcle" est pris en charge (cependant l'ajout de lot dans une commande sera effectué demain) </li>
+                <li>Une pagination des articles à été réalisé, à raison de 10 articles par pages </li>
+            </ul>
+            
+            
+            <h4><strong>Le 9/10/16 :</strong></h4>
+            <ul>
+                <li>La photo demandée par mail à été ajouté  l'album</li>
+                <li>Resolution du probleme de la page partenaire :
+                    <ul>
+                        <li>Les adresse des sites des partenaire seront sous la forme www.sitedupartenaire.fr (.com ou autre...)</li>
+                        <li>Si un partenaire n'a pas de site internet, un mail peut-etre mis à la place.</li>
+                        <li>Si une image n'est pas fourni pour un partenaire, le lien de son site internet sera sous la forme "site internet disponile ICI"</li>
+                    </ul>
+                </li>
+                <li>L'ancien site couleursdefete.free.fr pointe désormais vers couleursdefete.fr</li>
+            </ul>
+            
+            
+            <h4><strong>Le 5/10/16 :</strong></h4>
+            <ul>
+                <li>Les articles sont désormais triés par ordre alphabétique</li>
+                <li>Un partenaire peut etre lié à une commande </li>
+                <li>Il apparait désormais sur les devis/factures 
+                    <ul>
+                        <li>l'adresse du/de la client(e)</li>
+                        <li>la date de l'évenement</li>
+                        <li>le lieu si un partenaire est lié a la commande</li>
+                    </ul>
+                </li>
+                <li>
+                    Quand un ou plusieurs articles sont ajoutés à une commande avec l'action "Location" il ne sont désormais <strong>PLUS RETIRES DU STOCK</strong> à la place un lien apparait "Depart des articles" sur lequel il faut cliquer lorsque les articles vont etre mis en place (quelques jours avant l'évenement).<br/>
+                    Une fois que les articles ont étés déclarés partis, à la place de "Départ des artices" il y à "Retour des articles" à cliquer quand le matériel est récupéré apres l'évenement. 
+                </li>
+            </ul>
+            
+            
+            </ul>
+        
+        {% endif %}
+        
+        
+        
         
 {% endblock %}

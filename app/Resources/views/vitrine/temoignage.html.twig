@@ -1,0 +1,68 @@
+{% extends 'baseVitrine.html.twig' %}
+
+{% block title %}{{titre}}{% endblock %}
+
+{% block body %}
+
+    <h1>Temoignage</h1>
+
+    <div class="form-center" style="width:55%; margin:auto;">
+
+        <h3>Ajouter un témoignage</h3><br/>
+
+        <div>
+            <form action="{{ path('ajout-temoignage') }}" method="post" class="rows">
+                <label class="col-sm-5">Votre nom :</label>             <input class="col-sm-7" type="text" name="nom"/><br/><br/>
+                <!--<label class="col-sm-5">Votre temoignage :</label>      <input style="height:100px;"class="col-sm-7" type="text" size="10" name="description"/><br/><br/>-->
+                <label class="col-sm-5">Votre temoignage :</label>      <textarea class="col-sm-7" name="description" style="height:150px;"></textarea>
+
+                <input class="btn btn-primary" type="submit" value="Envoyer" />
+
+            </form>
+        </div>
+
+
+    </div>
+
+    <!-- FLASH MESSAGE -->
+    {% for flash_message in app.session.flashBag.get('feedback') %}
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ flash_message }}
+        </div>
+    {% endfor %}
+    {% for flash_message in app.session.flashBag.get('alert') %}
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ flash_message }}
+        </div>
+    {% endfor %}
+
+    {% if temoignages == null %}
+        <p>Il n'y à pas encore de temoignages</p>
+    {% else %}
+
+        {% set countHr = 0 %}
+
+            {% for temoignage in temoignages %}
+
+                {% if (countHr > 0) %}
+                    <hr/>
+                {% endif %}
+
+                <div class="jumbotron">
+
+                    <h3>{{ temoignage.getNom }} le {{ temoignage.getDate }}</h3>
+
+                    <p>"{{ temoignage.getDescription }}"</p>
+
+                </div>
+
+
+
+
+            {% endfor %}
+
+    {% endif %}
+
+{% endblock %}

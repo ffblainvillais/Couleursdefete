@@ -3,21 +3,334 @@ app:
     resource: "@AppBundle/Controller/"
     type:     annotation
 
-index:
-    path:   /index
-    defaults: {_controller: IndexBundle:Index:index }
+
+application:
+    path:   /application
+    defaults: {_controller: AppBundle:Default:indexAppli }
+  
+  
+  
+accueil:
+    path:   /accueil
+    defaults: {_controller: VitrineBundle:Vitrine:index }
+   
+contact:
+    path:   /contact
+    defaults: {_controller: VitrineBundle:Vitrine:contact }
+
+album:
+    path:   /album
+    defaults: {_controller: VitrineBundle:Vitrine:album }
+
+location:
+    path:   /location
+    defaults: {_controller: VitrineBundle:Vitrine:location }
     
-login:
-    path:   /login
-    defaults: {_controller: UserBundle:Security:login }
+prestation:
+    path:   /prestation
+    defaults: {_controller: VitrineBundle:Vitrine:prestation }
+    
+partenaire:
+    path:   /partenaire
+    defaults: {_controller: VitrineBundle:Vitrine:partenaire }
+
+temoignage:
+    path:   /temoignage
+    defaults: {_controller: VitrineBundle:Vitrine:temoignage }
+
+ajout-temoignage:
+    path:   /temoignage/ajout-temoignage
+    defaults: {_controller: VitrineBundle:Vitrine:ajoutTemoignage }
+
+gestion-temoignage:
+    path:   /temoignages
+    defaults: {_controller: VitrineBundle:Vitrine:gestionTemoignage }
+
+publier-temoignage:
+    path:   /temoignages/publier-temoignage/{idTemoignage}
+    defaults: {_controller: VitrineBundle:Vitrine:publier }
+
+supprimer-temoignage:
+    path:   /temoignages/supprimer-temoignage/{idTemoignage}
+    defaults: {_controller: VitrineBundle:Vitrine:supprimer }
  
-login_check:
-    path:   /login_check
+ 
+
+partenaire-appli:
+    path:   /partenaire-commerciaux
+    defaults: {_controller: PartenaireBundle:Partenaire:index }
     
-logout:
-    path:   /logout
-    #defaults: {_controller: UserBundle:Security:logout }
+ajout-partenaire:
+    path:   /partenaire-commerciaux/ajout-partenaire
+    defaults: {_controller: PartenaireBundle:Partenaire:ajout }
+
+suppression-partenaire:
+    path: /partenaire-commerciaux/suppression-partenaire/{idPartenaire}
+    defaults: {_controller: PartenaireBundle:Partenaire:suppression }
     
-genus:
-    path:   /genus/{genusName}
-    defaults: {_controller: IndexBundle:Index:show }
+modification-partenaire:
+    path: /partenaire-commerciaux/modification-partenaire/{idPartenaire}
+    defaults: {_controller: PartenaireBundle:Partenaire:modification }
+
+modification-pop-partenaire:
+    path: /partenaire-commerciaux/modification-pop-partenaire/{idPartenaire}
+    defaults: {_controller: PartenaireBundle:Partenaire:modificationPop }
+    
+    
+    
+article:
+    path:   /article
+    defaults: {_controller: ArticleBundle:Article:index }
+    
+ajout-article:
+    path:   /article/ajout-article
+    defaults: {_controller: ArticleBundle:Article:ajout }
+
+suppression-article:
+    path: /article/suppression-article/{idArticle}
+    defaults: {_controller: ArticleBundle:Article:suppression }
+    
+modification-article:
+    path: /article/modification-article/{idArticle}
+    defaults: {_controller: ArticleBundle:Article:modification }
+
+modification-pop-article:
+    path: /article/modification-pop-article/{idArticle}
+    defaults: {_controller: ArticleBundle:Article:modificationPop }
+    
+ajout-lot:
+    path:   /article/ajout-lot
+    defaults: {_controller: ArticleBundle:Article:ajoutLot }
+    
+suppression-lot:
+    path: /article/suppression-lot/{idLot}
+    defaults: {_controller: ArticleBundle:Article:suppressionLot }
+    
+modification-lot:
+    path: /article/modification-Lot/{idLot}
+    defaults: {_controller: ArticleBundle:Article:modificationLot }
+
+modification-pop-lot:
+    path: /article/modification-pop-lot/{idLot}
+    defaults: {_controller: ArticleBundle:Article:modificationPopLot }
+    
+ajout-article-lot-pop:
+    path:   /article/ajout-article-lot-pop/{idLot}
+    defaults: {_controller: ArticleBundle:Article:ajoutArticlePop }
+    
+ajout-article-lot:
+    path:   /article/ajout-article-lot/{idLot}
+    defaults: {_controller: ArticleBundle:Article:ajoutArticle }
+    
+suppression-article-lot:
+    path:   /article/suppression-article-lot/{idArticle}/{idLot}
+    defaults: {_controller: ArticleBundle:Article:suppressionArticle }
+
+
+
+commande:
+    path:   /commande
+    defaults: {_controller: CommandeBundle:Commande:index }
+    
+ajout-commande:
+    path:   /commande/ajout-commande
+    defaults: {_controller: CommandeBundle:Commande:ajout }
+
+ajout-article-commande-pop:
+    path:   /commande/ajout-article-commande-pop/{idCommande}
+    defaults: {_controller: CommandeBundle:Commande:ajoutArticlePop }
+    
+ajout-article-commande:
+    path:   /commande/ajout-article-commande/{idCommande}
+    defaults: {_controller: CommandeBundle:Commande:ajoutArticle }
+    
+    
+
+ajout-lot-commande-pop:
+    path:   /commande/ajout-lot-commande-pop/{idCommande}
+    defaults: {_controller: CommandeBundle:Commande:ajoutLotPop }
+    
+ajout-lot-commande:
+    path:   /commande/ajout-lot-commande/{idCommande}
+    defaults: {_controller: CommandeBundle:Commande:ajoutLot }
+    
+suppression-lot-commande:
+    path:   /commande/suppression-lot-commande/{idLot}/{idCommande}
+    defaults: {_controller: CommandeBundle:Commande:suppressionLot }
+    
+    
+    
+    
+    
+suppression-article-commande:
+    path:   /commande/suppression-article-commande/{idArticle}/{idCommande}
+    defaults: {_controller: CommandeBundle:Commande:suppressionArticle }
+
+suppression-commande:
+    path:   /commande/suppression-commande/{idCommande}
+    defaults: {_controller: CommandeBundle:Commande:suppression }
+
+commande-paye:
+    path:   /commande/commande-paye/{idCommande}
+    defaults: {_controller: CommandeBundle:Commande:paye }
+    
+générer-facture:
+    path:   /commande/générer-facture/{idCommande}
+    defaults: {_controller: CommandeBundle:Commande:facture }
+    
+générer-devis:
+    path:   /commande/générer-devis/{idCommande}
+    defaults: {_controller: CommandeBundle:Commande:devis }
+    
+archiver-commande:
+    path:   /commande/archiver-commande/{idCommande}
+    defaults: {_controller: CommandeBundle:Commande:archiver }
+    
+voir-commandes-archivees:
+    path:   /commande/commandes-archivees
+    defaults: {_controller: CommandeBundle:Commande:commandesArchivees }
+
+retour-location:
+    path:   /commande/retour-location/{idCommande}
+    defaults: {_controller: CommandeBundle:Commande:retourLocation }
+    
+depart-location:
+    path:   /commande/depart-location/{idCommande}
+    defaults: {_controller: CommandeBundle:Commande:departLocation }
+
+versement-acompte-pop:
+    path:   /commande/versement-acompte-pop/{idCommande}
+    defaults: {_controller: CommandeBundle:Commande:versementAcomptePop }
+    
+versement-acompte:
+    path:   /commande/versement-acompte/{idCommande}
+    defaults: {_controller: CommandeBundle:Commande:versementAcompte }
+    
+    
+    
+    
+client:
+    path:   /client
+    defaults: {_controller: ClientBundle:Client:index }
+
+ajout-client:
+    path:   /client/ajout-client
+    defaults: {_controller: ClientBundle:Client:ajout }
+
+suppression-client:
+    path:   /client/suppression-client/{idClient}
+    defaults: {_controller: ClientBundle:Client:suppression }
+    
+modification-client:
+    path: /client/modification-client/{idClient}
+    defaults: {_controller: ClientBundle:Client:modification }
+
+modification-pop-client:
+    path: /client/modification-pop-client/{idClient}
+    defaults: {_controller: ClientBundle:Client:modificationPop }
+
+mail-client:
+    path: /client/mail/{idClient}
+    defaults: {_controller: ClientBundle:Client:mailClient }
+    
+mail-client-pop:
+    path: /client/mail-pop/{idClient}
+    defaults: {_controller: ClientBundle:Client:mailClientPop }
+
+newsletter-client:
+    path: /client/newsletter
+    defaults: {_controller: ClientBundle:Client:newsletter }
+    
+relance-client:
+    path: /client/relance/{idCommande}/{idClient}
+    defaults: {_controller: ClientBundle:Client:relance }
+  
+    
+ 
+    
+bilan:
+    path:   /bilan
+    defaults: {_controller: BilanBundle:Bilan:index }
+
+generation-bilan:
+    path:   /generation-bilan
+    defaults: {_controller: BilanBundle:Bilan:generationBilan }
+    
+    
+    
+
+utilisateur:
+    path:   /utilisateur
+    defaults: {_controller: UserBundle:User:index }
+ 
+nommer-super-admin:
+    path:   /utilisateur/nommer-super-admin/{idUtilisateur}
+    defaults: {_controller: UserBundle:User:superAdmin }
+    
+nommer-admin:
+    path:   /utilisateur/nommer-admin/{idUtilisateur}
+    defaults: {_controller: UserBundle:User:admin }
+
+remove-admin:
+    path:   /utilisateur/remove-admin/{idUtilisateur}
+    defaults: {_controller: UserBundle:User:removeAdmin }
+    
+suppression-utilisateur:
+    path:   /utilisateur/suppression/{idUtilisateur}
+    defaults: {_controller: UserBundle:User:suppression }
+
+activer:
+    path:   /utilisateur/activer/{idUtilisateur}
+    defaults: {_controller: UserBundle:User:activer }
+
+desactiver:
+    path:   /utilisateur/desactiver/{idUtilisateur}
+    defaults: {_controller: UserBundle:User:desactiver }
+    
+    
+    
+
+depense:
+    path:   /depense
+    defaults: {_controller: DepenseBundle:Depense:index }
+    
+ajout-depense:
+    path:   /depense/ajout-depense
+    defaults: {_controller: DepenseBundle:Depense:ajout }
+
+suppression-depense:
+    path: /depense/suppression-depense/{idDepense}
+    defaults: {_controller: DepenseBundle:Depense:suppression }
+    
+modification-depense:
+    path: /depense/modification-depense/{idDepense}
+    defaults: {_controller: DepenseBundle:Depense:modification }
+
+modification-pop-depense:
+    path: /depense/modification-pop-depense/{idDepense}
+    defaults: {_controller: DepenseBundle:Depense:modificationPop }
+    
+    
+    
+    
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+fos_user_profile:
+    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+    prefix: /profile
+
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /register
+
+fos_user_resetting:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /resetting
+
+fos_user_change_password:
+    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
+    prefix: /profile
+
+
+

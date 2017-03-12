@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h2> Temoignages </h2>
+
+    <!-- FLASH MESSAGE -->
+    {% for flash_message in app.session.flashBag.get('feedback') %}
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ flash_message }}
+        </div>
+    {% endfor %}
+    {% for flash_message in app.session.flashBag.get('alert') %}
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ flash_message }}
+        </div>
+    {% endfor %}
+
+
+    {% if temoignages == null %}
+        <p>Il n'y à pas encore de temoignages</p>
+    {% else %}
+        <!-- TABLE ARTICLE -->
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th> Temoignage </th>
+                <th> Nom </th>
+                <th> Description </th>
+                <th> public </th>
+                <th> Actions </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for temoignage in temoignages %}
+                <tr class="rows">
+                    <td>{{temoignage.getId()}} </td>
+                    <td> {{temoignage.getNom()}}</td>
+                    <td> {{temoignage.getDescription()}}</td>
+                    <td>
+                        {% if (temoignage.getAllow() == 1) %}
+                            Publié
+                        {% else %}
+                            Caché
+                        {% endif %}
+                    </td>
+                    <td class="row MODAL col-sm-4">
+
+                        <a href="{{path('publier-temoignage', {'idTemoignage': temoignage.getId()})}}" class="col-sm-12">
+                            <span class="glyphicon glyphicon-ok"></span> Publier
+                        </a>
+                        <a href="{{path('supprimer-temoignage', {'idTemoignage': temoignage.getId()})}}" class="col-sm-12">
+                            <span class="glyphicon glyphicon-remove"></span> Supprimer
+                        </a>
+
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+
+{% endblock %}

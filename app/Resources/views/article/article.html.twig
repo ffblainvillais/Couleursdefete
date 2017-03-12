@@ -1,0 +1,251 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    
+    <h2> Articles </h2>
+    
+    <!-- AJOUT ARTICLE -->
+    <div>
+        <p class="row"> 
+            <span class="col-sm-3">Ajouter un Article : </span>
+             <!--path('ajout-article-pop') <a href="" class="btn btn-primary ajax-modal" data-submit-reload='true' > <span class="glyficon glyficon-plus"></span> Ajouter un Article ! </a>-->
+            <button type="button" class="btn btn-primary col-sm-3" data-toggle="modal" data-target="#modalAjout">
+                <span class="glyphicon glyphicon-plus"></span> ajouter Article
+            </button>
+
+        </p>
+    </div>
+    
+    <!-- FLASH MESSAGE -->
+    {% for flash_message in app.session.flashBag.get('feedback') %} 
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ flash_message }}
+        </div>
+    {% endfor %}
+    {% for flash_message in app.session.flashBag.get('alert') %} 
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ flash_message }}
+        </div>
+    {% endfor %}
+    
+    
+    {% if articles == null %}
+        <p>Il n'y à pas encore d'article</p>
+    {% else %}
+        <!-- TABLE ARTICLE -->
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <th> Utilisateur </th>
+                    {%endif%}
+                    <th> Article </th>
+                    <th> Description </th>
+                    <th> Quantite </th>
+                    <th> Prix / unité </th>
+                    <th> Actions </th>
+                </tr>
+            </thead> 
+            <tbody>
+            {% for article in articles %}
+                <tr class="rows">
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <th> {{article.getUtilisateur().getUsername()}} </th>
+                    {%endif%}
+                    <td>{{article.getLibelle()}} </td>
+                    <td> {{article.getDescription()}}</td>
+                    <td> {{article.getQuantite()}}</td>
+                    <td> {{article.getPrix()}}<span class='glyphicon glyphicon-euro'></span></td>
+                    <td class="row MODAL col-sm-4"> 
+
+                        <a href="#" 
+                           class="col-sm-6"
+                           id="modifModal"
+                           data-toggle="modal" 
+                           data-target="#modalTest" 
+                           data-url="{{path('modification-pop-article', {'idArticle': article.getId()})}}"
+                        >
+                            <span class="glyphicon glyphicon-pencil"></span> Modifier
+                        </a>
+
+                        <a class=" col-sm-6 popconfirm" 
+                               href="{{path('suppression-article', {'idArticle': article.getId()})}}"
+                               data-confirm-title="Attention" 
+                               data-confirm-content="Etes vous sur de vouloir supprimer l'article '{{article.getLibelle()}}'"
+                               data-confirm-placement="bottom"
+                               data-confirm-yesBtn="<span class='glyphicon glyphicon-ok'></span> Oui"
+                               data-confirm-noBtn="<span class='glyphicon glyphicon-remove'></span> Non"
+                        >
+                            <span class=" glyphicon glyphicon-trash"></span> Supprimer 
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+            {% endif %}
+            
+            <div class="navigation">
+                {{ knp_pagination_render(articles) }}
+            </div>
+            
+            
+        <!-- AJOUT LOT ARTICLE -->
+        <div>
+            <p class="row"> 
+                <span class="col-sm-3">Créer un Lot : </span>
+                 <!--path('ajout-article-pop') <a href="" class="btn btn-primary ajax-modal" data-submit-reload='true' > <span class="glyficon glyficon-plus"></span> Ajouter un Article ! </a>-->
+                <button type="button" class="btn btn-warning col-sm-3" data-toggle="modal" data-target="#modalAjoutLot">
+                    <span class="glyphicon glyphicon-plus"></span> créer Lot
+                </button>
+
+            </p>
+        </div>
+        
+        <!-- FLASH MESSAGE -->
+        {% for flash_message in app.session.flashBag.get('feedbackLot') %} 
+            <div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{ flash_message }}
+            </div>
+        {% endfor %}
+        {% for flash_message in app.session.flashBag.get('alertLot') %} 
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{ flash_message }}
+            </div>
+        {% endfor %}
+        
+        {% if lots == null %}
+            <p>Il n'y à pas encore de lots d'articles</p>
+        {% else %}
+        <!-- TABLE ARTICLE -->
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th> Lot </th>
+                    <th> Articles </th>
+                    <th> Prix </th>
+                    <th> Actions </th>
+                </tr>
+            </thead> 
+            <tbody>
+            {% for lot in lots %}
+                <tr>
+                    <td>{{lot.getLibelle()}} </td>
+                    <td> 
+                        <ul>
+                            
+                            {% for articleLot in articlesLots %}
+                                {% if(articleLot.getLot() == lot) %}
+                                    <li>
+                                        <!-- Libelle article -->
+                                        {{articleLot.getArticle}} ({{articleLot.getQuantite()}})
+       
+                                        <a href="{{path('suppression-article-lot',{'idArticle': articleLot.getArticle.getId(),'idLot': lot.getId()})}}">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </a>
+                                    </li>
+                                    
+                                {%endif%}
+                            {% endfor %}
+                            
+                            <li class="POPOVER">
+                                <a 
+                                    href="{{ path('ajout-article-lot-pop', {'idLot': lot.getId()})}}"
+                                    class="pop-ajax"
+                                    data-submit-close='true'
+                                    data-submit-reload='true'
+                                >
+                                    <span class="glyphicon glyphicon-plus"></span> Ajouter un article 
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </td>
+                    <td> {{lot.getPrix()}}<span class='glyphicon glyphicon-euro'></span></td>
+                    <td class="row MODAL"> 
+
+                        <a href="#" 
+                           class="col-sm-6"
+                           id="modifModal"
+                           data-toggle="modal" 
+                           data-target="#modalTest" 
+                           data-url="{{path('modification-pop-lot', {'idLot': lot.getId()})}}"
+                        >
+                            <span class="glyphicon glyphicon-pencil"></span> Modifier
+                        </a>
+
+                        <a class=" col-sm-6 popconfirm" 
+                               href="{{path('suppression-lot', {'idLot': lot.getId()})}}"
+                               data-confirm-title="Attention" 
+                               data-confirm-content="Etes vous sur de vouloir supprimer le lot '{{lot.getLibelle()}}'"
+                               data-confirm-placement="bottom"
+                               data-confirm-yesBtn="<span class='glyphicon glyphicon-ok'></span> Oui"
+                               data-confirm-noBtn="<span class='glyphicon glyphicon-remove'></span> Non"
+                        >
+                            <span class=" glyphicon glyphicon-trash"></span> Supprimer 
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+
+        <!-- FENETRE MODAL MODIFICATION ARTICLE-->
+        <div class="modal fade" id="modalTest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 class="modal-title" id="myModalLabel">Modification d'article</h3>
+                    </div>
+                    <div class="modal-body" id="cible">
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+     
+                
+    <!-- FENETRE MODAL AJOUT ARTICLE -->
+        <div class="modal fade" id="modalAjout" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 class="modal-title" id="myModalLabel">Creation d'article</h3>
+                    </div>
+                    <div class="modal-body">
+                        {{ form_start(form) }}
+                        {{ form_widget(form) }}
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FENETRE MODAL AJOUT ARTICLE LOT-->
+        <div class="modal fade" id="modalAjoutLot" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 class="modal-title" id="myModalLabel">Creation de Lots</h3>
+                    </div>
+                    <div class="modal-body">
+                        {{ form_start(formLot) }}
+                        {{ form_widget(formLot) }}
+                        {{ form_end(formLot) }}
+                    </div>
+                </div>
+            </div>
+        </div> 
+               
+
+
+        
+{% endblock %}

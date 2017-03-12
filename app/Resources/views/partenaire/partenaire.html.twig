@@ -1,0 +1,142 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    
+    <h2> Partenaires </h2>
+    
+    <p>Pour ajouter un partenaire veulliez  donner :
+        <ul>
+            <li>Le nom du partenaire (ex : Couleurs de fete)</li>
+            <li>L'adresse du partenaire (ex : ... Benouville)</li>
+            <li>Une <strong>IMAGE</strong> ou un logo (fichiers jpg, JPG, jpeg, png etc... Pas de PDF !)</li>
+            <li>L'adresse d'un <strong>site internet</strong> (pas d'adresse mail !!! ex : couleursdefete.fr)</li>
+        </ul>
+    
+    </p>
+    
+    <!-- AJOUT ARTICLE -->
+    <div>
+        <p class="row"> 
+            <span class="col-sm-3">Ajouter un Partenaire : </span>
+             <!--path('ajout-article-pop') <a href="" class="btn btn-primary ajax-modal" data-submit-reload='true' > <span class="glyficon glyficon-plus"></span> Ajouter un Article ! </a>-->
+            <button type="button" class="btn btn-primary col-sm-3" data-toggle="modal" data-target="#modalAjout">
+                <span class="glyphicon glyphicon-plus"></span> ajouter Partenaire
+            </button>
+
+        </p>
+    </div>
+    
+    <!-- FLASH MESSAGE -->
+    {% for flash_message in app.session.flashBag.get('feedback') %} 
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ flash_message }}
+        </div>
+    {% endfor %}
+    {% for flash_message in app.session.flashBag.get('alert') %} 
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ flash_message }}
+        </div>
+    {% endfor %}
+    
+    
+    {% if partenaires == null %}
+        <p>Il n'y à pas encore de partenaire</p>
+    {% else %}
+        <!-- TABLE ARTICLE -->
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th> Partenaire </th>
+                    <th> Adresse </th>
+                    <th> Logo </th>
+                    <th> Site </th>
+                    <th> Actions </th>
+                </tr>
+            </thead> 
+            <tbody>
+            {% for partenaire in partenaires %}
+                <tr>
+                    <td>{{partenaire.getNom()}} </td>
+                    <td> {{partenaire.getAdresse()}}</td>
+                    <td> 
+                        {% if(partenaire.getLogo == null)%}
+                            Pas d'image disponible.
+                        {% else %}
+                            <img src="{{asset('uploads/logos/' ~ partenaire.getLogo())}}" style="width:40%; display:block; margin-left:auto; margin-right:auto;"/>
+                        {% endif %}
+                    </td>
+                    <td> 
+                        {% if(partenaire.getSite == 'null' or partenaire.getSite == null)%}
+                            Pas de site internet disponible.
+                        {% else %}
+                            {{partenaire.getSite()}}
+                        {% endif %}
+                    </td>
+                    <td class="row MODAL"> 
+
+                        <a href="#" 
+                           class="col-sm-6"
+                           id="modifModal"
+                           data-toggle="modal" 
+                           data-target="#modalTest" 
+                           data-url="{{path('modification-pop-partenaire', {'idPartenaire': partenaire.getId()})}}"
+                        >
+                            <span class="glyphicon glyphicon-pencil"></span> Modifier
+                        </a>
+
+                        <a class=" col-sm-12 popconfirm" 
+                               href="{{path('suppression-partenaire', {'idPartenaire': partenaire.getId()})}}"
+                               data-confirm-title="Attention" 
+                               data-confirm-content="Etes vous sur de vouloir supprimer le partenaire '{{partenaire.getNom()}}'"
+                               data-confirm-placement="bottom"
+                               data-confirm-yesBtn="<span class='glyphicon glyphicon-ok'></span> Oui"
+                               data-confirm-noBtn="<span class='glyphicon glyphicon-remove'></span> Non"
+                        >
+                            <span class=" glyphicon glyphicon-trash"></span> Supprimer 
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+
+        <!-- FENETRE MODAL MODIFICATION -->
+        <div class="modal fade" id="modalTest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 class="modal-title" id="myModalLabel">Modification de partenaire</h3>
+                    </div>
+                    <div class="modal-body" id="cible">
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+     
+                
+    <!-- FENETRE MODAL AJOUT-->
+        <div class="modal fade" id="modalAjout" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 class="modal-title" id="myModalLabel">Creation de partenaire</h3>
+                    </div>
+                    <div class="modal-body">
+                        {{ form_start(form) }}
+                        {{ form_widget(form) }}
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>         
+               
+
+
+        
+{% endblock %}

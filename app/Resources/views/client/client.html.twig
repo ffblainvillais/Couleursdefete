@@ -1,0 +1,180 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    
+    <h2> Clients</h2>
+    
+    <!-- AJOUT ARTICLE -->
+    <div>
+        <p class="row"> 
+            <span class="col-sm-3"> Ajouter un Client : </span>
+            <button type="button" class="btn btn-primary col-sm-3" data-toggle="modal" data-target="#modalAjout">
+                <span class="glyphicon glyphicon-plus"></span> ajouter Client
+            </button>
+        </p>
+        <p class="row">
+            <span class="col-sm-3">Créer une Newsletter : </span>
+            <button type="button" class="btn btn-success col-sm-3" data-toggle="modal" data-target="#modalContact">
+                <span class="glyphicon glyphicon-plus"></span> nouvelle Newsletter
+            </button>
+        </p>
+    </div>
+    
+    <!-- FLASH MESSAGE -->
+    {% for flash_message in app.session.flashBag.get('feedback') %} 
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ flash_message }}
+        </div>
+    {% endfor %}
+    {% for flash_message in app.session.flashBag.get('alert') %} 
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ flash_message }}
+        </div>
+    {% endfor %}
+    
+    
+    {% if clients == null %}
+        <p>Il n'y à pas encore de client</p>
+    {% else %}
+        <!-- TABLE ARTICLE -->
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <th> Utilisateur </th>
+                    {% endif %}
+                    <th> Nom </th>
+                    <th> Prenom </th>
+                    <th> Adresse </th>
+                    <th> Mail </th>
+                    <th> Commandes </th>
+                    <th> Actions </th>
+                </tr>
+            </thead> 
+            <tbody>
+            {% for client in clients %}
+                <tr>
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <td> <strong>{{ client.getUtilisateur().getUsername() }}</strong> </td>
+                    {% endif %}
+                    <td> {{client.getNom()}} </td>
+                    <td> {{client.getPrenom()}}</td>
+                    <td> {{client.getAdresse()}}</td>
+                    <td> {{client.getMail()}}</td>
+                    <td> 
+                        <ul>
+                        {% for commande in commandes %}
+                            {%if(commande.getClient() == client)%}
+                                <li>
+                                    <strong>{{commande.getLibelle()}}</strong> 
+                                    le {{commande.getDate()|date('d/m/Y')}}
+                                    
+                                    <br/>
+                                    
+                                    {% if(commande.getPaye() == false) %}
+                                        <span class="label label-danger">
+                                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                                            Commande <strong>non-payée</strong>
+                                        </span><br/>
+                                        <a href="{{path('relance-client', {'idCommande': commande.getId(), 'idClient' : client.getId()})}}"><span class="glyphicon glyphicon-shopping-cart"></span> Relance paiement</a>
+                                        
+                                    {%endif%}
+                                
+                                </li>
+                            {%endif%}
+                        {% endfor%}
+                        </ul>
+                    </td>
+                    <td class="row MODAL"> 
+                        <a href="#" 
+                           class="col-sm-12"
+                           id="modifModal"
+                           data-toggle="modal" 
+                           data-target="#modalTest" 
+                           data-url="{{path('modification-pop-client', {'idClient': client.getId()})}}"
+                        >
+                            <span class="glyphicon glyphicon-pencil"></span> Modifier
+                        </a>
+
+                        <a class=" col-sm-12 popconfirm" 
+                               href="{{path('suppression-client', {'idClient': client.getId()})}}"
+                               data-confirm-title="Attention" 
+                               data-confirm-content="Etes vous sur de vouloir supprimer le client '{{client.getNom()}}'"
+                               data-confirm-placement="bottom"
+                               data-confirm-yesBtn="<span class='glyphicon glyphicon-ok'></span> Oui"
+                               data-confirm-noBtn="<span class='glyphicon glyphicon-remove'></span> Non"
+                        >
+                            <span class=" glyphicon glyphicon-trash"></span> Supprimer 
+                        </a>
+                        <a 
+                           class=" col-sm-12" 
+                           id="contactModal"
+                           data-toggle="modal" 
+                           data-target="#modalTest"
+                           data-url="{{path('mail-client-pop', {'idClient': client.getId()})}}"
+                        >
+                            <span class=" glyphicon glyphicon-envelope"></span> Contacter 
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+
+        <!-- FENETRE MODAL MODIFICATION -->
+        <div class="modal fade" id="modalTest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 class="modal-title" id="myModalLabel">Modification des informations d'un client</h3>
+                    </div>
+                    <div class="modal-body" id="cible">
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+     
+                
+    <!-- FENETRE MODAL AJOUT CLIENT-->
+        <div class="modal fade" id="modalAjout" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 class="modal-title" id="myModalLabel">Ajout d'un client</h3>
+                    </div>
+                    <div class="modal-body">
+                        {{ form_start(form) }}
+                        {{ form_widget(form) }}
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+                    
+    <!-- FENETRE MODAL CONTACT CLIENT-->
+        <div class="modal fade" id="modalContact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 class="modal-title" id="myModalLabel">Contact d'un client</h3>
+                    </div>
+                    <div class="modal-body">
+                        {{ form_start(formContact) }}
+                        {{ form_widget(formContact) }}
+                        {{ form_end(formContact) }}
+                    </div>
+                </div>
+            </div>
+        </div> 
+               
+
+
+        
+{% endblock %}

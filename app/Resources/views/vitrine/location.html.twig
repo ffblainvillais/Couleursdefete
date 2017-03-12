@@ -1,0 +1,84 @@
+{% extends 'baseVitrine.html.twig' %}
+
+{% block title %}{{titre}}{% endblock %}
+    
+{% block body %}
+    
+            <h1>Location / Devis</h1>
+
+            <p>Je vous propose de louer votre décoration afin de créer vous-même l'ambiance que vous desirez :</p>
+            
+            <ul>
+                <li>Housse de chaise en lycra blanc</li>
+                    <li>Ceinturage organza-satin- toile de jute ( choix de couleurs)</li>
+                    <li>Chandelier métal argenté 5 branches avec bougies LED 2 hauteurs 55 et 85 cm</li>
+                    <li>Chemin de table assorti au ceinturage des chaises</li>
+                    <li>Vase martini haut 60 cm- vase boule  haut 35 et 48 cm-vase coupelle diam 30 cm- vase cylindrique  haut 15 et 70 cm</li>
+                    <li>Rampe LED pour vase</li>
+                    <li>Arche en bois pour cérémonie laïque</li>
+                    <li>Mange-debout diam 60 et 80 cm avec housse noires ou blanches</li>
+                    <li>Spot projecteur à  LED 18 couleurs pour ambiance salle</li>
+                    <li>Malle à photobooth complète avec cadre et paravent</li>
+                    <li>Miroir plat pour centre de table diam 35 cm</li>
+                    <li>Plan de table originaux avec rappel sur table</li>
+                    <li>Urne</li>
+                    <li>Bûche bois plate pour centre de table diam 30 cm</li>
+                    <li>Set de dessin à colorier avec crayons de couleurs pour les enfants</li>
+
+            </ul>
+
+
+            <!--<p>Pour les tarifs indiquez les <strong>articles</strong> et les <strong>quantités</strong> que vous souhaitez louer
+            sans oublier de communiquer vos coordonnées complètes dans <strong>CONTACT</strong></p>-->
+
+            <div id='myCarousel' class='carousel slide' data-ride='carousel'>
+                <!-- Indicators -->
+                <ol class='carousel-indicators'>
+                  <li data-target='#myCarousel' data-slide-to='0' class='active'></li>
+                  <li data-target='#myCarouel' data-slide-to='1'></li>
+                  <li data-target='#myCarousel' data-slide-to='2'></li>
+                  <li data-target='#myCarousel' data-slide-to='3'></li>
+                  <li data-target='#myCarousel' data-slide-to='4'></li>
+                  <li data-target='#myCarousel' data-slide-to='5'></li>
+                </ol>
+
+                <!-- Wrapper for slides -->
+                <div class='carousel-inner' role='listbox'>
+                  <div class='item active'>
+                    <img src='{{asset('images/Location1.jpg')}}' alt='Chania' width='460' height='345'>
+                  </div>
+
+                  <div class='item'>
+                    <img src='{{asset('images/Location2.jpg')}}' alt='Chania' width='460' height='345'>
+                  </div>
+
+                  <div class='item'>
+                    <img src='{{asset('images/Location3.jpg')}}' alt='Chania' width='460' height='345'>
+                  </div>
+
+                  <div class='item'>
+                    <img src='{{asset('images/Location4.JPG')}}' alt='Chania' width='460' height='345'>
+                  </div>
+
+                    <div class='item'>
+                      <img src='{{asset('images/Location5.jpg')}}' alt='Chania' width='460' height='345'>
+                    </div>
+                    
+                    <div class='item'>
+                      <img src='{{asset('images/Location6.jpg')}}' alt='Chania' width='460' height='345'>
+                    </div>
+                    
+                </div>
+
+                <!-- Left and right controls -->
+                <a class='left carousel-control' href='#myCarousel' role='button' data-slide='prev'>
+                  <span class='glyphicon glyphicon-chevron-left' aria-hidden='true'></span>
+                  <span class='sr-only'>Previous</span>
+                </a>
+                <a class='right carousel-control' href='#myCarousel' role='button' data-slide='next'>
+                  <span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span>
+                  <span class='sr-only'>Next</span>
+                </a>
+              </div>
+        
+{% endblock %}

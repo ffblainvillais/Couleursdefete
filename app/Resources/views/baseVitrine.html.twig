@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title> Couleurs de Fete : {% block title %} {% endblock %}</title>
+        {% block stylesheets %}
+            <link href="{{asset('css/vitrine.css')}}" rel="stylesheet">
+            <link href="{{asset('vendor/css/bootstrap.min.css')}}" rel="stylesheet">
+            <link href="{{asset('vendor/css/bootstrap-theme.min.css')}}" rel="stylesheet">
+        {% endblock %}
+        
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        
+        <meta charset="UTF-8" />
+	<meta name="viewport" content="initial-scale=1" />
+
+        <META NAME="Author" CONTENT="Fran�ois Lavieille">
+        <META NAME="Language" CONTENT="fr">
+        <META NAME="Description" CONTENT="Location housses de chaises pour mariage et autres �v�nements, bapt�me, cousinades, anniversaire..... Un professionnel vous aide � r�aliser et personnaliser votre d�coration de table">
+        <META NAME="Keywords" CONTENT="location de housse de chaise, chandeliers, mange-debout, calvados, caen, normandie, f�tes, mariages d�coration, couleurs de fete">
+        <META NAME="Robots" CONTENT="all">
+
+        
+        
+    </head>
+    <body class='{{ app.environment }}'>
+        
+        <nav class="navbar navbar-inverse">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{path('homepage')}}">
+                <strong>
+                    <span class="mot">
+                        <span class="bleu">C</span>
+                        <span class="rose">o</span>
+                        <span class="vert">u</span>
+                        <span class="jaune">l</span>
+                        <span class="bleu">e</span>
+                        <span class="rose">u</span>
+                        <span class="vert">r</span>
+                        <span class="jaune">s</span> 
+                    </span>
+                    <span class="mot">
+                        <span class="bleu">D</span>
+                        <span class="rose">e</span> 
+                    </span>
+                    <span class="mot">
+                        <span class="vert">F</span>
+                        <span class="jaune">e</span>
+                        <span class="bleu">t</span>
+                        <span class="rose">e</span>
+                    </span>
+                </strong>
+            </a>
+
+          </div>
+          <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                    <li><a href="{{ path('contact') }}">Contact</a></li>
+                    <li><a href="{{ path('album') }}">Album</a></li>
+                    <li><a href="{{ path('location') }}">Location/devis</a></li>
+                    <li><a href="{{ path('prestation') }}">Prestations artisanales</a></li>
+                    <li><a href="{{ path('partenaire') }}">Partenaires</a></li>
+                    <li><a href="{{ path('temoignage') }}">Temoignages</a></li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                        {% if(app.user) %}
+                            <li><a href="{{ path('fos_user_security_logout') }}"><span class="glyphicon glyphicon-user"></span> {{app.user.username}} | Se deconnecter</a></li>
+                        {% else %}
+                            <li><a href="{{ path('fos_user_security_login') }}">Se connecter</a></li>
+                        {% endif %}
+              </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    <div id="contenu-principal" class="container">
+          {% block body %}{% endblock %}
+        
+        
+    </div>
+    <footer class="container" id="footer">
+        <ul>
+                <li><strong>Christine Lelong</strong></li>
+                <li><strong>06 89 47 02 19</strong></li>
+                <li><a href="https://www.facebook.com/couleursdefete.free.fr/?fref=ts"><img src="{{asset('images/facebook.png')}}" class="icone"/></a></li>
+                <li><a href="https://www.linkedin.com/in/christine-lelong-9b79b6104?authType=NAME_SEARCH&authToken=NyKZ&locale=fr_FR&trk=tyah&trkInfo=clickedVertical%3Amynetwork%2CclickedEntityId%3A444405019%2CauthType%3ANAME_SEARCH%2Cidx%3A1-1-1%2CtarId%3A1469533345425%2Ctas%3Achristin"><img src="{{asset('images/linkedin.png')}}" class="icone"/></a></li>
+        </ul>
+        <p class="texteCentre">Siège: Couleurs de Fête -6 rue du 7ème Bataillon- 14970 Bénouville</p>
+    </footer>
+
+        {% block javascripts %}
+            <script src='{{asset('js/jquery.min.js')}}'></script>
+            <script src='{{asset('js/jquery-ui.min.js')}}'></script>
+            <script src='{{asset('js/unicaen.js')}}'></script>
+            <script src='{{asset('js/bootstrap.min.js')}}'></script>
+            <script src='{{asset('js/jquery.popconfirm.js')}}'></script>
+            <script src='{{asset('js/app.js')}}'></script>
+            <script>
+                
+               $(".popconfirm").popConfirm();
+
+               $('[data-toggle="popover"]').popover({
+                   placement : 'bottom',
+                   /*content: function(){
+                        $.post($(this).data('url')).done(function (res) {
+                            $(this).data('content').html(res);
+                        });
+                    }*/
+                });
+                
+            </script>
+        {% endblock %}
+        
+    </body>
+</html>

@@ -1,0 +1,53 @@
+{% extends 'baseVitrine.html.twig' %}
+
+{% block title %}{{titre}}{% endblock %}
+    
+{% block body %}
+    
+            <h1>Partenaires</h1>
+            
+            {% if partenaires == null %}
+                <p>Il n'y à pas encore de partenaire</p>
+            {% else %}
+
+                <ul>    
+                {% for partenaire in partenaires %}
+                    {% set estMail = 0%}
+
+                    {% for caractere in partenaire.getSite()|split('') %}
+                        {% if caractere == "@" %}
+                            {% set estMail = 1%}
+                        {% endif%}
+                    {% endfor %}
+                    
+                    <li> {{partenaire.getNom()}} 
+                        <ul>
+                            <li>{{partenaire.getAdresse()}}</li>
+                            {% if partenaire.getLogo() == '' and partenaire.getSite() != null%}
+                                {% if estMail == 1%}
+                                    <li>Mail du partenaire : {{partenaire.getSite()}}</li>
+                                {% else %}
+                                    <li><a href="{{partenaire.getSite()}}">Site internet ICI</a></li>
+                                {% endif %}
+                            
+                            {% elseif partenaire.getSite() == null %}
+                                <li>Pas de site disponible</li>
+                                
+                            {% else %}
+                                {% if estMail == 1 %}
+                                    mail
+                                    <li><a href="mailto:{{partenaire.getSite()}}"><img src="{{asset('uploads/logos/' ~ partenaire.getLogo())}}" style="width:15%;"/></a></li>
+                                {% else %}
+                                    <li><a href="http://{{partenaire.getSite()}}"><img src="{{asset('uploads/logos/' ~ partenaire.getLogo())}}" style="width:15%;"/></a></li>
+                                {% endif %}
+                                
+                                
+                            {% endif %}
+                        </ul>
+                    </li>
+                {% endfor %}
+                </ul>
+
+            {% endif %}
+            
+{% endblock %}

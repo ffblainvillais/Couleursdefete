@@ -34,7 +34,7 @@ body.dev .navbar-inverse .navbar-nav .active a {
 
 /* ##### Page de connexion ##### */
 .corp-connexion {
-    width: 35%;
+    width: 50%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -82,14 +82,69 @@ body > .navbar{
 div#contenu-principal {
     box-shadow: 0px 15px 15px rgba(0, 0, 0, 0.25);
     background-color:white;
-    padding-top:1em;
-    padding-bottom:1em;
     padding-left : 40px;
     padding-right : 40px;
     width:1170px;
     margin-left : auto;
     margin-right : auto;
 }
+
+div#contenu-principal > * {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+@media screen and (max-width: 1170px){
+    div#contenu-principal{
+        width: 100%;
+        padding-left: 4%;
+        padding-right: 4%;
+    }
+}
+
+#contenu-principal ul{
+    margin-left : 20px;
+    padding: 0;
+}
+
+
+/* ##### Formulaire ##### */
+form > div > *{
+    margin-top: 15px;
+}
+form > div> :first-child{
+    margin-top: 0px;
+}
+
+form > div > div > div{
+    float: right;
+    width: 75%;
+    margin-bottom: 15px;
+}
+
+form label{
+    width: 25%;
+}
+
+form > div > div> input{
+    float:right;
+}
+
+form input, form select, form textarea{
+    width: 75%;
+}
+form button, form > div > div > div > *{
+    width: 100%;
+}
+
+.bilan{
+    padding-left: 30%;
+    padding-right: 30%;
+}
+
+
+
+
 /* FIN Corp */
 
 
@@ -113,5 +168,7 @@ div#contenu-principal {
 #footer ul > li:first-child {
     border: none;
 }
+
+
 /* FIN Footer */
 
