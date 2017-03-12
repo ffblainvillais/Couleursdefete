@@ -5,7 +5,9 @@ namespace DepenseBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use DepenseBundle\Form\DepenseType;
+use DepenseBundle\Form\CategorieDepenseType;
 use DepenseBundle\Entity\Depense;
+use DepenseBundle\Entity\CategorieDepense;
 
 
 class DepenseController extends Controller
@@ -40,12 +42,15 @@ class DepenseController extends Controller
         $depenses = $repository->findAll();
         
         $form = $this->createForm(DepenseType::class, null, array("action" => $this->generateUrl('ajout-depense')));
+        $formCategorie = $this->createForm(CategorieDepenseType::class, null, array("action" => $this->generateUrl('ajout-categorie')));
 
         return $this->render(
             'depense/depense.html.twig',
             array('depenses' => $depenses,
                   'categories' => $categoriesDepense,
-                  'form' => $form->createView())
+                  'form' => $form->createView(),
+                  'formCategorie' => $formCategorie->createView(),
+            )
         );
     }
     
@@ -148,6 +153,62 @@ class DepenseController extends Controller
         
         return $this->redirectToRoute('depense'); 
         
+    }
+
+    public function ajoutCategorieAction(Request $request)
+    {
+        $categorieDepense = new CategorieDepense();
+
+        $form = $this->createForm(CategorieDepenseType::class, $categorieDepense);
+
+        //renvois true quand le formulaire n'est pas valide n'empeche
+        //pas de lancer la requete avec ces données
+        $form->handleRequest($request)->isValid();
+
+        $categorieDepense = $form->getData();
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($categorieDepense);
+        $em->flush();
+
+        $this->addFlash('feedback', "la catégorie de dépense '".$categorieDepense->getLibelle()."' à bien été enregistrée");
+
+        return $this->redirectToRoute('depense');
+    }
+
+    public function suppressionCategorieAction(Request $request){
+
+        $categorieDepense = $this->getDoctrine()->getRepository('DepenseBundle:CategorieDepense')->findOneBy(['id' => $request->attributes->get('idCategorie')]);
+
+        $this->addFlash('feedback', "La categorie '".$categorieDepense->getLibelle()."' à bien été supprimé");
+
+        $this->deplaceDepensesDansDivers($categorieDepense);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($categorieDepense);
+        $em->flush();
+
+        return $this->redirectToRoute('depense');
+    }
+
+    public function deplaceDepensesDansDivers($categorieDepense){
+
+        $depenses = $this->getDoctrine()->getRepository('DepenseBundle:Depense')->findBy(['categorie' => $categorieDepense]);
+
+        $em = $this->getDoctrine()->getManager();
+
+        $aTrier = $this->getDoctrine()->getRepository('DepenseBundle:CategorieDepense')->findOneBy(['libelle' => 'A trier']);
+
+        foreach ($depenses as $depense){
+
+            $depense->setCategorie($aTrier);
+
+            $em->merge($depense);
+        }
+
+        $em->flush();
+
+        return true;
     }
     
     

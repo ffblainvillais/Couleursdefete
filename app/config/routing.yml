@@ -298,9 +298,17 @@ ajout-depense:
     path:   /depense/ajout-depense
     defaults: {_controller: DepenseBundle:Depense:ajout }
 
+ajout-categorie:
+    path:   /depense/ajout-categorie
+    defaults: {_controller: DepenseBundle:Depense:ajoutCategorie }
+
 suppression-depense:
     path: /depense/suppression-depense/{idDepense}
     defaults: {_controller: DepenseBundle:Depense:suppression }
+
+suppression-categorie:
+    path: /depense/suppression-categorie/{idCategorie}
+    defaults: {_controller: DepenseBundle:Depense:suppressionCategorie }
     
 modification-depense:
     path: /depense/modification-depense/{idDepense}

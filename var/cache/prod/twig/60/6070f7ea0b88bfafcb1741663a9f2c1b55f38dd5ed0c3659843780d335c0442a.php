@@ -21,20 +21,20 @@ class __TwigTemplate_04ca6efd1d040639818469bcfc693b9662c2504cd063ba90466d118b43f
 
     protected function doDisplay(array $context, array $blocks = array())
     {
-        $__internal_c2967f2b51b25d7fbb0d665cc35b5050e20dce7c0f34782cc35d112ddd7b275c = $this->env->getExtension("native_profiler");
-        $__internal_c2967f2b51b25d7fbb0d665cc35b5050e20dce7c0f34782cc35d112ddd7b275c->enter($__internal_c2967f2b51b25d7fbb0d665cc35b5050e20dce7c0f34782cc35d112ddd7b275c_prof = new Twig_Profiler_Profile($this->getTemplateName(), "template", "index/index.html.twig"));
+        $__internal_731e0a1359028317386568794b57777bc10ac0022883159f28a993a657337ea1 = $this->env->getExtension("native_profiler");
+        $__internal_731e0a1359028317386568794b57777bc10ac0022883159f28a993a657337ea1->enter($__internal_731e0a1359028317386568794b57777bc10ac0022883159f28a993a657337ea1_prof = new Twig_Profiler_Profile($this->getTemplateName(), "template", "index/index.html.twig"));
 
         $this->parent->display($context, array_merge($this->blocks, $blocks));
         
-        $__internal_c2967f2b51b25d7fbb0d665cc35b5050e20dce7c0f34782cc35d112ddd7b275c->leave($__internal_c2967f2b51b25d7fbb0d665cc35b5050e20dce7c0f34782cc35d112ddd7b275c_prof);
+        $__internal_731e0a1359028317386568794b57777bc10ac0022883159f28a993a657337ea1->leave($__internal_731e0a1359028317386568794b57777bc10ac0022883159f28a993a657337ea1_prof);
 
     }
 
     // line 3
     public function block_body($context, array $blocks = array())
     {
-        $__internal_f6bc7ef95370ce33bcad0eba1af3b055bf294b2fa2e7302098ec22eec126403c = $this->env->getExtension("native_profiler");
-        $__internal_f6bc7ef95370ce33bcad0eba1af3b055bf294b2fa2e7302098ec22eec126403c->enter($__internal_f6bc7ef95370ce33bcad0eba1af3b055bf294b2fa2e7302098ec22eec126403c_prof = new Twig_Profiler_Profile($this->getTemplateName(), "block", "body"));
+        $__internal_dce07428a459151bcdf89743931f2128ec0c293226888867e6d13dce9c0c5d26 = $this->env->getExtension("native_profiler");
+        $__internal_dce07428a459151bcdf89743931f2128ec0c293226888867e6d13dce9c0c5d26->enter($__internal_dce07428a459151bcdf89743931f2128ec0c293226888867e6d13dce9c0c5d26_prof = new Twig_Profiler_Profile($this->getTemplateName(), "block", "body"));
 
         // line 4
         echo "    
@@ -59,6 +59,13 @@ class __TwigTemplate_04ca6efd1d040639818469bcfc693b9662c2504cd063ba90466d118b43f
             echo "\" class=\"btn btn-primary\">Changer mot de passe</a></p>
         
             <h2>Mises à jour de l'application</h2>
+
+            <h4><strong>Le 12/03/17 :</strong></h4>
+            <ul>
+                <li>La création/suppression de categorie de dépenses </li>
+                <li>Suppression des devis demandés </li>
+                <li>Pagination des devis</li>
+            </ul>
             
             
             <h4><strong>Le 12/10/16 :</strong></h4>
@@ -104,14 +111,14 @@ class __TwigTemplate_04ca6efd1d040639818469bcfc693b9662c2504cd063ba90466d118b43f
         
         ";
         }
-        // line 60
+        // line 67
         echo "        
         
         
         
 ";
         
-        $__internal_f6bc7ef95370ce33bcad0eba1af3b055bf294b2fa2e7302098ec22eec126403c->leave($__internal_f6bc7ef95370ce33bcad0eba1af3b055bf294b2fa2e7302098ec22eec126403c_prof);
+        $__internal_dce07428a459151bcdf89743931f2128ec0c293226888867e6d13dce9c0c5d26->leave($__internal_dce07428a459151bcdf89743931f2128ec0c293226888867e6d13dce9c0c5d26_prof);
 
     }
 
@@ -127,7 +134,7 @@ class __TwigTemplate_04ca6efd1d040639818469bcfc693b9662c2504cd063ba90466d118b43f
 
     public function getDebugInfo()
     {
-        return array (  108 => 60,  58 => 13,  54 => 11,  48 => 9,  46 => 8,  40 => 4,  34 => 3,  11 => 1,);
+        return array (  115 => 67,  58 => 13,  54 => 11,  48 => 9,  46 => 8,  40 => 4,  34 => 3,  11 => 1,);
     }
 }
 /* {% extends 'base.html.twig' %}*/
@@ -145,6 +152,13 @@ class __TwigTemplate_04ca6efd1d040639818469bcfc693b9662c2504cd063ba90466d118b43f
 /*             <a href="{{ path('fos_user_change_password') }}" class="btn btn-primary">Changer mot de passe</a></p>*/
 /*         */
 /*             <h2>Mises à jour de l'application</h2>*/
+/* */
+/*             <h4><strong>Le 12/03/17 :</strong></h4>*/
+/*             <ul>*/
+/*                 <li>La création/suppression de categorie de dépenses </li>*/
+/*                 <li>Suppression des devis demandés </li>*/
+/*                 <li>Pagination des devis</li>*/
+/*             </ul>*/
 /*             */
 /*             */
 /*             <h4><strong>Le 12/10/16 :</strong></h4>*/

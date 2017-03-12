@@ -15,6 +15,18 @@
 
         </p>
     </div>
+
+    <!-- AJOUT ARTICLE -->
+    <div>
+        <p class="row">
+            <span class="col-sm-3">Ajouter une catégorie de dépense : </span>
+            <!--path('ajout-article-pop') <a href="" class="btn btn-primary ajax-modal" data-submit-reload='true' > <span class="glyficon glyficon-plus"></span> Ajouter un Article ! </a>-->
+            <button type="button" class="btn btn-primary col-sm-3" data-toggle="modal" data-target="#modalAjoutCategorie">
+                <span class="glyphicon glyphicon-plus"></span> ajouter Catégorie depense
+            </button>
+
+        </p>
+    </div>
     
     <!-- FLASH MESSAGE -->
     {% for flash_message in app.session.flashBag.get('feedback') %} 
@@ -48,7 +60,11 @@
                                 <a role="button" data-toggle="collapse" data-parent="#accordion" href="#{{categorie.getId()}}Corp" aria-expanded="true" aria-controls="{{categorie.getId()}}">
                                     {{categorie.getLibelle()}}
                                 </a>
+                                {% if(categorie.libelle != "A trier") %}
+                                    <a href="{{ url('suppression-categorie', {'idCategorie' : categorie.id}) }}"><span class=" glyphicon glyphicon-trash" ></span></a>
+                                {% endif %}
                             </h4>
+
                         </div>
                         <div id="{{categorie.getId()}}Corp" class="panel-collapse collapse" role="tabpanel" aria-labelledby="{{categorie.getId()}}Titre">
                             <div class="panel-body">
@@ -154,9 +170,27 @@
                     </div>
                 </div>
             </div>
-        </div>         
-               
+        </div>
+
+    <!-- FENETRE MODAL AJOUT Categorie depense-->
+    <div class="modal fade" id="modalAjoutCategorie" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title" id="myModalLabel">Creation de dépense</h3>
+                </div>
+                <div class="modal-body">
+                    {{ form_start(formCategorie) }}
+                    {{ form_widget(formCategorie) }}
+                    {{ form_end(formCategorie) }}
+                </div>
+            </div>
+        </div>
+    </div>
 
 
-        
+
+
+
 {% endblock %}

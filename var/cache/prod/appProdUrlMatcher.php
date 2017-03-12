@@ -439,14 +439,30 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
                 return array (  '_controller' => 'DepenseBundle\\Controller\\DepenseController::indexAction',  '_route' => 'depense',);
             }
 
-            // ajout-depense
-            if ($pathinfo === '/depense/ajout-depense') {
-                return array (  '_controller' => 'DepenseBundle\\Controller\\DepenseController::ajoutAction',  '_route' => 'ajout-depense',);
+            if (0 === strpos($pathinfo, '/depense/ajout-')) {
+                // ajout-depense
+                if ($pathinfo === '/depense/ajout-depense') {
+                    return array (  '_controller' => 'DepenseBundle\\Controller\\DepenseController::ajoutAction',  '_route' => 'ajout-depense',);
+                }
+
+                // ajout-categorie
+                if ($pathinfo === '/depense/ajout-categorie') {
+                    return array (  '_controller' => 'DepenseBundle\\Controller\\DepenseController::ajoutCategorieAction',  '_route' => 'ajout-categorie',);
+                }
+
             }
 
-            // suppression-depense
-            if (0 === strpos($pathinfo, '/depense/suppression-depense') && preg_match('#^/depense/suppression\\-depense/(?P<idDepense>[^/]++)$#s', $pathinfo, $matches)) {
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'suppression-depense')), array (  '_controller' => 'DepenseBundle\\Controller\\DepenseController::suppressionAction',));
+            if (0 === strpos($pathinfo, '/depense/suppression-')) {
+                // suppression-depense
+                if (0 === strpos($pathinfo, '/depense/suppression-depense') && preg_match('#^/depense/suppression\\-depense/(?P<idDepense>[^/]++)$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'suppression-depense')), array (  '_controller' => 'DepenseBundle\\Controller\\DepenseController::suppressionAction',));
+                }
+
+                // suppression-categorie
+                if (0 === strpos($pathinfo, '/depense/suppression-categorie') && preg_match('#^/depense/suppression\\-categorie/(?P<idCategorie>[^/]++)$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'suppression-categorie')), array (  '_controller' => 'DepenseBundle\\Controller\\DepenseController::suppressionCategorieAction',));
+                }
+
             }
 
             if (0 === strpos($pathinfo, '/depense/modification-')) {
