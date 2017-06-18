@@ -85,7 +85,7 @@
             {% endfor %}
             </tbody>
         </table>
-            {% endif %}
+    {% endif %}
             
             <div class="navigation">
                 {{ knp_pagination_render(articles) }}
@@ -133,9 +133,9 @@
             </thead> 
             <tbody>
             {% for lot in lots %}
-                <tr>
-                    <td>{{lot.getLibelle()}} </td>
-                    <td> 
+                <tr class="rows">
+                    <td class="col-sm-5" >{{lot.getLibelle()}} </td>
+                    <td class="col-sm-4">
                         <ul>
                             
                             {% for articleLot in articlesLots %}
@@ -165,8 +165,8 @@
                             
                         </ul>
                     </td>
-                    <td> {{lot.getPrix()}}<span class='glyphicon glyphicon-euro'></span></td>
-                    <td class="row MODAL"> 
+                    <td class="col-sm-1"> {{lot.getPrix()}}<span class='glyphicon glyphicon-euro'></span></td>
+                    <td class="row MODAL col-sm-2">
 
                         <a href="#" 
                            class="col-sm-6"

@@ -230,7 +230,7 @@ class CommandeController extends Controller
 
     
     public function ajoutArticlePopAction(Request $request){
-        
+
         $idCommande = $request->attributes->get('idCommande');
         
         $user = $this->getUser();
@@ -276,15 +276,7 @@ class CommandeController extends Controller
             
             //A VOIR !!!!!
             $commandeArticle->setQuantite($commandeArticle->getQuantite()+$quantiteDemandee);
-            
-            //Voir pour modifier la qtt de la reservation
-            $reservation = $this->getDoctrine()->getRepository('CommandeBundle:Reservation')->findOneBy(['article' => $article, 'date' => $commande->getDate()]);
-            
-            $reservation->setQuantite($commandeArticle->getQuantite()+$reservation->getQuantite());
-            
-            $em = $this->getDoctrine()->getManager();
-            $em->merge($reservation);
-            
+
         }
         else{
             
@@ -297,24 +289,34 @@ class CommandeController extends Controller
             $commandeArticle->setAction($action);
             
         }
-        
-        if(!$this->verificationReservation($article, $commande, $quantiteDemandee)){
-            
-            exit;
-        }
-        else{
-            
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($commandeArticle);
-            $em->flush();
 
-            exit;
-        }
+        $this->verificationReservtion($article, $commande, $quantiteDemandee);
+            
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($commandeArticle);
+        $em->flush();
+
+        exit;
+
         
+    }
+
+    public function verificationReservtion($article, $commande, $quantite){
+
+        //Voir pour modifier la qtt de la reservation
+        $reservation = $this->getDoctrine()->getRepository('CommandeBundle:Reservation')->findOneBy(['article' => $article, 'date' => $commande->getDateEvenement()]);
+
+        if($reservation){
+
+            return $this->modificationReservation($reservation, $quantite, $commande);
+        }
+
+        return $this->ajoutReservation($article, $commande, $quantite);
+
     }
     
     
-    public function verificationReservation($article, $commande, $quantiteDemandee){
+    /*public function verificationReservation($article, $commande, $quantiteDemandee){
         
         $reservations = $this->getDoctrine()->getRepository('CommandeBundle:Reservation')->findBy(['article' => $article, 'date' => $commande->getDateEvenement()]);
         
@@ -323,7 +325,7 @@ class CommandeController extends Controller
         foreach($reservations as $reservation){
             
             $compteurReservation += $reservation->getQuantite();
-        }
+        }*/
         
         /*//a voir ! $article->getQuantite() est FAUSSE !
         if($quantiteDemandee > $article->getQuantite() ){
@@ -336,12 +338,12 @@ class CommandeController extends Controller
         }
         else{*/
             
-            return $this->ajoutReservation($article, $commande, $quantiteDemandee, $compteurReservation); 
+            /*return $this->ajoutReservation($article, $commande, $quantiteDemandee, $compteurReservation);
         //}
 
-    }
+    }*/
     
-    public function ajoutReservation($article, $commande, $quantiteDemandee, $compteurReservation){
+    public function ajoutReservation($article, $commande, $quantiteDemandee, $compteurReservation = null){
         
         //on rajoute une reservation dans le cas de la location d'un article
         $reservation = new Reservation();
@@ -360,14 +362,33 @@ class CommandeController extends Controller
         return $reservation;
         
     }
+
+    public function modificationReservation($reservation, $quantite, $commande){
+
+        $quantiteReservation = $quantite + $reservation->getQuantite();
+
+        $reservation->setQuantite($quantiteReservation);
+
+        $this->getEntityManager()->merge($reservation);
+        $this->getEntityManager()->flush();
+
+        //$this->addFlash('feedback', "L'article '".$reservation->getArticle()->getLibelle()."' a été rajouté à la commande '".$commande->getLibelle()."', pour la date ".$commande->getDateEvenement()." il y en à donc ".$quantiteReservation." de reservés");
+
+    }
     
     public function suppressionReservation($article, $commande, $quantite){
         
-        $reservation = $this->getDoctrine()->getRepository('CommandeBundle:Reservation')->findOneBy(['article' => $article, 'date' => $commande->getDateEvenement(), 'quantite' => $quantite]);
+        $reservation = $this->getDoctrine()->getRepository('CommandeBundle:Reservation')->findOneBy(['article' => $article, 'date' => $commande->getDateEvenement()]);
+
+        if ($reservation->getQuantite() == $quantite){
+
+            $this->getEntityManager()->remove($reservation);
+        } else {
+
+            $reservation->setQuantite($reservation->getQuantite() - $quantite);
+        }
         
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($reservation);
-        $em->flush();
+        $this->getEntityManager()->flush();
         
         return $reservation;
         
@@ -383,6 +404,7 @@ class CommandeController extends Controller
         
         $commandeArticle = $this->getDoctrine()->getRepository('AppBundle:CommandeArticle')->findOneBy(['commande' => $commande, 'article' => $article]);
         
+        //echo "<pre style='background:#fff; color:#000'>";\Doctrine\Common\Util\Debug::dump($commandeArticle);die();
         // PREND EN COMPTE lors de l'ajout d'un article déja existant dans la commande, 
         $this->suppressionReservation($article, $commande, $commandeArticle->getQuantite());
         
@@ -885,6 +907,11 @@ class CommandeController extends Controller
         
         return $this->redirectToRoute('commande');
         
+    }
+
+    public function getEntityManager(){
+
+        return $this->getDoctrine()->getManager();
     }
     
     

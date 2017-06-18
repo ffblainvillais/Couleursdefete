@@ -345,6 +345,24 @@ class ArticleController extends Controller
         return $this->redirectToRoute('article');
         
     }
+
+    public function indexReservationAction(Request $request){
+
+        $repository = $this->getDoctrine()->getRepository('CommandeBundle:Reservation');
+
+        $queryReservations = $repository->createQueryBuilder("r")
+            ->orderBy("LOWER(r.date)",'ASC')
+            ->getQuery();
+
+        $reservations  = $this->get('knp_paginator')->paginate($queryReservations,$request->query->get('page', 1),10);
+
+        return $this->render(
+            'reservation/index.html.twig',
+            array(
+                'reservations' => $reservations
+            )
+        );
+    }
     
     
 }

@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h2> Reservations </h2>
+
+    <!-- FLASH MESSAGE -->
+    {% for flash_message in app.session.flashBag.get('feedback') %}
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ flash_message }}
+        </div>
+    {% endfor %}
+    {% for flash_message in app.session.flashBag.get('alert') %}
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ flash_message }}
+        </div>
+    {% endfor %}
+
+    {% if reservations == null %}
+        <p>Il n'y à pas encore de reservations d'article</p>
+    {% else %}
+        <!-- TABLE ARTICLE -->
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th> Date </th>
+                <th> Article </th>
+                <th> Quantite </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for reservation in reservations %}
+                <tr class="rows">
+                    <td> {{reservation.getDate() | date('d/m/Y')}}</td>
+                    <td> {{reservation.getArticle().getLibelle()}} </td>
+                    <td> {{reservation.getQuantite()}}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="navigation">
+            {{ knp_pagination_render(reservations) }}
+        </div>
+    {% endif %}
+
+
+
+{% endblock %}
