@@ -3,3 +3,6 @@ vendor/*
 idea/*
 /idea/*
 idea/sessions/*
+var/sessions/prod/*
+var/sessions/*
+var/*
