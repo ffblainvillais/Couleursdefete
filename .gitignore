@@ -1,3 +1,5 @@
 var/cache/*
 vendor/*
-.idea/*
+idea/*
+/idea/*
+idea/sessions/*
