@@ -290,7 +290,8 @@ class CommandeController extends Controller
             
         }
 
-        $this->verificationReservtion($article, $commande, $quantiteDemandee);
+        //il vaut mieux reserver lors du paiment de la commande
+        //$this->verificationReservtion($article, $commande, $quantiteDemandee);
             
         $em = $this->getDoctrine()->getManager();
         $em->persist($commandeArticle);
@@ -301,59 +302,54 @@ class CommandeController extends Controller
         
     }
 
+    /**
+     * Prend un commande en paramètre et reserve tout les articles de cette commande
+     *
+     * \CommandeBundle\Entity\Commande $commande
+     */
+    public function reservationCommandePayee($commande)
+    {
+
+        $commandeArticles = $this->getDoctrine()->getRepository('AppBundle:CommandeArticle')->findBy(['commande' => $commande]);
+
+        foreach ($commandeArticles as $commandeArticle) {
+
+            $article    = $commandeArticle->getArticle();
+            $quantite   = $commandeArticle->getQuantite();
+
+            $this->verificationReservtion($article, $commande, $quantite);
+
+        }
+
+        return true;
+
+    }
+
     public function verificationReservtion($article, $commande, $quantite){
 
+        $dateEvenement = $commande->getDateEvenement();
+
         //Voir pour modifier la qtt de la reservation
-        $reservation = $this->getDoctrine()->getRepository('CommandeBundle:Reservation')->findOneBy(['article' => $article, 'date' => $commande->getDateEvenement()]);
+        $reservation = $this->getDoctrine()->getRepository('CommandeBundle:Reservation')->findOneBy(['article' => $article, 'date' => $dateEvenement]);
 
         if($reservation){
 
-            return $this->modificationReservation($reservation, $quantite, $commande);
+            return $this->modificationReservation($reservation, $quantite);
         }
 
-        return $this->ajoutReservation($article, $commande, $quantite);
+        return $this->ajoutReservation($article, $dateEvenement, $quantite);
 
     }
     
-    
-    /*public function verificationReservation($article, $commande, $quantiteDemandee){
-        
-        $reservations = $this->getDoctrine()->getRepository('CommandeBundle:Reservation')->findBy(['article' => $article, 'date' => $commande->getDateEvenement()]);
-        
-        $compteurReservation = 0;
-        
-        foreach($reservations as $reservation){
-            
-            $compteurReservation += $reservation->getQuantite();
-        }*/
-        
-        /*//a voir ! $article->getQuantite() est FAUSSE !
-        if($quantiteDemandee > $article->getQuantite() ){
-            
-            var_dump("la qtt :".$quantiteDemandee. "en stock : ".$article->getQuantite(). "l'article : ".$article->getLibelle().$article->getDescription());
-            
-            $this->addFlash('alert', "L'article '".$article->getPrix()."' n'a pas rajouté à la commande '".$commande->getLibelle()."' car pour la date ".$commande->getDateEvenement()->format('d/m/Y')." il y en à ". $compteurReservation." de reservés, vous en demandez ".$quantiteDemandee." et en stock il y en a ".$article->getQuantite());
-            
-            return false;
-        }
-        else{*/
-            
-            /*return $this->ajoutReservation($article, $commande, $quantiteDemandee, $compteurReservation);
-        //}
-
-    }*/
-    
-    public function ajoutReservation($article, $commande, $quantiteDemandee, $compteurReservation = null){
+    public function ajoutReservation($article, $dateEvenement, $quantiteDemandee){
         
         //on rajoute une reservation dans le cas de la location d'un article
         $reservation = new Reservation();
         $reservation->setArticle($article);
-        $reservation->setDate($commande->getDateEvenement());
+        $reservation->setDate($dateEvenement);
         $reservation->setQuantite($quantiteDemandee);
-        
-        $quantiteReservation = $compteurReservation+$quantiteDemandee;
-        
-        $this->addFlash('feedback', "L'article '".$article->getLibelle()."' a été rajouté à la commande '".$commande->getLibelle()."', pour la date ".$commande->getDateEvenement()->format('d/m/Y')." il y en à donc ".$quantiteReservation." de reservés");
+
+        $this->addFlash('feedback', "L'article '".$article->getLibelle()."' a bien été reservé pour le " . $dateEvenement->format('d/m/Y'));
         
         $em = $this->getDoctrine()->getManager();
         $em->persist($reservation);
@@ -363,7 +359,7 @@ class CommandeController extends Controller
         
     }
 
-    public function modificationReservation($reservation, $quantite, $commande){
+    public function modificationReservation($reservation, $quantite){
 
         $quantiteReservation = $quantite + $reservation->getQuantite();
 
@@ -372,8 +368,9 @@ class CommandeController extends Controller
         $this->getEntityManager()->merge($reservation);
         $this->getEntityManager()->flush();
 
-        //$this->addFlash('feedback', "L'article '".$reservation->getArticle()->getLibelle()."' a été rajouté à la commande '".$commande->getLibelle()."', pour la date ".$commande->getDateEvenement()." il y en à donc ".$quantiteReservation." de reservés");
+        $this->addFlash('feedback', "L'article '".$reservation->getArticle()->getLibelle()."' a bien été reservé pour le " . $reservation->getDate()->format('d/m/Y'));
 
+        return $reservation;
     }
     
     public function suppressionReservation($article, $commande, $quantite){
@@ -406,7 +403,7 @@ class CommandeController extends Controller
         
         //echo "<pre style='background:#fff; color:#000'>";\Doctrine\Common\Util\Debug::dump($commandeArticle);die();
         // PREND EN COMPTE lors de l'ajout d'un article déja existant dans la commande, 
-        $this->suppressionReservation($article, $commande, $commandeArticle->getQuantite());
+        //$this->suppressionReservation($article, $commande, $commandeArticle->getQuantite());
         
         //on remet l'article dans le stock
         $this->suppressionArticleCommande($commandeArticle);
@@ -516,7 +513,9 @@ class CommandeController extends Controller
         $idCommande = $request->attributes->get('idCommande');
         
         $commande = $this->getDoctrine()->getRepository('CommandeBundle:Commande')->findOneBy(['id' => $idCommande]);
-        
+
+        $this->reservationCommandePayee($commande);
+
         return $this->setBoolean("payer", $commande);
     } 
     
@@ -908,6 +907,10 @@ class CommandeController extends Controller
         return $this->redirectToRoute('commande');
         
     }
+
+
+
+
 
     public function getEntityManager(){
 

@@ -28,27 +28,29 @@ class BilanController extends Controller
     
     public function generationBilanAction(Request $request)
     {
-        $user = $this->getUser();
+        $commandes = $this->getDoctrine()->getRepository('CommandeBundle:Commande')->findBy(['annee' => $request->request->get('bilan')['annee'], "paye" => 1]);
+
+        $repository = $this->getDoctrine()->getRepository('AppBundle:CommandeArticle');
+
+        $queryReservations = $repository->createQueryBuilder("ca")
+            ->leftJoin('ca.commande', 'c')
+            ->where("c.paye = 1")
+            ->getQuery();
+
+        $commandesArticles = $queryReservations->getResult();
         
-        foreach($user->getRoles() as $role){
-            
-            if($role === "ROLE_SUPER_ADMIN"){
-                $commandes = $this->getDoctrine()->getRepository('CommandeBundle:Commande')->findBy(['annee' => $request->request->get('bilan')['annee']]);
-                break;
-            }
-            elseif($role === "ROLE_ADMIN"){
-                $commandes = $this->getDoctrine()->getRepository('CommandeBundle:Commande')->findBy(['annee' => $request->request->get('bilan')['annee'], 'utilisateur' => $user]);
-                break;
-            }
-            //@todo selectionner les article du parent (de son admin)
-            else{
-                $commandes = $this->getDoctrine()->getRepository('CommandeBundle:Commande')->findBy(['annee' => $request->request->get('bilan')['annee'], 'utilisateur' => $user]);
-                break;
-            }
-        }
-        
-        $commandesArticles = $this->getDoctrine()->getRepository('AppBundle:CommandeArticle')->findAll();
-        $commandesLot = $this->getDoctrine()->getRepository('AppBundle:CommandeLot')->findAll();
+        //$commandesArticles = $this->getDoctrine()->getRepository('AppBundle:CommandeArticle')->findAll();
+
+        $repository = $this->getDoctrine()->getRepository('AppBundle:CommandeLot');
+
+        $queryReservations = $repository->createQueryBuilder("cl")
+            ->leftJoin('cl.commande', 'c')
+            ->where("c.paye = 1")
+            ->getQuery();
+
+        $commandesLot = $queryReservations->getResult();
+
+        //$commandesLot = $this->getDoctrine()->getRepository('AppBundle:CommandeLot')->findAll();
         $depenses = $this->getDoctrine()->getRepository('DepenseBundle:Depense')->findBy(['annee' => $request->request->get('bilan')['annee']]);
         $categoriesDepense = $this->getDoctrine()->getRepository('DepenseBundle:CategorieDepense')->findAll();
         

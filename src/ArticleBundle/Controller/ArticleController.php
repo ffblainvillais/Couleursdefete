@@ -348,20 +348,48 @@ class ArticleController extends Controller
 
     public function indexReservationAction(Request $request){
 
+        $dateDuJour = date("Y-m-d");
+
         $repository = $this->getDoctrine()->getRepository('CommandeBundle:Reservation');
 
         $queryReservations = $repository->createQueryBuilder("r")
             ->orderBy("LOWER(r.date)",'ASC')
+            ->where("r.date > :dateDuJour")
             ->getQuery();
 
+        $queryReservations->setParameter("dateDuJour", $dateDuJour);
+
         $reservations  = $this->get('knp_paginator')->paginate($queryReservations,$request->query->get('page', 1),10);
+
+        $excesReservation = $this->getExcesReservation();
 
         return $this->render(
             'reservation/index.html.twig',
             array(
-                'reservations' => $reservations
+                'reservations'      => $reservations,
+                'excesReservation'  => $excesReservation
             )
         );
+    }
+
+    public function getExcesReservation()
+    {
+
+        $dateDuJour = date("Y-m-d");
+
+        $repository = $this->getDoctrine()->getRepository('CommandeBundle:Reservation');
+
+        $queryReservations = $repository->createQueryBuilder("r")
+            ->leftJoin('r.article', 'a')
+            ->orderBy("LOWER(r.date)",'ASC')
+            ->where("r.date > :dateDuJour")
+            ->andWhere("r.quantite > a.quantite")
+            ->getQuery();
+
+        $queryReservations->setParameter("dateDuJour", $dateDuJour);
+
+        return $queryReservations->getResult();
+
     }
     
     

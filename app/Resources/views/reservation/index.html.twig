@@ -46,6 +46,23 @@
         </div>
     {% endif %}
 
+    {% if excesReservation %}
+
+        <h3> Alertes </h3>
+
+        {% for reservation in excesReservation %}
+
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Il y a {{ reservation.quantite }} {{ reservation.article.libelle }} de reservé(s) pour le {{ reservation.date|date('d/m/Y') }} mais seulement {{ reservation.article.quantite }} en stock !
+            </div>
+
+        {% endfor %}
+
+    {% endif %}
+
+
+
 
 
 {% endblock %}
