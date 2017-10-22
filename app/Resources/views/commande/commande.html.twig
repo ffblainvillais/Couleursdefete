@@ -266,19 +266,27 @@
                                 <span class="glyphicon glyphicon-transfer"></span> Retour des articles
                             </a>
                         {% endif %}
-                        
 
-                        <!-- Génération de la facture -->       
-                        <div class="col-sm-12">
-                            <a href="{{path('générer-facture',{'idCommande': commande.getId()})}}">
-                                <span class="glyphicon glyphicon-copy"></span> Génerer facture
-                            </a>
 
-                            <!-- Génération du devis -->       
-                            <a href="{{path('générer-devis',{'idCommande': commande.getId()})}}">
-                               / devis
+                        {% if(commande.getPaye() == true)%}
+                            <a href="{{path('générer-ultime-facture', {'idCommande': commande.getId()})}}" class="col-sm-12">
+                                <span class="glyphicon glyphicon-download-alt"></span> Télécharger facture
                             </a>
-                        </div>
+                        {% else %}
+
+                            <!-- Génération de la facture -->
+                            <div class="col-sm-12">
+                                <a href="{{path('générer-facture',{'idCommande': commande.getId()})}}">
+                                    <span class="glyphicon glyphicon-copy"></span> Génerer facture
+                                </a>
+
+                                <!-- Génération du devis -->
+                                <a href="{{path('générer-devis',{'idCommande': commande.getId()})}}">
+                                    / devis
+                                </a>
+                            </div>
+
+                        {% endif %}
                                
                         <!-- Archiver une commande -->   
                         <a href="{{path('archiver-commande', {'idCommande': commande.getId()})}}" 

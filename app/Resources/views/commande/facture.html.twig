@@ -15,10 +15,12 @@
     ">
         
         <img src="./images/cdf.png" width="160" height="100" alt="caré" /><br/>
+
+        <br/>
+
+        <strong style=" font-size: 22px;">{{commande.getTypeEvenement()}}</strong>
         
-        <strong style="margin-left: 495px; font-size: 22px;">{{commande.getTypeEvenement()}}</strong>
-        
-        <p><em>Décoratrice évènementiel</em></p>
+        <p><em></em></p>
         <p>
             SAS Couleurs de Fête<br/>
             7 rue Alfred Kastler<br/>
@@ -38,8 +40,16 @@
         <br/>
         <br/>
         
-        
-        <p><strong style="margin-left: 510px;">{{document|upper}} N° {{commande.getId()}}</strong></p>
+        {% if typeDocument == "UltimeFacture" %}
+
+            <p><strong style="margin-left: 510px;">FACTURE N° {{commande.getId()}}</strong></p>
+
+        {% else %}
+
+            <p><strong style="margin-left: 510px;">{{typeDocument|upper}} N° {{commande.getId()}}</strong></p>
+
+        {% endif %}
+
         
         <p> <strong>Demande de location de matériel pour votre évènement</strong></p>
         
@@ -56,39 +66,37 @@
                 </tr>
 
                 {% set total = 0 %}
-                
 
-                {%for commandeArticle in commandesArticles%}
-                    {% if(commandeArticle.getCommande() == commande)%}
-                    <tr>
-                        <td style="width: 400px;"> {{commandeArticle.getArticle()}} </td>
-                        <td style="text-align: right;"> {{commandeArticle.getQuantite()}} </td>
-                        <td style="text-align: right;"> {{commandeArticle.getArticle().getPrix()}} €</td>
 
-                        {% set compteArticle = commandeArticle.getArticle.getPrix()*commandeArticle.getQuantite() %}
-                        {% set total = total+compteArticle %}
-                        <td style="text-align: right;"> {{compteArticle}} €</td>
-                    </tr>
-                    {% endif%}
+                {%for type, items in itemsCommande %}
+                    {% if items is not empty %}
+
+                        <tr><td><strong>{{ type }}</strong></td><td></td><td></td><td></td></tr>
+
+                        {%for item in items %}
+
+
+                            <tr>
+
+                                <td style="width: 400px;"> {{item.libelle}} </td>
+                                <td style="text-align: right;"> {{item.quantite}} </td>
+                                <td style="text-align: right;"> {{item.prix}} €</td>
+
+                                {% set compteArticle = item.prix*item.quantite %}
+                                {% set total = total+compteArticle %}
+                                <td style="text-align: right;"> {{compteArticle}} €</td>
+
+                            </tr>
+                        {%endfor%}
+
+                    {% endif %}
+
                 {%endfor%}
-                
-                {%for commandeLot in commandesLot%}
-                    {% if(commandeLot.getCommande() == commande)%}
-                    <tr>
-                        <td style="width: 400px;"> {{commandeLot.getLot()}} </td>
-                        <td style="text-align: right;"> {{commandeLot.getQuantite()}} </td>
-                        <td style="text-align: right;"> {{commandeLot.getLot().getPrix()}} €</td>
 
-                        {% set compteArticle = commandeLot.getLot().getPrix()*commandeLot.getQuantite() %}
-                        {% set total = total+compteArticle %}
-                        <td style="text-align: right;"> {{compteArticle}} €</td>
-                    </tr>
-                    {% endif%}
-                {%endfor%}
                 
                 <tr><td><br/></td><td></td><td></td><td></td></tr> 
                 
-                {% if(document == "Devis")%}
+                {% if(typeDocument == "Devis")%}
                     <tr style="margin-top: 100px;">
                         <td style="width: 400px;">
                             Afin de valider votre réservation, il vous est demandé un acompte représentant 40 % de la commande totale.<br/>
@@ -108,7 +116,7 @@
                         <td></td>
                         <td></td>
                     </tr>
-                {% elseif(document == "Facture") %}
+                {% elseif(typeDocument == "Facture") %}
                     
                     
                 {% endif %}
@@ -120,7 +128,7 @@
                     <td colspan="3" style=" text-align: right; border: 1px solid black;"> {{total}} €</td>
                 </tr>
                 
-                {% if(document == "Devis")%}
+                {% if(typeDocument == "Devis")%}
                     {% set acompteLogique = total*0.40 %}
                     <tr>
                         <td style="width: 400px; text-align: right;">
@@ -138,7 +146,7 @@
                         </td>
                         <td colspan="3" style=" text-align: right; border: 1px solid black;"> {{restant}} €</td>
                     </tr>
-                {% elseif(document == "Facture") %}
+                {% elseif(typeDocument == "Facture") %}
                     <tr>
                         <td style="width: 400px; text-align: right;">
                             <strong>Acompte versé:</strong>
@@ -149,10 +157,10 @@
                             {% else %}
                                 {{commande.getAcompte()}} €
                             {% endif %}
-                            
+
                         </td>
                     </tr>
-                
+
                     
                     {% set restant = total-commande.getAcompte() %}
                 
@@ -162,8 +170,16 @@
                         </td>
                         <td colspan="3" style=" text-align: right; border: 1px solid black;"> {{restant}} €</td>
                     </tr>
-                
-                
+
+                {% else %}
+
+                    <tr>
+                        <td style="width: 400px; text-align: right;">
+                            <strong>Solde restant:</strong>
+                        </td>
+                        <td colspan="3" style=" text-align: right; border: 1px solid black;"> Solde acquitté </td>
+                    </tr>
+
                 {% endif %}
         </table>
                 
@@ -174,7 +190,7 @@
                     Non assujetti à la TVA.<br/><br/>
                     <strong>Avec mes remerciements.</strong><br/><br/>
                 </p> 
-                {% if(document == "Devis")%}
+                {% if(typeDocument == "Devis")%}
                     <div style="width:250px; padding-bottom:80px; margin-left: 420px; text-align:center; border:solid black 1px;"><strong>Bon pour accord</strong></div>
                 {% endif %}
          

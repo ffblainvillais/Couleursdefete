@@ -413,73 +413,10 @@ class CommandeController extends Controller
         return $this->redirectToRoute('commande');
         
     }
-    
-    
-    
-    public function devisAction(Request $request) {
-        
-        $commandeId = $request->attributes->get('idCommande');
-        
-        return $this->genererPdf($commandeId, "Devis");
-        
-    }
-    
-    
-    
-    public function factureAction(Request $request) {
-        
-        $commandeId = $request->attributes->get('idCommande');
-        
-        return $this->genererPdf($commandeId, "Facture");
-        
-    }
-    
-    
-    
-    private function genererPdf($commandeId, $document){
-        
-        $commande = $this->getDoctrine()->getRepository('CommandeBundle:Commande')->findOneBy(['id' => $commandeId]);
-        $commandesArticles = $this->getDoctrine()->getRepository('AppBundle:CommandeArticle')->findAll();
-        $commandesLot = $this->getDoctrine()->getRepository('AppBundle:CommandeLot')->findAll();
-        
-        //on stocke la vue à convertir en PDF, en n'oubliant pas les paramètres twig si la vue comporte des données dynamiques
-        $html = $this->render('commande/facture.html.twig',
-                array('commande' => $commande,
-                    'commandesArticles' => $commandesArticles,
-                    'document' => $document,
-                    'commandesLot' => $commandesLot)
-                )->getContent();
-         
-        //on instancie la classe Html2Pdf_Html2Pdf en lui passant en paramètre
-        //le sens de la page "portrait" => p ou "paysage" => l
-        //le format A4,A5...
-        //la langue du document fr,en,it...
-        $html2pdf = new \Html2Pdf_Html2Pdf('P','A4','fr');
- 
-        //SetDisplayMode définit la manière dont le document PDF va être affiché par l’utilisateur
-        //fullpage : affiche la page entière sur l'écran
-        //fullwidth : utilise la largeur maximum de la fenêtre
-        //real : utilise la taille réelle
-        $html2pdf->pdf->SetDisplayMode('real');
- 
-        //writeHTML va tout simplement prendre la vue stocker dans la variable $html pour la convertir en format PDF
-        $html2pdf->writeHTML($html);
- 
-        //Output envoit le document PDF au navigateur internet avec un nom spécifique qui aura un rapport avec le contenu à convertir (exemple : Facture, Règlement…)
-        $content = $html2pdf->Output('', true);
-        
-        //on appose un titre
-        $titre = $document.str_replace(" ", "_", $commande->getLibelle());
 
-        $response = new Response();
-        $response->setContent($content);
-        $response->headers->set('Content-Type', 'application/force-download');
-        $response->headers->set('Content-disposition', 'filename='.$titre.'.pdf');
-        return $response;
-    }
     
     
-    
+    //@todo a revoir le findAll pourri
     public function commandesArchiveesAction(){
         
         $commandes = $this->getDoctrine()->getRepository('CommandeBundle:Commande')->findBy(['archive' => true]);
@@ -488,7 +425,8 @@ class CommandeController extends Controller
 
         return $this->render(
             'commande/commandesArchivees.html.twig',
-            array('commandes' => $commandes,
+            array(
+                'commandes'         => $commandes,
                 'commandesArticles' => $commandesArticles)
         );
         
@@ -797,12 +735,12 @@ class CommandeController extends Controller
                 
                 $quantiteStock = $article->getQuantite();
                 
-                if(!$this->verificationReservation($article, $commande, $quantiteDemandee)){
+                /*if(!$this->verificationReservation($article, $commande, $quantiteDemandee)){
 
                     //$this->addFlash('alert', "L'article '".$article->getLibelle()."' n'a pas rajouté à la commande '".$commande->getLibelle());
 
                     exit;
-                }
+                }*/
 
                 //si on n'ajoute pas un service on soustrait la qtt demandé au stock
                 if($action->getLibelle() == "Vente"){

@@ -173,14 +173,18 @@ suppression-commande:
 commande-paye:
     path:   /commande/commande-paye/{idCommande}
     defaults: {_controller: CommandeBundle:Commande:paye }
-    
+
+générer-ultime-facture:
+    path:   /commande/générer-ultime-facture/{idCommande}
+    defaults: {_controller: CommandeBundle:Facture:ultimeFacture }
+
 générer-facture:
     path:   /commande/générer-facture/{idCommande}
-    defaults: {_controller: CommandeBundle:Commande:facture }
+    defaults: {_controller: CommandeBundle:Facture:facture }
     
 générer-devis:
     path:   /commande/générer-devis/{idCommande}
-    defaults: {_controller: CommandeBundle:Commande:devis }
+    defaults: {_controller: CommandeBundle:Facture:devis }
     
 archiver-commande:
     path:   /commande/archiver-commande/{idCommande}
