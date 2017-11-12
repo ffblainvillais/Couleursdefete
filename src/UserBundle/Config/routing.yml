@@ -1,0 +1,27 @@
+utilisateur:
+    path:   /utilisateur
+    defaults: {_controller: UserBundle:User:index }
+
+nommer-super-admin:
+    path:   /utilisateur/nommer-super-admin/{idUtilisateur}
+    defaults: {_controller: UserBundle:User:superAdmin }
+
+nommer-admin:
+    path:   /utilisateur/nommer-admin/{idUtilisateur}
+    defaults: {_controller: UserBundle:User:admin }
+
+remove-admin:
+    path:   /utilisateur/remove-admin/{idUtilisateur}
+    defaults: {_controller: UserBundle:User:removeAdmin }
+
+suppression-utilisateur:
+    path:   /utilisateur/suppression/{idUtilisateur}
+    defaults: {_controller: UserBundle:User:suppression }
+
+activer:
+    path:   /utilisateur/activer/{idUtilisateur}
+    defaults: {_controller: UserBundle:User:activer }
+
+desactiver:
+    path:   /utilisateur/desactiver/{idUtilisateur}
+    defaults: {_controller: UserBundle:User:desactiver }

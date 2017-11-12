@@ -3,7 +3,6 @@
 namespace CommandeBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use CommandeBundle\Form\CommandeType;
 use CommandeBundle\Form\AjoutArticleCommandeType;
@@ -32,6 +31,7 @@ class CommandeController extends Controller
         
         $query = $repository->createQueryBuilder("c")
                     ->orderBy("c.id",'DESC')
+                    ->where("c.archive = 0")
                     ->getQuery();
         
         //$commandes = $query->getResult();
@@ -50,7 +50,7 @@ class CommandeController extends Controller
         );
 
         return $this->render(
-            'commande/commande.html.twig',
+            'CommandeBundle:commande:commande.html.twig',
             array('form' => $form->createView(),
                 'commandes' => $commandes,
                 'commandesArticles' => $commandesArticles,
@@ -242,7 +242,7 @@ class CommandeController extends Controller
         ));
     
         return $this->render(
-            'commande/ajout-article-commande.html.twig',
+            'CommandeBundle:commande:ajout-article-commande.html.twig',
             array('form' => $form->createView())
         );
     }
@@ -416,18 +416,28 @@ class CommandeController extends Controller
 
     
     
-    //@todo a revoir le findAll pourri
     public function commandesArchiveesAction(){
         
-        $commandes = $this->getDoctrine()->getRepository('CommandeBundle:Commande')->findBy(['archive' => true]);
+        $toRender   = array();
         
-        $commandesArticles = $this->getDoctrine()->getRepository('AppBundle:CommandeArticle')->findAll();
+        $commandes  = $this->getDoctrine()->getRepository('CommandeBundle:Commande')->findBy(['archive' => true]);
+        
+        foreach ($commandes as $commande) {
+
+            $commandesArticles = $this->getDoctrine()->getRepository('AppBundle:CommandeArticle')->findBy(['commande' => $commande]);
+            
+            $toRender[] = array(
+                'orderEntity'   => $commande,
+                'articleOrder'  => $commandesArticles,
+            );
+            
+        }
 
         return $this->render(
-            'commande/commandesArchivees.html.twig',
+            'CommandeBundle:commande:commandesArchivees.html.twig',
             array(
-                'commandes'         => $commandes,
-                'commandesArticles' => $commandesArticles)
+                'orderInformationsArray' => $toRender,
+            )
         );
         
     }
@@ -643,6 +653,10 @@ class CommandeController extends Controller
         elseif($action === "archiver"){
             
             $commande->setArchive(true);
+
+            //@todo générer la facture définitive
+
+            $this->deleteArticleAssociateToOrder($commande);
             
             $this->addFlash('feedback', "La commande '".$commande->getLibelle()."' à bien été déclarée comme étant archivée");
         }
@@ -653,6 +667,19 @@ class CommandeController extends Controller
         $em->flush();
         
         return $this->redirectToRoute('commande');
+    }
+
+    public function deleteArticleAssociateToOrder($order)
+    {
+
+        $articlesAssociated = $this->getDoctrine()->getRepository('AppBundle:CommandeArticle')->findBy(['commande' => $order]);
+
+        foreach ($articlesAssociated as $articleAssociated) {
+
+            $this->getEntityManager()->remove($articleAssociated);
+        }
+
+        $this->getEntityManager()->flush();
     }
     
     
@@ -668,7 +695,7 @@ class CommandeController extends Controller
         ));
     
         return $this->render(
-            'commande/ajout-article-commande.html.twig',
+            'COmmandeBundle:commande:ajout-article-commande.html.twig',
             array('form' => $form->createView())
         );
     }
@@ -710,7 +737,7 @@ class CommandeController extends Controller
         ));
     
         return $this->render(
-            'commande/ajout-article-commande.html.twig',
+            'CommandeBundle:commande:ajout-article-commande.html.twig',
             array('form' => $form->createView())
         );
     }

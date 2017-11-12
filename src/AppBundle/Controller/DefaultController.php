@@ -29,7 +29,7 @@ class DefaultController extends Controller
         $message = 'Mon premier message';
 
         return $this->render(
-            'vitrine/index.html.twig',
+            'AppBundle:vitrine:index.html.twig',
           array('message' => $message,
                 'titre' => $titre)
         );
@@ -40,13 +40,12 @@ class DefaultController extends Controller
     public function indexAppliAction()
     {
         $titre = "Accueil";
-        
-        $message = 'Mon premier message';
 
         return $this->render(
-            'index/index.html.twig',
-          array('message' => $message,
-                'titre' => $titre)
+            'AppBundle:index:index.html.twig',
+          array(
+                'titre' => $titre
+          )
         );
     }
     

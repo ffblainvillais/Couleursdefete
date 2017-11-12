@@ -45,7 +45,7 @@ class DepenseController extends Controller
         $formCategorie = $this->createForm(CategorieDepenseType::class, null, array("action" => $this->generateUrl('ajout-categorie')));
 
         return $this->render(
-            'depense/depense.html.twig',
+            'DepenseBundle:depense:depense.html.twig',
             array('depenses' => $depenses,
                   'categories' => $categoriesDepense,
                   'form' => $form->createView(),
@@ -126,7 +126,7 @@ class DepenseController extends Controller
         $form->setData($depense);
         
         return $this->render(
-            'depense/ajout-depense.html.twig',
+            'DepenseBundledepense:ajout-depense.html.twig',
             array('form' => $form->createView())
         ); 
         

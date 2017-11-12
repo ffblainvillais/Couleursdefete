@@ -22,7 +22,7 @@ class PartenaireController extends Controller
         $form = $this->createForm(PartenaireType::class, null, array("action" => $this->generateUrl('ajout-partenaire')));
 
         return $this->render(
-            'partenaire/partenaire.html.twig',
+            'PartenaireBundle:partenaire:partenaire.html.twig',
             array('partenaires' => $partenaires,
                   'form' => $form->createView())
         );
@@ -113,7 +113,7 @@ class PartenaireController extends Controller
         $form->setData($partenaire);
         
         return $this->render(
-            'article/ajout-article.html.twig',
+            'ArticleBundle:article:ajout-article.html.twig',
             array('form' => $form->createView())
         ); 
         

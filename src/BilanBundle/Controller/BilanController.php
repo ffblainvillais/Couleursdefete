@@ -19,7 +19,7 @@ class BilanController extends Controller
         $form = $this->createForm(BilanType::class, null, array("action" => $this->generateUrl('generation-bilan')));
 
         return $this->render(
-            'bilan/bilan.html.twig',
+            'BilanBundle:bilan:bilan.html.twig',
             array('form' => $form->createView())
         );
     }
@@ -57,7 +57,7 @@ class BilanController extends Controller
         $annee = $this->getDoctrine()->getRepository('CommandeBundle:annee')->findOneBy(['id' => $request->request->get('bilan')['annee']]);
         
         //on stocke la vue à convertir en PDF, en n'oubliant pas les paramètres twig si la vue comporte des données dynamiques
-        $html = $this->render('bilan/affichage-bilan.html.twig',
+        $html = $this->render('BilanBundle:bilan:affichage-bilan.html.twig',
                 array('commandes' => $commandes,
                     'commandesArticles' => $commandesArticles,
                     'annee' => $annee,

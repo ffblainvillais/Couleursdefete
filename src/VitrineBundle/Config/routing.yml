@@ -1,0 +1,43 @@
+accueil:
+    path:   /accueil
+    defaults: {_controller: VitrineBundle:Vitrine:index }
+
+contact:
+    path:   /contact
+    defaults: {_controller: VitrineBundle:Vitrine:contact }
+
+album:
+    path:   /album
+    defaults: {_controller: VitrineBundle:Vitrine:album }
+
+location:
+    path:   /location
+    defaults: {_controller: VitrineBundle:Vitrine:location }
+
+prestation:
+    path:   /prestation
+    defaults: {_controller: VitrineBundle:Vitrine:prestation }
+
+partenaire:
+    path:   /partenaire
+    defaults: {_controller: VitrineBundle:Vitrine:partenaire }
+
+temoignage:
+    path:   /temoignage
+    defaults: {_controller: VitrineBundle:Vitrine:temoignage }
+
+ajout-temoignage:
+    path:   /temoignage/ajout-temoignage
+    defaults: {_controller: VitrineBundle:Vitrine:ajoutTemoignage }
+
+gestion-temoignage:
+    path:   /temoignages
+    defaults: {_controller: VitrineBundle:Vitrine:gestionTemoignage }
+
+publier-temoignage:
+    path:   /temoignages/publier-temoignage/{idTemoignage}
+    defaults: {_controller: VitrineBundle:Vitrine:publier }
+
+supprimer-temoignage:
+    path:   /temoignages/supprimer-temoignage/{idTemoignage}
+    defaults: {_controller: VitrineBundle:Vitrine:supprimer }

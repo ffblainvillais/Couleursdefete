@@ -1,0 +1,19 @@
+partenaire-appli:
+    path:   /partenaire-commerciaux
+    defaults: {_controller: PartenaireBundle:Partenaire:index }
+
+ajout-partenaire:
+    path:   /partenaire-commerciaux/ajout-partenaire
+    defaults: {_controller: PartenaireBundle:Partenaire:ajout }
+
+suppression-partenaire:
+    path: /partenaire-commerciaux/suppression-partenaire/{idPartenaire}
+    defaults: {_controller: PartenaireBundle:Partenaire:suppression }
+
+modification-partenaire:
+    path: /partenaire-commerciaux/modification-partenaire/{idPartenaire}
+    defaults: {_controller: PartenaireBundle:Partenaire:modification }
+
+modification-pop-partenaire:
+    path: /partenaire-commerciaux/modification-pop-partenaire/{idPartenaire}
+    defaults: {_controller: PartenaireBundle:Partenaire:modificationPop }

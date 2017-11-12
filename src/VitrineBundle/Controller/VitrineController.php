@@ -18,7 +18,7 @@ class VitrineController extends Controller
         
         
         return $this->render(
-            'vitrine/index.html.twig',
+            'VitrineBundle:vitrine:index.html.twig',
             array('titre' => $titre)
         );
     }
@@ -29,7 +29,7 @@ class VitrineController extends Controller
         
         
         return $this->render(
-            'vitrine/contact.html.twig',
+            'VitrineBundle:vitrine:contact.html.twig',
             array('titre' => $titre)
         );
     }
@@ -40,7 +40,7 @@ class VitrineController extends Controller
         
         
         return $this->render(
-            'vitrine/album.html.twig',
+            'VitrineBundle:vitrine:album.html.twig',
             array('titre' => $titre)
         );
     }
@@ -51,7 +51,7 @@ class VitrineController extends Controller
         
         
         return $this->render(
-            'vitrine/location.html.twig',
+            'VitrineBundle:vitrine:location.html.twig',
             array('titre' => $titre)
         );
     }
@@ -62,7 +62,7 @@ class VitrineController extends Controller
         
         
         return $this->render(
-            'vitrine/prestation.html.twig',
+            'VitrineBundle:vitrine:prestation.html.twig',
             array('titre' => $titre)
         );
     }
@@ -77,7 +77,7 @@ class VitrineController extends Controller
         
         
         return $this->render(
-            'vitrine/partenaire.html.twig',
+            'VitrineBundle:vitrine:partenaire.html.twig',
             array('titre' => $titre,
                   'partenaires' => $partenaires)
         );
@@ -95,7 +95,7 @@ class VitrineController extends Controller
 
 
         return $this->render(
-            'vitrine/temoignage.html.twig',
+            'VitrineBundle:vitrine:temoignage.html.twig',
             array('titre'       => $titre,
                 "form"          => $form->createView(),
                 'temoignages'   => $temoignages)
@@ -135,7 +135,7 @@ class VitrineController extends Controller
 
 
         return $this->render(
-            'temoignages/temoignage.html.twig',
+            'AppBundle:temoignages:temoignage.html.twig',
             array('titre'       => $titre,
                 'temoignages'   => $temoignages)
         );

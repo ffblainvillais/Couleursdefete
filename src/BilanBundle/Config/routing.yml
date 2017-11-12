@@ -1,0 +1,7 @@
+bilan:
+    path:   /bilan
+    defaults: {_controller: BilanBundle:Bilan:index }
+
+generation-bilan:
+    path:   /generation-bilan
+    defaults: {_controller: BilanBundle:Bilan:generationBilan }

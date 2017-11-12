@@ -57,7 +57,7 @@ class ArticleController extends Controller
         $formLot = $this->createForm(LotType::class, null, array("action" => $this->generateUrl('ajout-lot')));
 
         return $this->render(
-            'article/article.html.twig',
+            'ArticleBundle:article:article.html.twig',
             array('articles' => $articles,
                   'lots' => $lots,
                   'articlesLots' => $articlesLots,
@@ -145,7 +145,7 @@ class ArticleController extends Controller
         $form->setData($article);
         
         return $this->render(
-            'article/ajout-article.html.twig',
+            'ArticleBundle:article:ajout-article.html.twig',
             array('form' => $form->createView())
         ); 
         
@@ -238,7 +238,7 @@ class ArticleController extends Controller
         $form->setData($lot);
         
         return $this->render(
-            'article/ajout-article.html.twig',
+            'ArticleBundle:article:ajout-article.html.twig',
             array('form' => $form->createView())
         ); 
         
@@ -281,7 +281,7 @@ class ArticleController extends Controller
         ));
     
         return $this->render(
-            'commande/ajout-article-commande.html.twig',
+            'CommandeBundle:commande:ajout-article-commande.html.twig',
             array('form' => $form->createView())
         );
     }
@@ -364,7 +364,7 @@ class ArticleController extends Controller
         $excesReservation = $this->getExcesReservation();
 
         return $this->render(
-            'reservation/index.html.twig',
+            'ArticleBundle:reservation:index.html.twig',
             array(
                 'reservations'      => $reservations,
                 'excesReservation'  => $excesReservation

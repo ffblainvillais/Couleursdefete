@@ -41,7 +41,7 @@ class ClientController extends Controller
         $formContact = $this->createForm(ContactClientType::class, null, array("action" => $this->generateUrl('newsletter-client')));
 
         return $this->render(
-            'client/client.html.twig',
+            'ClientBundle:client:client.html.twig',
             array('clients' => $clients,
                 'commandes' => $commandes,
                 'form' => $form->createView(),
@@ -116,7 +116,7 @@ class ClientController extends Controller
         $form->setData($client);
         
         return $this->render(
-            'client/ajout-client.html.twig',
+            'ClientBundle:client:ajout-client.html.twig',
             array('form' => $form->createView())
         ); 
         
@@ -153,7 +153,7 @@ class ClientController extends Controller
         $form = $this->createForm(ContactClientType::class, null, array("action" => $this->generateUrl('mail-client', array('idClient' => $idClient))));
         
         return $this->render(
-            'client/ajout-client.html.twig',
+            'ClientBundle:client:ajout-client.html.twig',
             array('form' => $form->createView())
         ); 
         
@@ -260,7 +260,7 @@ class ClientController extends Controller
             
         $image = $message->embed(\Swift_Image::fromPath("http://couleursdefete.free.fr/images/cdf.png"));
         
-        $message->setBody($this->renderView('email/relance.html.twig', array('commande' => $commande, 'image' => $image)), 'text/html');
+        $message->setBody($this->renderView('ClientBundle:email:relance.html.twig', array('commande' => $commande, 'image' => $image)), 'text/html');
         
         $this->get('mailer')->send($message);
         

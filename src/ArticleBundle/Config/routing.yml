@@ -1,0 +1,47 @@
+article:
+    path:   /article
+    defaults: {_controller: ArticleBundle:Article:index }
+
+ajout-article:
+    path:   /article/ajout-article
+    defaults: {_controller: ArticleBundle:Article:ajout }
+
+suppression-article:
+    path: /article/suppression-article/{idArticle}
+    defaults: {_controller: ArticleBundle:Article:suppression }
+
+modification-article:
+    path: /article/modification-article/{idArticle}
+    defaults: {_controller: ArticleBundle:Article:modification }
+
+modification-pop-article:
+    path: /article/modification-pop-article/{idArticle}
+    defaults: {_controller: ArticleBundle:Article:modificationPop }
+
+ajout-lot:
+    path:   /article/ajout-lot
+    defaults: {_controller: ArticleBundle:Article:ajoutLot }
+
+suppression-lot:
+    path: /article/suppression-lot/{idLot}
+    defaults: {_controller: ArticleBundle:Article:suppressionLot }
+
+modification-lot:
+    path: /article/modification-Lot/{idLot}
+    defaults: {_controller: ArticleBundle:Article:modificationLot }
+
+modification-pop-lot:
+    path: /article/modification-pop-lot/{idLot}
+    defaults: {_controller: ArticleBundle:Article:modificationPopLot }
+
+ajout-article-lot-pop:
+    path:   /article/ajout-article-lot-pop/{idLot}
+    defaults: {_controller: ArticleBundle:Article:ajoutArticlePop }
+
+ajout-article-lot:
+    path:   /article/ajout-article-lot/{idLot}
+    defaults: {_controller: ArticleBundle:Article:ajoutArticle }
+
+suppression-article-lot:
+    path:   /article/suppression-article-lot/{idArticle}/{idLot}
+    defaults: {_controller: ArticleBundle:Article:suppressionArticle }

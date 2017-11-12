@@ -1,0 +1,35 @@
+client:
+    path:   /client
+    defaults: {_controller: ClientBundle:Client:index }
+
+ajout-client:
+    path:   /client/ajout-client
+    defaults: {_controller: ClientBundle:Client:ajout }
+
+suppression-client:
+    path:   /client/suppression-client/{idClient}
+    defaults: {_controller: ClientBundle:Client:suppression }
+
+modification-client:
+    path: /client/modification-client/{idClient}
+    defaults: {_controller: ClientBundle:Client:modification }
+
+modification-pop-client:
+    path: /client/modification-pop-client/{idClient}
+    defaults: {_controller: ClientBundle:Client:modificationPop }
+
+mail-client:
+    path: /client/mail/{idClient}
+    defaults: {_controller: ClientBundle:Client:mailClient }
+
+mail-client-pop:
+    path: /client/mail-pop/{idClient}
+    defaults: {_controller: ClientBundle:Client:mailClientPop }
+
+newsletter-client:
+    path: /client/newsletter
+    defaults: {_controller: ClientBundle:Client:newsletter }
+
+relance-client:
+    path: /client/relance/{idCommande}/{idClient}
+    defaults: {_controller: ClientBundle:Client:relance }

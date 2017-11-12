@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title> </title>
+            <link href="/css/app.css" rel="stylesheet">
+            <link href="/vendor/css/bootstrap.min.css" rel="stylesheet">
+            <link href="/vendor/css/bootstrap-theme.min.css" rel="stylesheet">
+                
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    </head>
+    <body class='dev'>
+        <!-- TABLE ARTICLE -->
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th> Commande </th>
+                    {#
+                    <th> Articles </th>
+                    <th> Total </th>
+                    #}
+                    <th> Date </th>
+                    <th> Client </th>
+                    <th> Actions </th>
+                </tr>
+            </thead> 
+            <tbody class="row">
+                {% for orderInformations in orderInformationsArray %}
+
+                    {% set compteArticle = 0 %}
+                    {% set total = 0 %}
+                    {% set order = orderInformations.orderEntity %}
+
+                    <tr>
+                        <td class="col-sm-1">{{ order.getLibelle()}} </td>
+                        {#<td class="col-sm-4">
+                            <ul>
+
+                                {% for articleOrder in orderInformations.articleOrder %}
+
+                                    <li>
+                                        {{articleOrder.getArticle.GetLibelle()}}
+                                        (x{{articleOrder.getQuantite()}})
+                                        {% set compteArticle = articleOrder.getArticle.getPrix()*articleOrder.getQuantite() %}
+                                        {% set total = total+compteArticle %}
+                                    </li>
+
+                                {% endfor %}
+
+                            </ul>
+                        </td>
+
+                        <td class="col-sm-2">{{total}}<span class="glyphicon glyphicon-euro"></span></td>#}
+
+
+
+                        <td class="col-sm-1">{{ order.getDate()|date('d/m/Y')}} </td>
+                        <td class="col-sm-1">
+                            {{ order.getClient().getNom()}}
+                            {{ order.getClient().getPrenom()}}
+
+                        </td>
+
+                        <!-- ACTIONS -->
+                        <td class="row TEST col-sm-3">
+                            <!-- Génération de la facture -->
+                            {% if(order.getPaye() == true)%}
+                                <a href="{{path('générer-ultime-facture', {'idCommande': order.getId()})}}" class="col-sm-12">
+                                    <span class="glyphicon glyphicon-download-alt"></span> Télécharger facture
+                                </a>
+                            {% else %}
+
+                                <!-- Génération de la facture -->
+                                <div class="col-sm-12">
+                                    <a href="{{path('générer-facture',{'idCommande': order.getId()})}}">
+                                        <span class="glyphicon glyphicon-copy"></span> Génerer facture
+                                    </a>
+
+                                    <!-- Génération du devis -->
+                                    <a href="{{path('générer-devis',{'idCommande': order.getId()})}}">
+                                        / devis
+                                    </a>
+                                </div>
+
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+
+        </table>
+    </body>
+</html>

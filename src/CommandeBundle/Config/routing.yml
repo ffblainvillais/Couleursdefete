@@ -1,0 +1,81 @@
+commande:
+    path:   /commande
+    defaults: {_controller: CommandeBundle:Commande:index }
+
+ajout-commande:
+    path:   /commande/ajout-commande
+    defaults: {_controller: CommandeBundle:Commande:ajout }
+
+ajout-article-commande-pop:
+    path:   /commande/ajout-article-commande-pop/{idCommande}
+    defaults: {_controller: CommandeBundle:Commande:ajoutArticlePop }
+
+ajout-article-commande:
+    path:   /commande/ajout-article-commande/{idCommande}
+    defaults: {_controller: CommandeBundle:Commande:ajoutArticle }
+
+
+
+ajout-lot-commande-pop:
+    path:   /commande/ajout-lot-commande-pop/{idCommande}
+    defaults: {_controller: CommandeBundle:Commande:ajoutLotPop }
+
+ajout-lot-commande:
+    path:   /commande/ajout-lot-commande/{idCommande}
+    defaults: {_controller: CommandeBundle:Commande:ajoutLot }
+
+suppression-lot-commande:
+    path:   /commande/suppression-lot-commande/{idLot}/{idCommande}
+    defaults: {_controller: CommandeBundle:Commande:suppressionLot }
+
+
+
+
+
+suppression-article-commande:
+    path:   /commande/suppression-article-commande/{idArticle}/{idCommande}
+    defaults: {_controller: CommandeBundle:Commande:suppressionArticle }
+
+suppression-commande:
+    path:   /commande/suppression-commande/{idCommande}
+    defaults: {_controller: CommandeBundle:Commande:suppression }
+
+commande-paye:
+    path:   /commande/commande-paye/{idCommande}
+    defaults: {_controller: CommandeBundle:Commande:paye }
+
+générer-ultime-facture:
+    path:   /commande/générer-ultime-facture/{idCommande}
+    defaults: {_controller: CommandeBundle:Facture:ultimeFacture }
+
+générer-facture:
+    path:   /commande/générer-facture/{idCommande}
+    defaults: {_controller: CommandeBundle:Facture:facture }
+
+générer-devis:
+    path:   /commande/générer-devis/{idCommande}
+    defaults: {_controller: CommandeBundle:Facture:devis }
+
+archiver-commande:
+    path:   /commande/archiver-commande/{idCommande}
+    defaults: {_controller: CommandeBundle:Commande:archiver }
+
+voir-commandes-archivees:
+    path:   /commande/commandes-archivees
+    defaults: {_controller: CommandeBundle:Commande:commandesArchivees }
+
+retour-location:
+    path:   /commande/retour-location/{idCommande}
+    defaults: {_controller: CommandeBundle:Commande:retourLocation }
+
+depart-location:
+    path:   /commande/depart-location/{idCommande}
+    defaults: {_controller: CommandeBundle:Commande:departLocation }
+
+versement-acompte-pop:
+    path:   /commande/versement-acompte-pop/{idCommande}
+    defaults: {_controller: CommandeBundle:Commande:versementAcomptePop }
+
+versement-acompte:
+    path:   /commande/versement-acompte/{idCommande}
+    defaults: {_controller: CommandeBundle:Commande:versementAcompte }
