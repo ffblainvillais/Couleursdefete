@@ -2,9 +2,19 @@
 
 namespace CommandeBundle\Service;
 
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class InvoiceService {
+
+    protected $em;
+    
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->em = $entityManager;
+        return $this;
+    }
 
     /**
      * Récupère le PDF correspondant à la commande donnée si il n'existe pas il est généré et renvoyé à la volée
@@ -13,7 +23,7 @@ class InvoiceService {
      * @param string $typeDocument
      * @return Response
      */
-    public function getOrderPdf($commandeId, $typeDocument)
+    public function getOrderPdf($commandeId, $typeDocument, $html)
     {
         $orderDirectory    = './data/factures/';
         $orderFilename     = 'Facture-' . $commandeId . '.pdf';
@@ -28,18 +38,32 @@ class InvoiceService {
         $pdf = @file_get_contents($orderDirectory.$orderFilename);
 
         if (!$pdf) {
-
-            $this->genererPdf($commandeId, $typeDocument);
-
+            
+            $this->genererPdf($html, $typeDocument, $commandeId);
+            
             $pdf = @file_get_contents($orderDirectory.$orderFilename);
 
         }
-
+        
         $response = new Response();
         $response->setContent($pdf);
         $response->headers->set('Content-Type', 'application/force-download');
         $response->headers->set('Content-disposition', 'filename='.$orderFilename);
         return $response;
+
+    }
+
+    public function prepareRenderViewPdf($commandeId, $typeDocument)
+    {
+        $commande           = $this->em->getRepository('CommandeBundle:Commande')->findOneBy(['id' => $commandeId]);
+
+        $itemsCommande = $this->getItemsCommande($commandeId);
+
+        return array(
+            'commande'          => $commande,
+            'itemsCommande'     => $itemsCommande,
+            'typeDocument'      => $typeDocument,
+        );
 
     }
 
@@ -50,20 +74,7 @@ class InvoiceService {
      * @param string $typeDocument
      * @return Response
      */
-    public function genererPdf($commandeId, $typeDocument){
-
-        $commande           = $this->getDoctrine()->getRepository('CommandeBundle:Commande')->findOneBy(['id' => $commandeId]);
-
-        $itemsCommande = $this->getItemsCommande($commandeId);
-
-        //on stocke la vue à convertir en PDF, en n'oubliant pas les paramètres twig si la vue comporte des données dynamiques
-        $html = $this->render('commande/facture.html.twig',
-            array(
-                'commande'          => $commande,
-                'itemsCommande'     => $itemsCommande,
-                'typeDocument'      => $typeDocument,
-            )
-        )->getContent();
+    public function genererPdf($html, $typeDocument, $commandeId){
 
         //on instancie la classe Html2Pdf_Html2Pdf avec le sens de la page, le format, la langue
         $html2pdf = new \Html2Pdf_Html2Pdf('P','A4','fr');
@@ -80,7 +91,7 @@ class InvoiceService {
 
             //Output récupère le contenu du pdf
             $content = $html2pdf->Output('', 'S');
-
+            
             //on enregistre le pdf sur le serveur
             file_put_contents('./data/factures/' . $orderFilename, $content);
 
@@ -167,4 +178,8 @@ class InvoiceService {
         return $mappedArrayLocation;
     }
 
+    public function getDoctrine()
+    {
+        return $this->em;
+    }
 }

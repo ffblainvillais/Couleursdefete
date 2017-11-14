@@ -1,0 +1,3 @@
+parameters:
+    commande_bundle_service_invoice_service: CommandeBundle\Service\InvoiceService
+    commande_bundle_controller_invoice_controller: CommandeBundle\Controller\FactureController

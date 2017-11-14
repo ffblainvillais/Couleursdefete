@@ -1,0 +1,10 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+services:
+    commande_bundle_service_invoice_service:
+        class: '%commande_bundle_service_invoice_service%'
+        arguments: ['@doctrine.orm.entity_manager']
+
+    commande_bundle_controller_invoice_controller:
+        class: '%commande_bundle_controller_invoice_controller%'
+        arguments: ['@commande_bundle_service_invoice_service', '@service_container']

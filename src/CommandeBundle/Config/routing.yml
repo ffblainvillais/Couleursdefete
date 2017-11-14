@@ -46,15 +46,15 @@ commande-paye:
 
 générer-ultime-facture:
     path:   /commande/générer-ultime-facture/{idCommande}
-    defaults: {_controller: CommandeBundle:Facture:ultimeFacture }
+    defaults: {_controller: commande_bundle_controller_invoice_controller:ultimeFactureAction }
 
 générer-facture:
     path:   /commande/générer-facture/{idCommande}
-    defaults: {_controller: CommandeBundle:Facture:facture }
+    defaults: {_controller: commande_bundle_controller_invoice_controller:factureAction }
 
 générer-devis:
     path:   /commande/générer-devis/{idCommande}
-    defaults: {_controller: CommandeBundle:Facture:devis }
+    defaults: {_controller: commande_bundle_controller_invoice_controller:devisAction }
 
 archiver-commande:
     path:   /commande/archiver-commande/{idCommande}

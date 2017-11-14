@@ -29,7 +29,7 @@ class DefaultController extends Controller
         $message = 'Mon premier message';
 
         return $this->render(
-            'AppBundle:vitrine:index.html.twig',
+            'VitrineBundle:vitrine:index.html.twig',
           array('message' => $message,
                 'titre' => $titre)
         );
