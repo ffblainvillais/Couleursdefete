@@ -3,10 +3,10 @@
 namespace CommandeBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use CommandeBundle\Service\InvoiceService;
 use Symfony\Component\HttpFoundation\Request;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use CommandeBundle\Service\InvoiceService;
 
 class FactureController extends Controller
 {
@@ -88,13 +88,9 @@ class FactureController extends Controller
                 'itemsCommande'     => $varsForPdf['itemsCommande'],
                 'typeDocument'      => $varsForPdf['typeDocument'],
             )
-        )->getContent();        //return $this->invoiceService->genererPdf($commandeId, "Devis");
+        )->getContent();
 
         return $this->invoiceService->getOrderPdf($commandeId, "UltimeFacture", $html);
-
-        /*$commandeId = $request->attributes->get('idCommande');
-
-        return $this->invoiceService->getOrderPdf($commandeId, "UltimeFacture");*/
 
     }
 

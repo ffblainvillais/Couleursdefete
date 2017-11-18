@@ -7,8 +7,8 @@ use Symfony\Component\HttpFoundation\Request;
 use ClientBundle\Form\ClientType;
 use ClientBundle\Form\ContactClientType;
 
-use ClientBundle\Service\CustomerService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use ClientBundle\Service\CustomerService;
 
 
 class ClientController extends Controller
@@ -45,7 +45,6 @@ class ClientController extends Controller
                 'formContact'   => $formContact->createView())
         );
     }
-    
     
     public function ajoutAction(Request $request)
     {

@@ -1,32 +1,32 @@
 commande:
     path:   /commande
-    defaults: {_controller: CommandeBundle:Commande:index }
+    defaults: {_controller: commande_bundle_controller_commande_controller:indexAction }
 
 ajout-commande:
     path:   /commande/ajout-commande
-    defaults: {_controller: CommandeBundle:Commande:ajout }
+    defaults: {_controller: commande_bundle_controller_commande_controller:ajoutAction }
 
 ajout-article-commande-pop:
     path:   /commande/ajout-article-commande-pop/{idCommande}
-    defaults: {_controller: CommandeBundle:Commande:ajoutArticlePop }
+    defaults: {_controller: commande_bundle_controller_commande_controller:ajoutArticlePopAction }
 
 ajout-article-commande:
     path:   /commande/ajout-article-commande/{idCommande}
-    defaults: {_controller: CommandeBundle:Commande:ajoutArticle }
+    defaults: {_controller: commande_bundle_controller_commande_controller:ajoutArticleAction }
 
 
 
 ajout-lot-commande-pop:
     path:   /commande/ajout-lot-commande-pop/{idCommande}
-    defaults: {_controller: CommandeBundle:Commande:ajoutLotPop }
+    defaults: {_controller: commande_bundle_controller_commande_controller:ajoutLotPopAction }
 
 ajout-lot-commande:
     path:   /commande/ajout-lot-commande/{idCommande}
-    defaults: {_controller: CommandeBundle:Commande:ajoutLot }
+    defaults: {_controller: commande_bundle_controller_commande_controller:ajoutLotAction }
 
 suppression-lot-commande:
     path:   /commande/suppression-lot-commande/{idLot}/{idCommande}
-    defaults: {_controller: CommandeBundle:Commande:suppressionLot }
+    defaults: {_controller: commande_bundle_controller_commande_controller:suppressionLot }
 
 
 
@@ -34,15 +34,15 @@ suppression-lot-commande:
 
 suppression-article-commande:
     path:   /commande/suppression-article-commande/{idArticle}/{idCommande}
-    defaults: {_controller: CommandeBundle:Commande:suppressionArticle }
+    defaults: {_controller: commande_bundle_controller_commande_controller:suppressionArticleAction }
 
 suppression-commande:
     path:   /commande/suppression-commande/{idCommande}
-    defaults: {_controller: CommandeBundle:Commande:suppression }
+    defaults: {_controller: commande_bundle_controller_commande_controller:suppressionAction }
 
 commande-paye:
     path:   /commande/commande-paye/{idCommande}
-    defaults: {_controller: CommandeBundle:Commande:paye }
+    defaults: {_controller: commande_bundle_controller_commande_controller:payeAction }
 
 générer-ultime-facture:
     path:   /commande/générer-ultime-facture/{idCommande}
@@ -58,24 +58,24 @@ générer-devis:
 
 archiver-commande:
     path:   /commande/archiver-commande/{idCommande}
-    defaults: {_controller: CommandeBundle:Commande:archiver }
+    defaults: {_controller: commande_bundle_controller_commande_controller:archiverAction }
 
 voir-commandes-archivees:
     path:   /commande/commandes-archivees
-    defaults: {_controller: CommandeBundle:Commande:commandesArchivees }
+    defaults: {_controller: commande_bundle_controller_commande_controller:commandesArchiveesAction }
 
 retour-location:
     path:   /commande/retour-location/{idCommande}
-    defaults: {_controller: CommandeBundle:Commande:retourLocation }
+    defaults: {_controller: commande_bundle_controller_commande_controller:retourLocationAction }
 
 depart-location:
     path:   /commande/depart-location/{idCommande}
-    defaults: {_controller: CommandeBundle:Commande:departLocation }
+    defaults: {_controller: commande_bundle_controller_commande_controller:departLocationAction }
 
 versement-acompte-pop:
     path:   /commande/versement-acompte-pop/{idCommande}
-    defaults: {_controller: CommandeBundle:Commande:versementAcomptePop }
+    defaults: {_controller: commande_bundle_controller_commande_controller:versementAcomptePopAction }
 
 versement-acompte:
     path:   /commande/versement-acompte/{idCommande}
-    defaults: {_controller: CommandeBundle:Commande:versementAcompte }
+    defaults: {_controller: commande_bundle_controller_commande_controller:versementAcompteAction }

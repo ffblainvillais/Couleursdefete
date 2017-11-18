@@ -22,7 +22,12 @@ class CustomerService {
         return $this;
     }
 
-
+    /**
+     * Return paginate customers
+     *
+     * @param $request
+     * @return \Knp\Component\Pager\Pagination\PaginationInterface
+     */
     public function getPaginateCustomers($request)
     {
         $customerRepository = $this->em->getRepository('ClientBundle:Client');

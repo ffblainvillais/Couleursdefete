@@ -4,6 +4,10 @@ namespace CommandeBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use CommandeBundle\Service\InvoiceService;
+
 use CommandeBundle\Form\CommandeType;
 use CommandeBundle\Form\AjoutArticleCommandeType;
 use CommandeBundle\Form\AjoutLotCommandeType;
@@ -18,6 +22,17 @@ use AppBundle\Entity\CommandeLot;
 
 class CommandeController extends Controller
 {
+
+    protected $container;
+    protected $invoiceService;
+
+    public function __construct(InvoiceService $invoiceService, ContainerInterface $container)
+    {
+        $this->invoiceService = $invoiceService;
+        $this->container      = $container;
+
+    }
+
     /*@todo mettre en place l'affichage des commandes par mois
      * faire un repository pour prendre les dates de tout les mois  
      * et les afficher dans la vue
@@ -651,10 +666,22 @@ class CommandeController extends Controller
             $this->addFlash('feedback', "La commande '".$commande->getLibelle()."' à bien été déclarée comme étant payée");
         }
         elseif($action === "archiver"){
-            
-            $commande->setArchive(true);
 
-            //@todo générer la facture définitive
+            $varsForPdf = $this->invoiceService->prepareRenderViewPdf($commande->getId(), "UltimeFacture");
+
+            //on stocke la vue à convertir en PDF, en n'oubliant pas les paramètres twig si la vue comporte des données dynamiques
+            $html = $this->render('CommandeBundle:commande:facture.html.twig',
+                array(
+                    'commande'          => $varsForPdf['commande'],
+                    'itemsCommande'     => $varsForPdf['itemsCommande'],
+                    'typeDocument'      => $varsForPdf['typeDocument'],
+                )
+            )->getContent();
+
+            $this->invoiceService->getOrderPdf($commande->getId(), "UltimeFacture", $html);
+
+
+            $commande->setArchive(true);
 
             $this->deleteArticleAssociateToOrder($commande);
             

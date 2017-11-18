@@ -8,3 +8,7 @@ services:
     commande_bundle_controller_invoice_controller:
         class: '%commande_bundle_controller_invoice_controller%'
         arguments: ['@commande_bundle_service_invoice_service', '@service_container']
+
+    commande_bundle_controller_commande_controller:
+        class: '%commande_bundle_controller_commande_controller%'
+        arguments: ['@commande_bundle_service_invoice_service', '@service_container']
