@@ -287,14 +287,17 @@
                             </div>
 
                         {% endif %}
-                               
-                        <!-- Archiver une commande -->   
-                        <a href="{{path('archiver-commande', {'idCommande': commande.getId()})}}" 
-                           class="col-sm-12"
-                        >
-                            <span class="glyphicon glyphicon-folder-open"></span> Archiver la commande
-                        </a>
-                           
+
+                        {% if commande.getPaye() == 1 %}
+                            <!-- Archiver une commande -->
+                            <a href="{{path('archiver-commande', {'idCommande': commande.getId()})}}"
+                               class="col-sm-12"
+                            >
+                                <span class="glyphicon glyphicon-folder-open"></span> Archiver la commande
+                            </a>
+
+                        {% endif %}
+
                         <!-- Suppression de la commande -->
                         <a class=" col-sm-12 popconfirm" 
                                href="{{path('suppression-commande', {'idCommande': commande.getId()})}}"

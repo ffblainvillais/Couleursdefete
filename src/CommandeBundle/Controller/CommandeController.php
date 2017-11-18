@@ -48,14 +48,9 @@ class CommandeController extends Controller
                     ->orderBy("c.id",'DESC')
                     ->where("c.archive = 0")
                     ->getQuery();
-        
-        //$commandes = $query->getResult();
 
         $commandes  = $this->get('knp_paginator')->paginate($query,$request->query->get('page', 1),5);
-        
-        //pagination des commandes ! (reste a modifier la vue)
-        //$commandes  = $this->get('knp_paginator')->paginate($query,$request->query->get('page', 1),1);
-        
+
         $commandesArticles = $this->getDoctrine()->getRepository('AppBundle:CommandeArticle')->findAll();
         $commandesLots = $this->getDoctrine()->getRepository('AppBundle:CommandeLot')->findAll();
         
@@ -431,13 +426,20 @@ class CommandeController extends Controller
 
     
     
-    public function commandesArchiveesAction(){
+    public function commandesArchiveesAction(Request $request){
         
         $toRender   = array();
+
+        $repository = $this->getDoctrine()->getRepository('CommandeBundle:Commande');
+
+        $query = $repository->createQueryBuilder("c")
+            ->orderBy("c.id",'DESC')
+            ->where("c.archive = 1")
+            ->getQuery();
+
+        $orders  = $this->get('knp_paginator')->paginate($query,$request->query->get('page', 1),5);
         
-        $commandes  = $this->getDoctrine()->getRepository('CommandeBundle:Commande')->findBy(['archive' => true]);
-        
-        foreach ($commandes as $commande) {
+        /*foreach ($commandes as $commande) {
 
             $commandesArticles = $this->getDoctrine()->getRepository('AppBundle:CommandeArticle')->findBy(['commande' => $commande]);
             
@@ -446,12 +448,12 @@ class CommandeController extends Controller
                 'articleOrder'  => $commandesArticles,
             );
             
-        }
+        }*/
 
         return $this->render(
             'CommandeBundle:commande:commandesArchivees.html.twig',
             array(
-                'orderInformationsArray' => $toRender,
+                'orders' => $orders,
             )
         );
         

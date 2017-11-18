@@ -22,11 +22,7 @@
                 </tr>
             </thead> 
             <tbody class="row">
-                {% for orderInformations in orderInformationsArray %}
-
-                    {% set compteArticle = 0 %}
-                    {% set total = 0 %}
-                    {% set order = orderInformations.orderEntity %}
+                {% for order in orders %}
 
                     <tr>
                         <td class="col-sm-1">{{ order.getId() }}</td>
@@ -66,5 +62,10 @@
                 </tbody>
 
         </table>
+
+        <div class="navigation">
+            {{ knp_pagination_render(orders) }}
+        </div>
+
     </body>
 </html>

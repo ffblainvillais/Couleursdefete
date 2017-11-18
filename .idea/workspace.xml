@@ -2,13 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="de029f1b-8b3d-4e8b-a8d9-f4bc68b4f3a2" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ClientBundle/Controller/ClientController.php" afterPath="$PROJECT_DIR$/src/ClientBundle/Controller/ClientController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ClientBundle/Service/CustomerService.php" afterPath="$PROJECT_DIR$/src/ClientBundle/Service/CustomerService.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/CommandeBundle/Controller/CommandeController.php" afterPath="$PROJECT_DIR$/src/CommandeBundle/Controller/CommandeController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/CommandeBundle/Controller/FactureController.php" afterPath="$PROJECT_DIR$/src/CommandeBundle/Controller/FactureController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/CommandeBundle/Resources/config/parameters.yml" afterPath="$PROJECT_DIR$/src/CommandeBundle/Resources/config/parameters.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/CommandeBundle/Resources/config/routing.yml" afterPath="$PROJECT_DIR$/src/CommandeBundle/Resources/config/routing.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/CommandeBundle/Resources/config/services.yml" afterPath="$PROJECT_DIR$/src/CommandeBundle/Resources/config/services.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/CommandeBundle/Resources/views/commande/commande.html.twig" afterPath="$PROJECT_DIR$/src/CommandeBundle/Resources/views/commande/commande.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/CommandeBundle/Resources/views/commande/commandesArchivees.html.twig" afterPath="$PROJECT_DIR$/src/CommandeBundle/Resources/views/commande/commandesArchivees.html.twig" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/var/logs/prod.log" afterPath="$PROJECT_DIR$/var/logs/prod.log" />
     </list>
     <ignored path="agc.iws" />
@@ -39,43 +35,62 @@
     <favorites_list name="agc" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="CommandeController.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/CommandeBundle/Controller/CommandeController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="313">
-              <caret line="666" column="9" lean-forward="false" selection-start-line="666" selection-start-column="9" selection-end-line="666" selection-end-column="9" />
-              <folding>
-                <element signature="e#45#102#0#PHP" expanded="true" />
-                <element signature="e#2152#2168#1#PHP" expanded="true" />
-                <element signature="e#2862#2878#1#PHP" expanded="true" />
-                <element signature="e#4035#4045#1#PHP" expanded="true" />
-                <element signature="e#7856#7866#1#PHP" expanded="true" />
-                <element signature="e#8255#8279#0#PHP" expanded="true" />
-                <element signature="e#14710#14720#1#PHP" expanded="true" />
-                <element signature="e#22800#22810#1#PHP" expanded="true" />
-                <element signature="e#24286#24296#1#PHP" expanded="true" />
-                <element signature="e#25044#25063#0#PHP" expanded="true" />
-                <element signature="e#26377#26397#0#PHP" expanded="true" />
-                <element signature="e#31848#31858#1#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FactureController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/CommandeBundle/Controller/FactureController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="483">
-              <caret line="92" column="87" lean-forward="false" selection-start-line="92" selection-start-column="38" selection-end-line="92" selection-end-column="87" />
-              <folding>
-                <element signature="e#45#102#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.5">
+      <split-first>
+        <leaf>
+          <file leaf-file-name="CommandeController.php" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/CommandeBundle/Controller/CommandeController.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="126">
+                  <caret line="430" column="30" lean-forward="true" selection-start-line="430" selection-start-column="30" selection-end-line="430" selection-end-column="30" />
+                  <folding>
+                    <element signature="e#45#102#0#PHP" expanded="true" />
+                    <element signature="e#1914#1930#1#PHP" expanded="true" />
+                    <element signature="e#2624#2640#1#PHP" expanded="true" />
+                    <element signature="e#3797#3807#1#PHP" expanded="true" />
+                    <element signature="e#7618#7628#1#PHP" expanded="true" />
+                    <element signature="e#8017#8041#0#PHP" expanded="true" />
+                    <element signature="e#14472#14482#1#PHP" expanded="true" />
+                    <element signature="e#22783#22793#1#PHP" expanded="true" />
+                    <element signature="e#24269#24279#1#PHP" expanded="true" />
+                    <element signature="e#25027#25046#0#PHP" expanded="true" />
+                    <element signature="e#26360#26380#0#PHP" expanded="true" />
+                    <element signature="e#31831#31841#1#PHP" expanded="true" />
+                    <marker date="1511022342000" expanded="false" signature="15084:15109" ph="CommandeArticle" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file leaf-file-name="commandesArchivees.html.twig" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/CommandeBundle/Resources/views/commande/commandesArchivees.html.twig">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="233">
+                  <caret line="24" column="34" lean-forward="false" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="34" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="commande.html.twig" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/CommandeBundle/Resources/views/commande/commande.html.twig">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="342">
+                  <caret line="298" column="32" lean-forward="false" selection-start-line="298" selection-start-column="32" selection-end-line="298" selection-end-column="32" />
+                  <folding>
+                    <element signature="e#12#26#0#Twig" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -83,6 +98,7 @@
       <find>factu</find>
       <find>archi</find>
       <find>setB</find>
+      <find>archiv</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -120,6 +136,8 @@
         <option value="$PROJECT_DIR$/src/CommandeBundle/Resources/config/routing.yml" />
         <option value="$PROJECT_DIR$/src/CommandeBundle/Controller/FactureController.php" />
         <option value="$PROJECT_DIR$/src/CommandeBundle/Controller/CommandeController.php" />
+        <option value="$PROJECT_DIR$/src/CommandeBundle/Resources/views/commande/commandesArchivees.html.twig" />
+        <option value="$PROJECT_DIR$/src/CommandeBundle/Resources/views/commande/commande.html.twig" />
       </list>
     </option>
   </component>
@@ -285,16 +303,16 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15457000" />
+    <option name="totallyTimeSpent" value="15927000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="797" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2160229" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.0" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32905984" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.0" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -339,14 +357,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/VitrineBundle/Controller/VitrineController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2310">
-          <caret line="157" column="38" lean-forward="false" selection-start-line="157" selection-start-column="38" selection-end-line="157" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/temoignages/temoignage.html.twig" />
     <entry file="file://$PROJECT_DIR$/app/Resources/views/vitrine/temoignage.html.twig" />
     <entry file="file://$PROJECT_DIR$/src/CommandeBundle/Controller/CommandeController.php">
       <provider selected="true" editor-type-id="text-editor">
@@ -616,21 +626,40 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/CommandeBundle/Controller/CommandeController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="313">
-          <caret line="666" column="9" lean-forward="false" selection-start-line="666" selection-start-column="9" selection-end-line="666" selection-end-column="9" />
+        <state relative-caret-position="126">
+          <caret line="430" column="30" lean-forward="true" selection-start-line="430" selection-start-column="30" selection-end-line="430" selection-end-column="30" />
           <folding>
             <element signature="e#45#102#0#PHP" expanded="true" />
-            <element signature="e#2152#2168#1#PHP" expanded="true" />
-            <element signature="e#2862#2878#1#PHP" expanded="true" />
-            <element signature="e#4035#4045#1#PHP" expanded="true" />
-            <element signature="e#7856#7866#1#PHP" expanded="true" />
-            <element signature="e#8255#8279#0#PHP" expanded="true" />
-            <element signature="e#14710#14720#1#PHP" expanded="true" />
-            <element signature="e#22800#22810#1#PHP" expanded="true" />
-            <element signature="e#24286#24296#1#PHP" expanded="true" />
-            <element signature="e#25044#25063#0#PHP" expanded="true" />
-            <element signature="e#26377#26397#0#PHP" expanded="true" />
-            <element signature="e#31848#31858#1#PHP" expanded="true" />
+            <element signature="e#1914#1930#1#PHP" expanded="true" />
+            <element signature="e#2624#2640#1#PHP" expanded="true" />
+            <element signature="e#3797#3807#1#PHP" expanded="true" />
+            <element signature="e#7618#7628#1#PHP" expanded="true" />
+            <element signature="e#8017#8041#0#PHP" expanded="true" />
+            <element signature="e#14472#14482#1#PHP" expanded="true" />
+            <element signature="e#22783#22793#1#PHP" expanded="true" />
+            <element signature="e#24269#24279#1#PHP" expanded="true" />
+            <element signature="e#25027#25046#0#PHP" expanded="true" />
+            <element signature="e#26360#26380#0#PHP" expanded="true" />
+            <element signature="e#31831#31841#1#PHP" expanded="true" />
+            <marker date="1511022342000" expanded="false" signature="15084:15109" ph="CommandeArticle" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/CommandeBundle/Resources/views/commande/commandesArchivees.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="233">
+          <caret line="24" column="34" lean-forward="false" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/CommandeBundle/Resources/views/commande/commande.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="298" column="32" lean-forward="false" selection-start-line="298" selection-start-column="32" selection-end-line="298" selection-end-column="32" />
+          <folding>
+            <element signature="e#12#26#0#Twig" expanded="true" />
           </folding>
         </state>
       </provider>
