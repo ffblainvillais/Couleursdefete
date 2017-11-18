@@ -1,0 +1,3 @@
+parameters:
+    client_bundle_service_customer_service: ClientBundle\Service\CustomerService
+    client_bundle_controller_customer_controller: ClientBundle\Controller\ClientController

@@ -1,0 +1,35 @@
+client:
+    path:   /client
+    defaults: {_controller: client_bundle_controller_customer_controller:indexAction }
+
+ajout-client:
+    path:   /client/ajout-client
+    defaults: {_controller: client_bundle_controller_customer_controller:ajoutAction }
+
+suppression-client:
+    path:   /client/suppression-client/{idClient}
+    defaults: {_controller: client_bundle_controller_customer_controller:suppressionAction }
+
+modification-client:
+    path: /client/modification-client/{idClient}
+    defaults: {_controller: client_bundle_controller_customer_controller:modificationAction }
+
+modification-pop-client:
+    path: /client/modification-pop-client/{idClient}
+    defaults: {_controller: client_bundle_controller_customer_controller:modificationPopAction }
+
+mail-client:
+    path: /client/mail/{idClient}
+    defaults: {_controller: client_bundle_controller_customer_controller:mailClientAction }
+
+mail-client-pop:
+    path: /client/mail-pop/{idClient}
+    defaults: {_controller: client_bundle_controller_customer_controller:mailClientPopAction }
+
+newsletter-client:
+    path: /client/newsletter
+    defaults: {_controller: client_bundle_controller_customer_controller:newsletterAction }
+
+relance-client:
+    path: /client/relance/{idCommande}/{idClient}
+    defaults: {_controller: client_bundle_controller_customer_controller:relanceAction }

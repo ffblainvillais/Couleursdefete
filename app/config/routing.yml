@@ -1,9 +1,3 @@
-
-app:
-    resource: "@AppBundle/Controller/"
-    type:     annotation
-
-
 application:
     path:   /application
     defaults: {_controller: AppBundle:Default:indexAppli }
@@ -13,28 +7,28 @@ reservation:
     defaults: {_controller: ArticleBundle:Article:indexReservation }
 
 commande:
-    resource: "@CommandeBundle/Config/routing.yml"
+    resource: "@CommandeBundle/Resources/config/routing.yml"
 
 depense:
-    resource: "@DepenseBundle/Config/routing.yml"
+    resource: "@DepenseBundle/Resources/config/routing.yml"
 
 bilan:
-    resource: "@BilanBundle/Config/routing.yml"
+    resource: "@BilanBundle/Resources/config/routing.yml"
 
 client:
-    resource: "@ClientBundle/Config/routing.yml"
+    resource: "@ClientBundle/Resources/config/routing.yml"
 
 article:
-    resource: "@ArticleBundle/Config/routing.yml"
+    resource: "@ArticleBundle/Resources/config/routing.yml"
 
 partenaire:
-    resource: "@PartenaireBundle/Config/routing.yml"
+    resource: "@PartenaireBundle/Resources/config/routing.yml"
 
 vitrine:
-    resource: "@VitrineBundle/Config/routing.yml"
+    resource: "@VitrineBundle/Resources/config/routing.yml"
 
 user:
-    resource: "@UserBundle/Config/routing.yml"
+    resource: "@UserBundle/Resources/config/routing.yml"
 
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"

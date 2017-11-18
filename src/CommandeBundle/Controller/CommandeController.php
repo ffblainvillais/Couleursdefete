@@ -695,7 +695,7 @@ class CommandeController extends Controller
         ));
     
         return $this->render(
-            'COmmandeBundle:commande:ajout-article-commande.html.twig',
+            'CommandeBundle:commande:ajout-article-commande.html.twig',
             array('form' => $form->createView())
         );
     }

@@ -6,34 +6,30 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use ClientBundle\Form\ClientType;
 use ClientBundle\Form\ContactClientType;
-use ClientBundle\Entity\Client;
+
+use ClientBundle\Service\CustomerService;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 
 class ClientController extends Controller
 {
     const MAIL = "etrewebmaster@gmail.com";
     const NOM = "Couleurs de Fete";
-   
-    public function indexAction()
+
+    protected $customerService;
+    protected $container;
+
+    public function __construct(CustomerService $customerService, ContainerInterface $container)
     {
-        
-        foreach($this->getUser()->getRoles() as $role){
-            
-            if($role === "ROLE_SUPER_ADMIN"){
-                $clients = $this->getDoctrine()->getRepository('ClientBundle:Client')->findAll();
-                break;
-            }
-            elseif($role === "ROLE_ADMIN"){
-                $clients = $this->getDoctrine()->getRepository('ClientBundle:Client')->findBy(['utilisateur' => $this->getUser()]);
-                break;
-            }
-            //@todo selectionner les article du parent (de son admin)
-            else{
-                $clients = $this->getDoctrine()->getRepository('ClientBundle:Client')->findBy(['utilisateur' => $this->getUser()]);
-                break;
-            }
-        }
-        
+        $this->customerService   = $customerService;
+        $this->container         = $container;
+    }
+   
+    public function indexAction(Request $request)
+    {
+
+        $paginateCustomers = $this->customerService->getPaginateCustomers($request);
+
         $commandes = $this->getDoctrine()->getRepository('CommandeBundle:Commande')->findAll();
         
         $form = $this->createForm(ClientType::class, null, array("action" => $this->generateUrl('ajout-client')));
@@ -42,48 +38,36 @@ class ClientController extends Controller
 
         return $this->render(
             'ClientBundle:client:client.html.twig',
-            array('clients' => $clients,
-                'commandes' => $commandes,
-                'form' => $form->createView(),
-                'formContact' => $formContact->createView())
+            array(
+                'clients'       => $paginateCustomers,
+                'commandes'     => $commandes,
+                'form'          => $form->createView(),
+                'formContact'   => $formContact->createView())
         );
     }
     
     
     public function ajoutAction(Request $request)
     {
-        $user = $this->getUser();
-        
-        $client = $this->getDoctrine()->getRepository('ClientBundle:Client')->findOneBy(['nom' => $request->request->get('client')['nom'], 'prenom' => $request->request->get('client')['prenom']]);
 
-        if($client){
-            
-            $this->addFlash('alert', "le client '".$client->getPrenom()." ".$client->getNom()."' existe déjà !");
-            
-            return $this->indexAction(); 
+        $customerInfo   = $request->request->get('client');
+        $customer       = $this->customerService->getCustomerByLastName($customerInfo['nom']);
+
+        if ($customer) {
+
+            $this->addFlash('alert', "le client '".$customer->getPrenom()." ".$customer->getNom()."' existe déjà !");
+
+        } else {
+
+            $customer = $this->customerService->add($customerInfo);
+
+            $this->addFlash('feedback', "le client ".$customer->getPrenom()." ".$customer->getNom()." à bien été ajouté");
+
         }
-        
-        $client = new Client();
-        
-        $form = $this->createForm(ClientType::class, $client);
-        
-        $form->handleRequest($request);
-            
-        $client = $form->getData();
-        
-        $client->setUtilisateur($user);
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($client);
-        $em->flush();
-
-        $this->addFlash('feedback', "le client ".$client->getPrenom()." ".$client->getNom()." à bien été ajouté");
-       
         return $this->redirectToRoute('client');    
     }
-    
-    
-    
+
     public function suppressionAction(Request $request){
 
         $client = $this->getDoctrine()->getRepository('ClientBundle:Client')->findOneBy(['id' => $request->attributes->get('idClient')]);

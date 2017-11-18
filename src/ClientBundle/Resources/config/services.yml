@@ -1,0 +1,10 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+services:
+    client_bundle_service_customer_service:
+        class: '%client_bundle_service_customer_service%'
+        arguments: ['@doctrine.orm.entity_manager', '@knp_paginator']
+
+    client_bundle_controller_customer_controller:
+        class: '%client_bundle_controller_customer_controller%'
+        arguments: ['@client_bundle_service_customer_service', '@service_container']

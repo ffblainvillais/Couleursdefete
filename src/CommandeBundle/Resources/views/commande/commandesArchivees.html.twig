@@ -14,11 +14,8 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
+                    <th> Numero de commande </th>
                     <th> Commande </th>
-                    {#
-                    <th> Articles </th>
-                    <th> Total </th>
-                    #}
                     <th> Date </th>
                     <th> Client </th>
                     <th> Actions </th>
@@ -32,28 +29,8 @@
                     {% set order = orderInformations.orderEntity %}
 
                     <tr>
+                        <td class="col-sm-1">{{ order.getId() }}</td>
                         <td class="col-sm-1">{{ order.getLibelle()}} </td>
-                        {#<td class="col-sm-4">
-                            <ul>
-
-                                {% for articleOrder in orderInformations.articleOrder %}
-
-                                    <li>
-                                        {{articleOrder.getArticle.GetLibelle()}}
-                                        (x{{articleOrder.getQuantite()}})
-                                        {% set compteArticle = articleOrder.getArticle.getPrix()*articleOrder.getQuantite() %}
-                                        {% set total = total+compteArticle %}
-                                    </li>
-
-                                {% endfor %}
-
-                            </ul>
-                        </td>
-
-                        <td class="col-sm-2">{{total}}<span class="glyphicon glyphicon-euro"></span></td>#}
-
-
-
                         <td class="col-sm-1">{{ order.getDate()|date('d/m/Y')}} </td>
                         <td class="col-sm-1">
                             {{ order.getClient().getNom()}}
