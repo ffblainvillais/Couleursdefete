@@ -114,6 +114,13 @@ class ArticleController extends Controller
         $article = $this->getDoctrine()->getRepository('ArticleBundle:Article')->findOneBy(['id' => $request->attributes->get('idArticle')]);
 
         $commandeArticle = $this->getDoctrine()->getRepository('AppBundle:CommandeArticle')->findOneBy(['article' => $article]);
+
+        $reservations = $this->getDoctrine()->getRepository('CommandeBundle:Reservation')->findBy(['article' => $article]);
+
+        foreach ($reservations as $reservation) {
+
+            $this->getDoctrine()->getManager()->remove($reservation);
+        }
         
         if($commandeArticle){
             
