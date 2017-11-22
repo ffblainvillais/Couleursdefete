@@ -1,7 +1,3 @@
-homepage:
-    path:   /homepage
-    defaults: {_controller: VitrineBundle:Vitrine:index }
-
 accueil:
     path:   /accueil
     defaults: {_controller: VitrineBundle:Vitrine:index }

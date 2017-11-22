@@ -134,7 +134,12 @@
                         <td style="width: 400px; text-align: right;">
                             <strong>Acompte:</strong>
                         </td>
-                        <td colspan="3" style=" text-align: right; border: 1px solid black;"> {{acompteLogique}} €</td>
+                        {% if commande.getAcompte() %}
+                            <td colspan="3" style=" text-align: right; border: 1px solid black;"> {{commande.getAcompte()}} €</td>
+                        {% else %}
+                            <td colspan="3" style=" text-align: right; border: 1px solid black;"> {{acompteLogique}} €</td>
+                        {% endif %}
+
                     </tr>
                 
                     
