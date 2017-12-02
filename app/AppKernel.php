@@ -20,7 +20,6 @@ class AppKernel extends Kernel
             new ArticleBundle\ArticleBundle(),
             new CommandeBundle\CommandeBundle(),
             new ClientBundle\ClientBundle(),
-            new BilanBundle\BilanBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new ActionBundle\ActionBundle(),
             new DepenseBundle\DepenseBundle(),

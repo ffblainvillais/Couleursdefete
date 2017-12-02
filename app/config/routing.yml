@@ -4,9 +4,6 @@ commande:
 depense:
     resource: "@DepenseBundle/Resources/config/routing.yml"
 
-bilan:
-    resource: "@BilanBundle/Resources/config/routing.yml"
-
 client:
     resource: "@ClientBundle/Resources/config/routing.yml"
 

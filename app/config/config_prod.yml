@@ -41,3 +41,7 @@ monolog:
 #        auto_generate_proxy_classes: "%kernel.debug%"
 #        naming_strategy: doctrine.orm.naming_strategy.underscore
 #        auto_mapping: true
+
+#ovh_identifiant:
+#    login:      "couleursdefete@gmail.com"
+#    password:   "lucguimar2714"

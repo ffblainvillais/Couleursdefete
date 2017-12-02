@@ -7,9 +7,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use BilanBundle\Form\BilanType;
 
-
-
-
 class BilanController extends Controller
 {
 
@@ -39,8 +36,6 @@ class BilanController extends Controller
 
         $commandesArticles = $queryReservations->getResult();
         
-        //$commandesArticles = $this->getDoctrine()->getRepository('AppBundle:CommandeArticle')->findAll();
-
         $repository = $this->getDoctrine()->getRepository('AppBundle:CommandeLot');
 
         $queryReservations = $repository->createQueryBuilder("cl")

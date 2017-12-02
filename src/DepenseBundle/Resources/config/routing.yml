@@ -25,3 +25,11 @@ modification-depense:
 modification-pop-depense:
     path: /depense/modification-pop-depense/{idDepense}
     defaults: {_controller: DepenseBundle:Depense:modificationPop }
+
+bilan:
+    path:   /bilan
+    defaults: {_controller: depense_bundle_controller_bilan_controller:indexAction  }
+
+generation-bilan:
+    path:   /generation-bilan
+    defaults: {_controller: depense_bundle_controller_bilan_controller:generationBilanAction }

@@ -1,0 +1,2 @@
+parameters:
+    depense_bundle_controller_bilan_controller: DepenseBundle\Controller\BilanController
