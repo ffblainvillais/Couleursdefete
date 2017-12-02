@@ -1,0 +1,6 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+services:
+    article_bundle_service_article_service:
+        class: '%article_bundle_service_article_service%'
+        arguments: ['@doctrine.orm.entity_manager']

@@ -1,5 +1,5 @@
 accueil:
-    path:   /accueil
+    path:   /
     defaults: {_controller: VitrineBundle:Vitrine:index }
 
 contact:

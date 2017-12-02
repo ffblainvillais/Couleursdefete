@@ -30,7 +30,7 @@ class CommandeType extends AbstractType
                 'class' => 'ClientBundle:Client',
                 'query_builder' => function(ClientRepository $cr)
                     {
-                        return $cr->getClients($this->user);
+                        return $cr->getClients();
                     },
             ))
             ->add('partenaire', EntityType::class, array(

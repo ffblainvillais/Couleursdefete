@@ -45,3 +45,7 @@ ajout-article-lot:
 suppression-article-lot:
     path:   /article/suppression-article-lot/{idArticle}/{idLot}
     defaults: {_controller: ArticleBundle:Article:suppressionArticle }
+
+reservation:
+    path: /reservations
+    defaults: {_controller: ArticleBundle:Article:indexReservation }

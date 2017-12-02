@@ -9,11 +9,9 @@ use Doctrine\ORM\EntityRepository;
 class ClientRepository extends EntityRepository
 {
      
-    public function getClients($user)
+    public function getClients()
     {
         $qb = $this->createQueryBuilder('c')
-            ->where('c.utilisateur = :user')
-            ->setParameter('user', $user)
             ->orderBy('c.nom', 'ASC');
  
         return $qb;

@@ -1,0 +1,2 @@
+parameters:
+    article_bundle_service_article_service: ArticleBundle\Service\ArticleService

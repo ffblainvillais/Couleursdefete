@@ -26,7 +26,7 @@ ajout-lot-commande:
 
 suppression-lot-commande:
     path:   /commande/suppression-lot-commande/{idLot}/{idCommande}
-    defaults: {_controller: commande_bundle_controller_commande_controller:suppressionLot }
+    defaults: {_controller: commande_bundle_controller_commande_controller:suppressionLotAction }
 
 
 

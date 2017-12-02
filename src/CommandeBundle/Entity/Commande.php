@@ -7,7 +7,7 @@ use DoctrineCommonCollectionsArrayCollection;
 use ArticleBundle\Entity\Article;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="CommandeBundle\Repository\CommandeRepository")
  * @ORM\Table(name="Commande")
  */
 class Commande
@@ -31,12 +31,12 @@ class Commande
     private $date;
     
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default" = 0})
      */
     private $paye;
     
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default" = 0})
      */
     private $archive;
     

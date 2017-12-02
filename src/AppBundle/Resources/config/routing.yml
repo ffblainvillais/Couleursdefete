@@ -1,0 +1,3 @@
+application:
+    path:   /agc
+    defaults: {_controller: AppBundle:Default:indexAppli }

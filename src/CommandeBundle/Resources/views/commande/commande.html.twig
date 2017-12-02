@@ -55,9 +55,7 @@
                         <th> Utilisateur </th>
                     {% endif %}
                     <th> Commande </th>
-                    <th> Evenement </th>
                     <th> Articles </th>
-                    <th> Total </th>
                     <th> Date </th>
                     <th> Client </th>
                     <th> Actions </th>
@@ -78,14 +76,11 @@
                     
                     <td class="col-sm-1">
                         {{commande.getLibelle()}}<hr/>
-                        <strong>Commande N° {{commande.getId()}}</strong> 
+                        <strong>Commande N° {{commande.getId()}}</strong> <hr/>
+                        Evènement : {{commande.getTypeEvenement()}}
                     </td>
                     
-                    <td class="col-sm-1">
-                        {{commande.getTypeEvenement()}}
-                    </td>
-                    
-                    <td class="col-sm-4"> 
+                    <td class="col-sm-6">
                         <ul>
                             
                             <!-- Boucle ARTICLE -->
@@ -94,12 +89,12 @@
                                     <li>
                                         <!-- Libelle article -->
                                         {{commandeArticle.getArticle}}
+
+                                        <br/>
                                         
                                         <!-- Quantité article -->
-                                        (x{{commandeArticle.getQuantite()}})
-                                        
+                                        -> (x{{commandeArticle.getQuantite()}})
                                         {% set compteArticle = commandeArticle.getArticle.getPrix()*commandeArticle.getQuantite() %}
-                                        
                                         = {{compteArticle}}<span class="glyphicon glyphicon-euro"></span>
                                         
                                         <!-- Action article -->
@@ -201,10 +196,8 @@
                                 
                             {%endif%}
                         </ul>
-                    </td>
-                    
-                    <td class="col-sm-2">
-                        {{total}}<span class="glyphicon glyphicon-euro"></span><br/>
+                        <hr/>
+                        TOTAL : {{total}}<span class="glyphicon glyphicon-euro"></span><br/>
                         {% if(commande.getAcompte() != 0) %}
                             Acompte : {{commande.getAcompte()}} <span class="glyphicon glyphicon-euro"></span>
                             <br/>
@@ -214,8 +207,7 @@
                         {% endif %}
                     </td>
                     
-                   
-                    
+
                     <td class="col-sm-1">Date commande <br/>{{commande.getDate()|date('d/m/Y')}}<hr/> Date Evenement {{commande.getDateEvenement()|date('d/m/Y')}}<br/> </td>
                     <td class="col-sm-1">
                         {{commande.getClient().getNom()}}
@@ -253,18 +245,6 @@
                                 </a>
                             {% endif %}
                             
-                        {% endif %}
-                        
-                        <!-- Retour des articles -->
-                        {% if(locationCommande == 1 and retourArticle == 1) %}
-                            <a href="{{path('depart-location', {'idCommande': commande.getId()})}}" class="col-sm-12">
-                                <span class="glyphicon glyphicon-transfer"></span> Depart des articles
-                            </a>
-                            
-                        {% elseif(locationCommande == 1 and retourArticle ==  0)%}
-                            <a href="{{path('retour-location', {'idCommande': commande.getId()})}}" class="col-sm-12">
-                                <span class="glyphicon glyphicon-transfer"></span> Retour des articles
-                            </a>
                         {% endif %}
 
 
