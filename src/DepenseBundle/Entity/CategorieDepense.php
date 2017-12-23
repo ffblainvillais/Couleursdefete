@@ -3,12 +3,12 @@
 namespace DepenseBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
+use DepenseBundle\Entity\Depense;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="Categorie_depense")
- * @ORM\Entity(repositoryClass="ArticleBundle\Entity\ArticleRepository")
  */
 class CategorieDepense
 {
@@ -19,13 +19,22 @@ class CategorieDepense
      */
     private $id;
 
-
     /**
      * @ORM\Column(type="string")
      */
     private $libelle;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="DepenseBundle\Entity\Depense", mappedBy="categorie")
+     */
+    private $spents;
     
-    
+    public function __construct()
+    {
+        $this->spents = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -60,12 +69,29 @@ class CategorieDepense
     {
         return $this->libelle;
     }
-    
-    
-    
-    
-    public function __toString()
+
+    /**
+     * @param Depense $spent
+     */
+    public function addSpent(Depense $spent)
     {
-        return $this->getLibelle();
+        $this->spents[] = $spent;
     }
+
+    /**
+     * @param Depense $spent
+     */
+    public function removeSpent(Depense $spent)
+    {
+        $this->spents->removeElement($spent);
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSpents()
+    {
+        return $this->spents;
+    }
+
 }

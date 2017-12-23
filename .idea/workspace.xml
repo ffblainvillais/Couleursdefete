@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="de029f1b-8b3d-4e8b-a8d9-f4bc68b4f3a2" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/AppBundle/Entity/CommandeLot.php" afterPath="$PROJECT_DIR$/src/AppBundle/Entity/CommandeLot.php" />
+      <change beforePath="$PROJECT_DIR$/src/CommandeBundle/Entity/Commande.php" afterPath="$PROJECT_DIR$/src/CommandeBundle/Entity/Commande.php" />
+      <change beforePath="$PROJECT_DIR$/src/DepenseBundle/Controller/BilanController.php" afterPath="$PROJECT_DIR$/src/DepenseBundle/Controller/BilanController.php" />
+      <change beforePath="$PROJECT_DIR$/src/DepenseBundle/Entity/CategorieDepense.php" afterPath="$PROJECT_DIR$/src/DepenseBundle/Entity/CategorieDepense.php" />
+      <change beforePath="$PROJECT_DIR$/src/DepenseBundle/Entity/Depense.php" afterPath="$PROJECT_DIR$/src/DepenseBundle/Entity/Depense.php" />
+      <change beforePath="$PROJECT_DIR$/src/DepenseBundle/Resources/config/parameters.yml" afterPath="$PROJECT_DIR$/src/DepenseBundle/Resources/config/parameters.yml" />
+      <change beforePath="$PROJECT_DIR$/src/DepenseBundle/Resources/config/services.yml" afterPath="$PROJECT_DIR$/src/DepenseBundle/Resources/config/services.yml" />
     </list>
     <ignored path="agc.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -36,12 +41,40 @@
     <splitter split-orientation="horizontal" split-proportion="0.5">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file leaf-file-name="Commande.php" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/CommandeBundle/Entity/Commande.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="35">
+                  <caret line="357" column="4" lean-forward="false" selection-start-line="357" selection-start-column="4" selection-end-line="379" selection-end-column="5" />
+                  <folding>
+                    <element signature="e#41#73#0#PHP" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
           <file leaf-file-name="BilanController.php" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/DepenseBundle/Controller/BilanController.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="434">
-                  <caret line="37" column="98" lean-forward="false" selection-start-line="37" selection-start-column="98" selection-end-line="37" selection-end-column="98" />
-                  <folding />
+                <state relative-caret-position="312">
+                  <caret line="63" column="42" lean-forward="true" selection-start-line="63" selection-start-column="42" selection-end-line="63" selection-end-column="42" />
+                  <folding>
+                    <element signature="e#44#101#0#PHP" expanded="true" />
+                    <element signature="e#1538#1563#1#PHP" expanded="true" />
+                    <element signature="e#2021#2044#1#PHP" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="CategorieDepense.php" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/DepenseBundle/Entity/CategorieDepense.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-274">
+                  <caret line="42" column="7" lean-forward="true" selection-start-line="42" selection-start-column="7" selection-end-line="42" selection-end-column="7" />
+                  <folding>
+                    <element signature="e#40#72#0#PHP" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -50,23 +83,23 @@
       </split-first>
       <split-second>
         <leaf>
-          <file leaf-file-name="CommandeRepository.php" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/CommandeBundle/Repository/CommandeRepository.php">
+          <file leaf-file-name="affichage-bilan.html.twig" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/DepenseBundle/Resources/views/bilan/affichage-bilan.html.twig">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="373">
-                  <caret line="40" column="62" lean-forward="false" selection-start-line="40" selection-start-column="62" selection-end-line="40" selection-end-column="62" />
+                <state relative-caret-position="148">
+                  <caret line="104" column="8" lean-forward="true" selection-start-line="104" selection-start-column="8" selection-end-line="104" selection-end-column="8" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="CommandeLot.php" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/CommandeLot.php">
+          <file leaf-file-name="Depense.php" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/DepenseBundle/Entity/Depense.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-275">
-                  <caret line="94" column="5" lean-forward="true" selection-start-line="94" selection-start-column="5" selection-end-line="94" selection-end-column="5" />
+                <state relative-caret-position="2176">
+                  <caret line="161" column="5" lean-forward="false" selection-start-line="161" selection-start-column="5" selection-end-line="161" selection-end-column="5" />
                   <folding>
-                    <element signature="e#36#68#0#PHP" expanded="true" />
+                    <element signature="e#40#72#0#PHP" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -84,6 +117,7 @@
       <find>setB</find>
       <find>archiv</find>
       <find>commande</find>
+      <find>categori</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -125,6 +159,15 @@
         <option value="$PROJECT_DIR$/src/CommandeBundle/Resources/views/commande/commande.html.twig" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/CommandeArticle.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/CommandeLot.php" />
+        <option value="$PROJECT_DIR$/src/CommandeBundle/Entity/Commande.php" />
+        <option value="$PROJECT_DIR$/src/DepenseBundle/Service/SpentService.php" />
+        <option value="$PROJECT_DIR$/src/DepenseBundle/Resources/config/parameters.yml" />
+        <option value="$PROJECT_DIR$/src/DepenseBundle/Resources/config/services.yml" />
+        <option value="$PROJECT_DIR$/src/DepenseBundle/Entity/Depense.php" />
+        <option value="$PROJECT_DIR$/src/DepenseBundle/Repository/SpentRepository.php" />
+        <option value="$PROJECT_DIR$/src/DepenseBundle/Repository/SpentCategoryRepository.php" />
+        <option value="$PROJECT_DIR$/src/DepenseBundle/Entity/CategorieDepense.php" />
+        <option value="$PROJECT_DIR$/src/DepenseBundle/Controller/BilanController.php" />
       </list>
     </option>
   </component>
@@ -182,7 +225,15 @@
               <item name="agc" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="CommandeBundle" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Repository" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Resources" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="agc" type="b2602c69:ProjectViewProjectNode" />
+              <item name="agc" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="CommandeBundle" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Resources" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="config" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="agc" type="b2602c69:ProjectViewProjectNode" />
@@ -195,7 +246,7 @@
               <item name="agc" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="DepenseBundle" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Controller" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Entity" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
           </expand>
           <select />
@@ -298,7 +349,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16621000" />
+    <option name="totallyTimeSpent" value="18234000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="797" extended-state="0" />
@@ -349,34 +400,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/vitrine/prestation.html.twig" />
-    <entry file="file://$PROJECT_DIR$/src/ArticleBundle/Entity/Article.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="112" column="4" lean-forward="false" selection-start-line="112" selection-start-column="4" selection-end-line="134" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/CommandeBundle/Entity/Commande.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="287">
-          <caret line="117" column="0" lean-forward="false" selection-start-line="117" selection-start-column="0" selection-end-line="117" selection-end-column="0" />
-          <folding>
-            <element signature="e#41#73#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/VitrineBundle/Form/LotType.php" />
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/vitrine/partenaire.html.twig" />
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/article/ajout-article.html.twig" />
-    <entry file="file://$PROJECT_DIR$/src/FOS/UserBundle/Controller/SecurityController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-480">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/FOS/UserBundle/Controller/RegistrationController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1601">
@@ -489,28 +512,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/DepenseBundle/Entity/CategorieDepense.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/DepenseBundle/Entity/Depense.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="39" column="22" lean-forward="false" selection-start-line="39" selection-start-column="12" selection-end-line="39" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/depense/depense.html.twig" />
-    <entry file="file://$PROJECT_DIR$/src/DepenseBundle/Controller/DepenseController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="177" column="0" lean-forward="false" selection-start-line="177" selection-start-column="0" selection-end-line="177" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/index/index.html.twig" />
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
@@ -533,20 +535,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/CommandeBundle/Service/InvoiceService.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="7" column="6" lean-forward="false" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/CommandeBundle/Resources/config/parameters.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/symfony/symfony/src/Symfony/Component/DependencyInjection/ContainerInterface.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
@@ -565,13 +553,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="418">
           <caret line="72" column="97" lean-forward="true" selection-start-line="72" selection-start-column="97" selection-end-line="72" selection-end-column="97" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/CommandeBundle/Resources/config/services.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="62" lean-forward="false" selection-start-line="13" selection-start-column="62" selection-end-line="13" selection-end-column="62" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -603,38 +585,152 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/DepenseBundle/Controller/BilanController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="434">
-          <caret line="37" column="98" lean-forward="false" selection-start-line="37" selection-start-column="98" selection-end-line="37" selection-end-column="98" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/CommandeArticle.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="355">
           <caret line="45" column="7" lean-forward="true" selection-start-line="45" selection-start-column="7" selection-end-line="45" selection-end-column="7" />
+          <folding>
+            <element signature="e#36#68#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/CommandeLot.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="205">
+          <caret line="126" column="7" lean-forward="false" selection-start-line="126" selection-start-column="7" selection-end-line="126" selection-end-column="7" />
           <folding>
             <element signature="e#36#68#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/CommandeBundle/Repository/CommandeRepository.php">
+    <entry file="file://$PROJECT_DIR$/src/DepenseBundle/Controller/DepenseController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="373">
-          <caret line="40" column="62" lean-forward="false" selection-start-line="40" selection-start-column="62" selection-end-line="40" selection-end-column="62" />
+        <state relative-caret-position="2820">
+          <caret line="193" column="20" lean-forward="false" selection-start-line="193" selection-start-column="20" selection-end-line="193" selection-end-column="20" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/CommandeLot.php">
+    <entry file="file://$PROJECT_DIR$/src/CommandeBundle/Service/InvoiceService.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-275">
-          <caret line="94" column="5" lean-forward="true" selection-start-line="94" selection-start-column="5" selection-end-line="94" selection-end-column="5" />
+        <state relative-caret-position="270">
+          <caret line="19" column="6" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="183" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/CommandeBundle/Resources/config/parameters.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DepenseBundle/Resources/config/parameters.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="76" lean-forward="false" selection-start-line="2" selection-start-column="76" selection-end-line="2" selection-end-column="76" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/CommandeBundle/Resources/config/services.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="4" lean-forward="false" selection-start-line="3" selection-start-column="4" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DepenseBundle/Resources/config/services.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/CommandeBundle/Repository/CommandeRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="268">
+          <caret line="33" column="11" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="58" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DepenseBundle/Resources/views/bilan/affichage-bilan.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="148">
+          <caret line="104" column="8" lean-forward="true" selection-start-line="104" selection-start-column="8" selection-end-line="104" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DepenseBundle/Service/SpentService.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="6" lean-forward="false" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DepenseBundle/Repository/SpentRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="1" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="9" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DepenseBundle/Repository/SpentCategoryRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="9" lean-forward="false" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DepenseBundle/Entity/Depense.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2176">
+          <caret line="161" column="5" lean-forward="false" selection-start-line="161" selection-start-column="5" selection-end-line="161" selection-end-column="5" />
           <folding>
-            <element signature="e#36#68#0#PHP" expanded="true" />
+            <element signature="e#40#72#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/CommandeBundle/Entity/Commande.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="35">
+          <caret line="357" column="4" lean-forward="false" selection-start-line="357" selection-start-column="4" selection-end-line="379" selection-end-column="5" />
+          <folding>
+            <element signature="e#41#73#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DepenseBundle/Entity/CategorieDepense.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-274">
+          <caret line="42" column="7" lean-forward="true" selection-start-line="42" selection-start-column="7" selection-end-line="42" selection-end-column="7" />
+          <folding>
+            <element signature="e#40#72#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DepenseBundle/Controller/BilanController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="63" column="42" lean-forward="true" selection-start-line="63" selection-start-column="42" selection-end-line="63" selection-end-column="42" />
+          <folding>
+            <element signature="e#44#101#0#PHP" expanded="true" />
+            <element signature="e#1538#1563#1#PHP" expanded="true" />
+            <element signature="e#2021#2044#1#PHP" expanded="true" />
           </folding>
         </state>
       </provider>

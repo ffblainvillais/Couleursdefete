@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity
  * @ORM\Table(name="depense")
- * @ORM\Entity(repositoryClass="ArticleBundle\Entity\ArticleRepository")
+ * @ORM\Entity(repositoryClass="DepenseBundle\Repository\SpentRepository")
  */
 class Depense
 {
@@ -159,11 +159,5 @@ class Depense
     public function getDate()
     {
         return $this->date;
-    }
-    
-    
-    public function __toString()
-    {
-        return $this->getLibelle();
     }
 }

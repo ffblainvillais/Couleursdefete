@@ -403,4 +403,17 @@ class Commande
         return $this->lots;
     }
 
+    /**
+     * Return array of all items who are into this Order
+     *
+     * @return array
+     */
+    public function getItems()
+    {
+        return array(
+            "articles"  => $this->getArticles(),
+            "lots"      => $this->getLots(),
+        );
+    }
+
 }

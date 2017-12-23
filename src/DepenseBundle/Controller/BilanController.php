@@ -8,19 +8,24 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use DepenseBundle\Service\SpentService;
 
 use DepenseBundle\Form\BilanType;
+use CommandeBundle\Entity\Commande;
+use DepenseBundle\Entity\CategorieDepense;
 
 class BilanController extends Controller
 {
 
     protected $container;
     protected $em;
+    protected $spentService;
 
-    public function __construct(ContainerInterface $container, EntityManagerInterface $entityManager)
+    public function __construct(ContainerInterface $container, EntityManagerInterface $entityManager, SpentService $spentService)
     {
         $this->container        = $container;
         $this->em               = $entityManager;
+        $this->spentService     = $spentService;
     }
 
     public function indexAction()
@@ -29,12 +34,19 @@ class BilanController extends Controller
 
         return $this->render(
             'DepenseBundle:bilan:bilan.html.twig',
-            array('form' => $form->createView())
+            array(
+                'form' => $form->createView()
+            )
         );
     }
 
     public function generationBilanAction(Request $request)
     {
+        /*$year   = $request->request->get('bilan')['annee'];
+
+        $orders = $this->em->getRepository(Commande::class)->getOrdersForBalanceSheet($year);
+        $spents = $this->em->getRepository(CategorieDepense::class)*/
+
         $commandes = $this->em->getRepository('CommandeBundle:Commande')->findBy(['annee' => $request->request->get('bilan')['annee'], "paye" => 1]);
 
         $repository = $this->em->getRepository('AppBundle:CommandeArticle');

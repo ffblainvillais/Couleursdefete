@@ -1,7 +1,11 @@
 # Learn more about services, parameters and containers at
 # http://symfony.com/doc/current/book/service_container.html
 services:
+    depense_bundle_service_spent_service:
+        class: '%depense_bundle_service_spent_service%'
+        arguments: ['@doctrine.orm.entity_manager']
+
     depense_bundle_controller_bilan_controller:
         class: '%depense_bundle_controller_bilan_controller%'
-        arguments: ['@service_container','@doctrine.orm.entity_manager']
+        arguments: ['@service_container','@doctrine.orm.entity_manager', '@depense_bundle_service_spent_service']
 

@@ -1,2 +1,3 @@
 parameters:
     depense_bundle_controller_bilan_controller: DepenseBundle\Controller\BilanController
+    depense_bundle_service_spent_service: DepenseBundle\Service\SpentService
