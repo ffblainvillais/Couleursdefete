@@ -4,6 +4,8 @@ namespace DepenseBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use DepenseBundle\Entity\CategorieDepense;
+use CommandeBundle\Entity\Annee;
 
 /**
  * @ORM\Entity
@@ -19,23 +21,20 @@ class Depense
      */
     private $id;
 
-
     /**
      * @ORM\Column(type="string")
      */
     private $libelle;
-    
-    
+
     /**
      * @ORM\Column(name="montant",type="float")
      * @Assert\Type(type="float", message="prix.invalid")
      */
     private $montant;
-    
-    
+
     /**
-    * @ORM\ManyToOne(targetEntity="DepenseBundle\Entity\CategorieDepense")
-    * @ORM\JoinColumn(nullable=true)
+    * @ORM\ManyToOne(targetEntity="DepenseBundle\Entity\CategorieDepense", inversedBy="spents")
+    * @ORM\JoinColumn(name="commande_id", referencedColumnName="id", nullable=false)
     */
     private $categorie;
     
@@ -49,7 +48,6 @@ class Depense
      * @ORM\Column(type="string")
      */
     private $date;
-    
     
 
     /**
@@ -67,7 +65,7 @@ class Depense
      *
      * @param \varchar $libelle
      *
-     * @return Article
+     * @return Depense
      */
     public function setLibelle($libelle)
     {
@@ -92,7 +90,7 @@ class Depense
      *
      * @param \float $montant
      *
-     * @return Article
+     * @return Depense
      */
     public function setMontant($montant)
     {
@@ -110,33 +108,43 @@ class Depense
     {
         return $this->montant;
     }
-    
-    
-    public function setCategorie(\DepenseBundle\Entity\CategorieDepense $categorie)
+
+    /**
+     * @param CategorieDepense $categorie
+     * @return $this
+     */
+    public function setCategorie(CategorieDepense $categorie)
     {
         $this->categorie = $categorie;
         return $this;
     }
 
+    /**
+     * @return CategorieDepense
+     */
     public function getCategorie()
     {
         return $this->categorie;
     }
-    
-    
-    
-    public function setAnnee(\CommandeBundle\Entity\Annee $annee)
+
+    /**
+     * @param Annee $annee
+     * @return $this
+     */
+    public function setAnnee(Annee $annee)
     {
         $this->annee = $annee;
         return $this;
     }
 
+    /**
+     * @return Annee
+     */
     public function getAnnee()
     {
         return $this->annee;
     }
-    
-    
+
     /**
      * Set date
      *

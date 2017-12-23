@@ -5,11 +5,10 @@ namespace CommandeBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
-use ArticleBundle\Entity\Lot;
-use ArticleBundle\Entity\Article;
+use AppBundle\Entity\CommandeArticle;
+use AppBundle\Entity\CommandeLot;
 use PartenaireBundle\Entity\Partenaire;
 use UserBundle\Entity\User;
-use CommandeBundle\Entity\Annee;
 use ClientBundle\Entity\Client;
 
 /**
@@ -356,17 +355,17 @@ class Commande
     }
 
     /**
-     * @param Article $article
+     * @param CommandeArticle $article
      */
-    public function addArticle(Article $article)
+    public function addArticle(CommandeArticle $article)
     {
         $this->articles[] = $article;
     }
 
     /**
-     * @param Article $article
+     * @param CommandeArticle $article
      */
-    public function removeArticle(Article $article)
+    public function removeArticle(CommandeArticle $article)
     {
         $this->articles->removeElement($article);
     }
@@ -380,17 +379,17 @@ class Commande
     }
 
     /**
-     * @param Lot $lot
+     * @param CommandeLot $lot
      */
-    public function addLot(Lot $lot)
+    public function addLot(CommandeLot $lot)
     {
         $this->lots[] = $lot;
     }
 
     /**
-     * @param Lot $lot
+     * @param CommandeLot $lot
      */
-    public function removeLot(Lot $lot)
+    public function removeLot(CommandeLot $lot)
     {
         $this->lots->removeElement($lot);
     }
