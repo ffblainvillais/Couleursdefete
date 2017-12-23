@@ -3,6 +3,9 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use CommandeBundle\Entity\Commande;
+use ArticleBundle\Entity\Article;
+use ActionBundle\Entity\Action;
 
 /**
  * @ORM\Entity
@@ -55,62 +58,92 @@ class CommandeArticle
         return $this->id;
     }
 
-   
-    
-    
+
+    /**
+     * @param $quantite
+     * @return $this
+     */
     public function setQuantite($quantite)
     {
         $this->quantite = $quantite;
         return $this;
     }
 
+    /**
+     * @return integer
+     */
     public function getQuantite()
     {
         return $this->quantite;
     }
 
-
-
-
-    public function setCommande(\CommandeBundle\Entity\Commande $commande)
+    /**
+     * @param \CommandeBundle\Entity\Commande $commande
+     * @return $this
+     */
+    public function setCommande(Commande $commande)
     {
         $this->commande = $commande;
         return $this;
     }
 
+    /**
+     * @return Commande
+     */
     public function getCommande()
     {
         return $this->commande;
     }
 
-    public function setArticle(\ArticleBundle\Entity\Article $article)
+    /**
+     * @param Article $article
+     * @return $this
+     */
+    public function setArticle(Article $article)
     {
         $this->article = $article;
         return $this;
     }
 
+    /**
+     * @return Article
+     */
     public function getArticle()
     {
         return $this->article;
     }
 
-    public function setAction(\ActionBundle\Entity\Action $action)
+    /**
+     * @param Action $action
+     * @return $this
+     */
+    public function setAction(Action $action)
     {
         $this->action = $action;
         return $this;
     }
 
+    /**
+     * @return Action
+     */
     public function getAction()
     {
         return $this->action;
     }
 
+    /**
+     * @param $retour
+     * @return $this
+     */
     public function setRetour($retour)
     {
         $this->retour = $retour;
         return $this;
     }
 
+    /**
+     * @return boolean
+     */
     public function getRetour()
     {
         return $this->retour;
