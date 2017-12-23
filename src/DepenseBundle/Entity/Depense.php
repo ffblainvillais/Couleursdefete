@@ -34,7 +34,7 @@ class Depense
 
     /**
     * @ORM\ManyToOne(targetEntity="DepenseBundle\Entity\CategorieDepense", inversedBy="spents")
-    * @ORM\JoinColumn(name="commande_id", referencedColumnName="id", nullable=false)
+    * @ORM\JoinColumn(name="categorie_id", referencedColumnName="id", nullable=false)
     */
     private $categorie;
     
