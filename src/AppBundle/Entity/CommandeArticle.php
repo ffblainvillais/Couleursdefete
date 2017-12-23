@@ -29,8 +29,8 @@ class CommandeArticle
     private $article;
     
     /**
-    * @ORM\ManyToOne(targetEntity="CommandeBundle\Entity\Commande")
-    * @ORM\JoinColumn(nullable=false)
+    * @ORM\ManyToOne(targetEntity="CommandeBundle\Entity\Commande", inversedBy="article")
+    * @ORM\JoinColumn(name="commande_id", referencedColumnName="id", nullable=false)
     */
     private $commande;
     
@@ -68,10 +68,10 @@ class CommandeArticle
     {
         return $this->quantite;
     }
-    
-    
-    
-    
+
+
+
+
     public function setCommande(\CommandeBundle\Entity\Commande $commande)
     {
         $this->commande = $commande;
@@ -83,9 +83,6 @@ class CommandeArticle
         return $this->commande;
     }
 
-    
-    
-
     public function setArticle(\ArticleBundle\Entity\Article $article)
     {
         $this->article = $article;
@@ -96,10 +93,7 @@ class CommandeArticle
     {
         return $this->article;
     }
-    
-    
-    
-    
+
     public function setAction(\ActionBundle\Entity\Action $action)
     {
         $this->action = $action;
@@ -110,10 +104,7 @@ class CommandeArticle
     {
         return $this->action;
     }
-    
-    
-    
-    
+
     public function setRetour($retour)
     {
         $this->retour = $retour;
@@ -124,13 +115,5 @@ class CommandeArticle
     {
         return $this->retour;
     }
-  
-    
-    
 
-    
-    public function __toString()
-    {
-        return $this->getLibelle();
-    }
 }

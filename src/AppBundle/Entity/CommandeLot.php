@@ -29,8 +29,8 @@ class CommandeLot
     private $lot;
     
     /**
-    * @ORM\ManyToOne(targetEntity="CommandeBundle\Entity\Commande")
-    * @ORM\JoinColumn(nullable=false)
+    * @ORM\ManyToOne(targetEntity="CommandeBundle\Entity\Commande", inversedBy="lots")
+    * @ORM\JoinColumn(name="commande_id", referencedColumnName="id", nullable=false)
     */
     private $commande;
     

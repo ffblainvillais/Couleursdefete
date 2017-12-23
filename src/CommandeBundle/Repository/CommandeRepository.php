@@ -37,4 +37,23 @@ class CommandeRepository extends EntityRepository
         return $query;
     }
 
+    /**
+     * Returns Order Entity who has been payed or have acompte
+     *
+     * @param $year
+     * @return array
+     */
+    public function getOrdersForBalanceSheet($year)
+    {
+        $query = $this->createQueryBuilder('c')
+            ->orderBy('c.date', 'ASC')
+            ->where('c.paye = 1 OR c.acompte is not null')
+            ->andWhere('c.annee = :year')
+            ->getQuery();
+
+        $query->setParameter('year', $year);
+
+        return $query->getResult();
+    }
+
 }

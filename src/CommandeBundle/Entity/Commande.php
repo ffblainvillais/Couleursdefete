@@ -3,8 +3,14 @@
 namespace CommandeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use DoctrineCommonCollectionsArrayCollection;
+use Doctrine\Common\Collections\ArrayCollection;
+
+use ArticleBundle\Entity\Lot;
 use ArticleBundle\Entity\Article;
+use PartenaireBundle\Entity\Partenaire;
+use UserBundle\Entity\User;
+use CommandeBundle\Entity\Annee;
+use ClientBundle\Entity\Client;
 
 /**
  * @ORM\Entity(repositoryClass="CommandeBundle\Repository\CommandeRepository")
@@ -73,14 +79,33 @@ class Commande
     * @ORM\JoinColumn(nullable=true)
     */
     private $partenaire;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\CommandeArticle", mappedBy="commande")
+     */
+    private $articles;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\CommandeLot", mappedBy="commande")
+     */
+    private $lots;
     
     /**
      * @ORM\Column(type="string")
      */
     private $type_evenement;
     
-    
-    
+
+    public function __construct()
+    {
+        $this->articles = new ArrayCollection();
+        $this->lots     = new ArrayCollection();
+    }
+
     /**
      * Get id
      *
@@ -108,7 +133,7 @@ class Commande
     /**
      * Get libelle
      *
-     * @return \varchar
+     * @return varchar
      */
     public function getLibelle()
     {
@@ -119,9 +144,9 @@ class Commande
     /**
      * Set date
      *
-     * @param \date $date
+     * @param \DateTime $date
      *
-     * @return Article
+     * @return Commande
      */
     public function setDate($date)
     {
@@ -133,7 +158,7 @@ class Commande
     /**
      * Get date
      *
-     * @return \date
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -188,44 +213,60 @@ class Commande
         return $this->archive;
     }
 
-    
-    
-    public function setClient(\ClientBundle\Entity\Client $client)
+    /**
+     * @param Client $client
+     * @return $this
+     */
+    public function setClient(Client $client)
     {
         $this->client = $client;
         return $this;
     }
 
+    /**
+     * @return Client
+     */
     public function getClient()
     {
         return $this->client;
     }
-    
-    
-    public function setAnnee(\CommandeBundle\Entity\Annee $annee)
+
+    /**
+     * @param Annee $annee
+     * @return $this
+     */
+    public function setAnnee(Annee $annee)
     {
         $this->annee = $annee;
         return $this;
     }
 
+    /**
+     * @return Annee
+     */
     public function getAnnee()
     {
         return $this->annee;
     }
-    
-    
-    public function setUtilisateur(\UserBundle\Entity\User $utilisateur)
+
+    /**
+     * @param User $utilisateur
+     * @return $this
+     */
+    public function setUtilisateur(User $utilisateur)
     {
         $this->utilisateur = $utilisateur;
         return $this;
     }
 
+    /**
+     * @return User
+     */
     public function getUtilisateur()
     {
         return $this->utilisateur;
     }
-    
-    
+
     /**
      * Set acompte
      *
@@ -236,7 +277,6 @@ class Commande
     public function setAcompte($acompte)
     {
         $this->acompte = $acompte;
-
         return $this;
     }
 
@@ -261,7 +301,6 @@ class Commande
     public function setDateEvenement($dateEvenement)
     {
         $this->dateEvenement = $dateEvenement;
-
         return $this;
     }
 
@@ -274,21 +313,24 @@ class Commande
     {
         return $this->dateEvenement;
     }
-    
-    
-    public function setPartenaire(\PartenaireBundle\Entity\Partenaire $partenaire)
+
+    /**
+     * @param Partenaire $partenaire
+     * @return $this
+     */
+    public function setPartenaire(Partenaire $partenaire)
     {
         $this->partenaire = $partenaire;
         return $this;
     }
 
+    /**
+     * @return Partenaire
+     */
     public function getPartenaire()
     {
         return $this->partenaire;
     }
-    
-    
-    
     
     /**
      * Set type_evenement
@@ -300,7 +342,6 @@ class Commande
     public function setTypeEvenement($type_evenement)
     {
         $this->type_evenement = $type_evenement;
-
         return $this;
     }
 
@@ -313,11 +354,53 @@ class Commande
     {
         return $this->type_evenement;
     }
-    
-    
-    
-    public function __toString()
+
+    /**
+     * @param Article $article
+     */
+    public function addArticle(Article $article)
     {
-        return $this->getLibelle();
+        $this->articles[] = $article;
     }
+
+    /**
+     * @param Article $article
+     */
+    public function removeArticle(Article $article)
+    {
+        $this->articles->removeElement($article);
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getArticles()
+    {
+        return $this->articles;
+    }
+
+    /**
+     * @param Lot $lot
+     */
+    public function addLot(Lot $lot)
+    {
+        $this->lots[] = $lot;
+    }
+
+    /**
+     * @param Lot $lot
+     */
+    public function removeLot(Lot $lot)
+    {
+        $this->lots->removeElement($lot);
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLots()
+    {
+        return $this->lots;
+    }
+
 }
