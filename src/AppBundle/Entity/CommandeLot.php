@@ -3,6 +3,9 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use CommandeBundle\Entity\Commande;
+use ArticleBundle\Entity\Lot;
+use ActionBundle\Entity\Action;
 
 /**
  * @ORM\Entity
@@ -55,82 +58,93 @@ class CommandeLot
         return $this->id;
     }
 
-   
-    
-    
+    /**
+     * @param $quantite
+     * @return $this
+     */
     public function setQuantite($quantite)
     {
         $this->quantite = $quantite;
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function getQuantite()
     {
         return $this->quantite;
     }
-    
-    
-    
-    
-    public function setCommande(\CommandeBundle\Entity\Commande $commande)
+
+    /**
+     * @param Commande $commande
+     * @return $this
+     */
+    public function setCommande(Commande $commande)
     {
         $this->commande = $commande;
         return $this;
     }
 
+    /**
+     * @return Commande
+     */
     public function getCommande()
     {
         return $this->commande;
     }
 
-    
-    
-
-    public function setLot(\ArticleBundle\Entity\Lot $lot)
+    /**
+     * @param Lot $lot
+     * @return $this
+     */
+    public function setLot(Lot $lot)
     {
         $this->lot = $lot;
         return $this;
     }
 
+    /**
+     * @return Lot
+     */
     public function getLot()
     {
         return $this->lot;
     }
-    
-    
-    
-    
-    public function setAction(\ActionBundle\Entity\Action $action)
+
+    /**
+     * @param Action $action
+     * @return $this
+     */
+    public function setAction(Action $action)
     {
         $this->action = $action;
         return $this;
     }
 
+    /**
+     * @return Action
+     */
     public function getAction()
     {
         return $this->action;
     }
-    
-    
-    
-    
+
+    /**
+     * @param $retour
+     * @return $this
+     */
     public function setRetour($retour)
     {
         $this->retour = $retour;
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function getRetour()
     {
         return $this->retour;
-    }
-  
-    
-    
-
-    
-    public function __toString()
-    {
-        return $this->getLibelle();
     }
 }

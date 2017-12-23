@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="de029f1b-8b3d-4e8b-a8d9-f4bc68b4f3a2" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/AppBundle/Entity/CommandeArticle.php" afterPath="$PROJECT_DIR$/src/AppBundle/Entity/CommandeArticle.php" />
+      <change beforePath="$PROJECT_DIR$/src/AppBundle/Entity/CommandeLot.php" afterPath="$PROJECT_DIR$/src/AppBundle/Entity/CommandeLot.php" />
     </list>
     <ignored path="agc.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -39,7 +39,7 @@
           <file leaf-file-name="BilanController.php" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/DepenseBundle/Controller/BilanController.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="368">
+                <state relative-caret-position="434">
                   <caret line="37" column="98" lean-forward="false" selection-start-line="37" selection-start-column="98" selection-end-line="37" selection-end-column="98" />
                   <folding />
                 </state>
@@ -60,24 +60,14 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="CommandeArticle.php" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/CommandeArticle.php">
+          <file leaf-file-name="CommandeLot.php" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/CommandeLot.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="140">
-                  <caret line="35" column="19" lean-forward="false" selection-start-line="35" selection-start-column="19" selection-end-line="35" selection-end-column="19" />
+                <state relative-caret-position="-275">
+                  <caret line="94" column="5" lean-forward="true" selection-start-line="94" selection-start-column="5" selection-end-line="94" selection-end-column="5" />
                   <folding>
                     <element signature="e#36#68#0#PHP" expanded="true" />
                   </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="CommandeLot.php" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/CommandeLot.php">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="203">
-                  <caret line="32" column="54" lean-forward="false" selection-start-line="32" selection-start-column="54" selection-end-line="32" selection-end-column="54" />
-                  <folding />
                 </state>
               </provider>
             </entry>
@@ -93,6 +83,7 @@
       <find>archi</find>
       <find>setB</find>
       <find>archiv</find>
+      <find>commande</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -133,6 +124,7 @@
         <option value="$PROJECT_DIR$/src/CommandeBundle/Resources/views/commande/commandesArchivees.html.twig" />
         <option value="$PROJECT_DIR$/src/CommandeBundle/Resources/views/commande/commande.html.twig" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/CommandeArticle.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Entity/CommandeLot.php" />
       </list>
     </option>
   </component>
@@ -146,7 +138,7 @@
   <component name="ProjectFrameBounds">
     <option name="y" value="23" />
     <option name="width" value="1440" />
-    <option name="height" value="803" />
+    <option name="height" value="797" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
@@ -306,10 +298,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16066000" />
+    <option name="totallyTimeSpent" value="16621000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="797" extended-state="6" />
+    <frame x="0" y="23" width="1440" height="797" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -357,14 +349,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/config/routing.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
-          <caret line="44" column="0" lean-forward="false" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/vitrine/contact.html.twig" />
     <entry file="file://$PROJECT_DIR$/app/Resources/views/vitrine/prestation.html.twig" />
     <entry file="file://$PROJECT_DIR$/src/ArticleBundle/Entity/Article.php">
       <provider selected="true" editor-type-id="text-editor">
@@ -378,7 +362,7 @@
         <state relative-caret-position="287">
           <caret line="117" column="0" lean-forward="false" selection-start-line="117" selection-start-column="0" selection-end-line="117" selection-end-column="0" />
           <folding>
-            <element signature="e#41#73#0#PHP" expanded="true" />
+            <element signature="e#41#73#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -621,7 +605,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/DepenseBundle/Controller/BilanController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
+        <state relative-caret-position="434">
           <caret line="37" column="98" lean-forward="false" selection-start-line="37" selection-start-column="98" selection-end-line="37" selection-end-column="98" />
           <folding />
         </state>
@@ -629,8 +613,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/CommandeArticle.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="35" column="19" lean-forward="false" selection-start-line="35" selection-start-column="19" selection-end-line="35" selection-end-column="19" />
+        <state relative-caret-position="355">
+          <caret line="45" column="7" lean-forward="true" selection-start-line="45" selection-start-column="7" selection-end-line="45" selection-end-column="7" />
+          <folding>
+            <element signature="e#36#68#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/CommandeBundle/Repository/CommandeRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="373">
+          <caret line="40" column="62" lean-forward="false" selection-start-line="40" selection-start-column="62" selection-end-line="40" selection-end-column="62" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/CommandeLot.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-275">
+          <caret line="94" column="5" lean-forward="true" selection-start-line="94" selection-start-column="5" selection-end-line="94" selection-end-column="5" />
           <folding>
             <element signature="e#36#68#0#PHP" expanded="true" />
           </folding>
