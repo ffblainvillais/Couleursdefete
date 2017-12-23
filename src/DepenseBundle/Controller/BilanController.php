@@ -2,6 +2,7 @@
 
 namespace DepenseBundle\Controller;
 
+use CommandeBundle\Entity\Annee;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,68 +43,30 @@ class BilanController extends Controller
 
     public function generationBilanAction(Request $request)
     {
-        /*$year   = $request->request->get('bilan')['annee'];
+        $yearNumber         = $request->request->get('bilan')['annee'];
+        $year               = $this->em->getRepository(Annee::class)->findOneBy(['id' => $request->request->get('bilan')['annee']]);
+        $orders             = $this->em->getRepository(Commande::class)->getOrdersForBalanceSheet($yearNumber);
+        $spentsCategories   = $this->em->getRepository(CategorieDepense::class)->findAll();
 
-        $orders = $this->em->getRepository(Commande::class)->getOrdersForBalanceSheet($year);
-        $spents = $this->em->getRepository(CategorieDepense::class)*/
+        $html = $this->render('DepenseBundle:bilan:affichage-bilan.html.twig', array(
+            "orders"            => $orders,
+            "spentsCategories"  => $spentsCategories,
+            "year"              => $year,
+        ))->getContent();
 
-        $commandes = $this->em->getRepository('CommandeBundle:Commande')->findBy(['annee' => $request->request->get('bilan')['annee'], "paye" => 1]);
+        $html2pdf = new \Html2Pdf_Html2Pdf('P','A4','fr', true, 'UTF-8', array(20, 15, 20, 15));
 
-        $repository = $this->em->getRepository('AppBundle:CommandeArticle');
-
-        $queryReservations = $repository->createQueryBuilder("ca")
-            ->leftJoin('ca.commande', 'c')
-            ->where("c.paye = 1")
-            ->getQuery();
-
-        $commandesArticles = $queryReservations->getResult();
-        
-        $repository = $this->getDoctrine()->getRepository('AppBundle:CommandeLot');
-
-        $queryReservations = $repository->createQueryBuilder("cl")
-            ->leftJoin('cl.commande', 'c')
-            ->where("c.paye = 1")
-            ->getQuery();
-
-        $commandesLot = $queryReservations->getResult();
-
-        //$commandesLot = $this->getDoctrine()->getRepository('AppBundle:CommandeLot')->findAll();
-        $depenses = $this->getDoctrine()->getRepository('DepenseBundle:Depense')->findBy(['annee' => $request->request->get('bilan')['annee']]);
-        $categoriesDepense = $this->getDoctrine()->getRepository('DepenseBundle:CategorieDepense')->findAll();
-        
-        $annee = $this->getDoctrine()->getRepository('CommandeBundle:annee')->findOneBy(['id' => $request->request->get('bilan')['annee']]);
-        
-        //on stocke la vue à convertir en PDF, en n'oubliant pas les paramètres twig si la vue comporte des données dynamiques
-        $html = $this->render('DepenseBundle:bilan:affichage-bilan.html.twig',
-                array(
-                    'commandes'         => $commandes,
-                    'commandesArticles' => $commandesArticles,
-                    'annee'             => $annee,
-                    'commandesLot'      => $commandesLot,
-                    'depenses'          => $depenses,
-                    'categoriesDepense' => $categoriesDepense)
-                )->getContent();
-         
-        //on instancie la classe Html2Pdf_Html2Pdf en lui passant en paramètre
-        //le sens de la page "portrait" => p ou "paysage" => l
-        //le format A4,A5...
-        //la langue du document fr,en,it...
-        $html2pdf = new \Html2Pdf_Html2Pdf('P','A4','fr');
- 
         //SetDisplayMode définit la manière dont le document PDF va être affiché par l’utilisateur
         //fullpage : affiche la page entière sur l'écran
         //fullwidth : utilise la largeur maximum de la fenêtre
         //real : utilise la taille réelle
-        $html2pdf->pdf->SetDisplayMode('real');
- 
-        //writeHTML va tout simplement prendre la vue stocker dans la variable $html pour la convertir en format PDF
+        $html2pdf->pdf->SetDisplayMode('fullpage');
+
         $html2pdf->writeHTML($html);
- 
-        //Output envoit le document PDF au navigateur internet avec un nom spécifique qui aura un rapport avec le contenu à convertir (exemple : Facture, Règlement…)
+
         $content = $html2pdf->Output('', true);
         
-        //on appose un titre
-        $titre = "Bilan_Financier_".str_replace(" ", "_", $annee->getLibelle());
+        $titre = "Bilan_Financier_".str_replace(" ", "_", $year->getLibelle());
 
         $response = new Response();
         $response->setContent($content);
