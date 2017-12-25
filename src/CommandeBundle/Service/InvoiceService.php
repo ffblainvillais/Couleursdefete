@@ -6,6 +6,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 use CommandeBundle\Entity\Action;
+use CommandeBundle\Entity\Commande;
+use AppBundle\Entity\CommandeArticle;
+use AppBundle\Entity\CommandeLot;
 
 class InvoiceService {
 
@@ -56,7 +59,7 @@ class InvoiceService {
 
     public function prepareRenderViewPdf($commandeId, $typeDocument)
     {
-        $commande           = $this->em->getRepository('CommandeBundle:Commande')->findOneBy(['id' => $commandeId]);
+        $commande           = $this->em->getRepository(Commande::class)->findOneBy(['id' => $commandeId]);
 
         $itemsCommande = $this->getItemsCommande($commandeId);
 
@@ -71,8 +74,9 @@ class InvoiceService {
     /**
      * Génere un fichier PDF correspondant à la commande donnée
      *
-     * @param int $commandeId
+     * @param string $html
      * @param string $typeDocument
+     * @param int $commandeId
      * @return Response
      */
     public function genererPdf($html, $typeDocument, $commandeId){
@@ -122,18 +126,18 @@ class InvoiceService {
     public function getItemsCommande($commandeId)
     {
 
-        $commande           = $this->getDoctrine()->getRepository('CommandeBundle:Commande')->findOneBy(['id' => $commandeId]);
+        $commande           = $this->getDoctrine()->getRepository(Commande::class)->findOneBy(['id' => $commandeId]);
         $location           = $this->getDoctrine()->getRepository(Action::class)->findOneBy(['libelle' => "Location"]);
         $prestation         = $this->getDoctrine()->getRepository(Action::class)->findOneBy(['libelle' => "Prestation"]);
 
         $aLocations     = array_merge(
-            $this->getDoctrine()->getRepository('AppBundle:CommandeArticle')->findBy(['commande' => $commande, "action" => $location]),
-            $this->getDoctrine()->getRepository('AppBundle:CommandeLot')->findBy(['commande' => $commande, "action" => $location])
+            $this->getDoctrine()->getRepository(CommandeArticle::class)->findBy(['commande' => $commande, "action" => $location]),
+            $this->getDoctrine()->getRepository(CommandeLot::class)->findBy(['commande' => $commande, "action" => $location])
         );
 
         $aPrestations   = array_merge(
-            $this->getDoctrine()->getRepository('AppBundle:CommandeArticle')->findBy(['commande' => $commande, "action" => $prestation]),
-            $this->getDoctrine()->getRepository('AppBundle:CommandeLot')->findBy(['commande' => $commande, "action" => $prestation])
+            $this->getDoctrine()->getRepository(CommandeArticle::class)->findBy(['commande' => $commande, "action" => $prestation]),
+            $this->getDoctrine()->getRepository(CommandeLot::class)->findBy(['commande' => $commande, "action" => $prestation])
         );
 
         $aLocations     = $this->mapArrayItems($aLocations);
