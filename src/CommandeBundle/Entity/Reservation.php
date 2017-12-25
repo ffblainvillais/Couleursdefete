@@ -18,10 +18,9 @@ class Reservation
      */
     private $id;
 
-
     /**
     * @ORM\ManyToOne(targetEntity="ArticleBundle\Entity\Article")
-    * @ORM\JoinColumn(nullable=false)
+    * @ORM\JoinColumn(name="article_id", referencedColumnName="id", nullable=false)
     */
     private $article;
     
@@ -35,8 +34,7 @@ class Reservation
      */
     private $quantite;
     
-    
-    
+
     /**
      * Get id
      *
@@ -47,25 +45,30 @@ class Reservation
         return $this->id;
     }
 
-    
-    public function setArticle(\ArticleBundle\Entity\Article $article)
+    /**
+     * @param Article $article
+     * @return $this
+     */
+    public function setArticle(Article $article)
     {
         $this->article = $article;
         return $this;
     }
 
+    /**
+     * @return Article
+     */
     public function getArticle()
     {
         return $this->article;
     }
-    
-    
+
     /**
      * Set date
      *
      * @param \date $date
      *
-     * @return Article
+     * @return Reservation
      */
     public function setDate($date)
     {
@@ -83,24 +86,23 @@ class Reservation
     {
         return $this->date;
     }
-    
-    
+
+    /**
+     * @param $quantite
+     * @return Reservation
+     */
     public function setQuantite($quantite)
     {
         $this->quantite = $quantite;
         return $this;
     }
 
+    /**
+     * @return integer
+     */
     public function getQuantite()
     {
         return $this->quantite;
     }
-    
-    
-    
-    
-    public function __toString()
-    {
-        return $this->getLibelle();
-    }
+
 }
