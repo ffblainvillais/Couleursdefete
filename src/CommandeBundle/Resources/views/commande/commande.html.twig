@@ -51,9 +51,6 @@
         <table class="table table-bordered">
             <thead>
             <tr>
-                {% if is_granted('ROLE_SUPER_ADMIN') %}
-                    <th> Utilisateur </th>
-                {% endif %}
                 <th> Commande </th>
                 <th> Libelle </th>
                 <th> Date </th>
@@ -70,11 +67,15 @@
                 {% set retourArticle = 1 %}
 
                 <tr>
-                    {% if is_granted('ROLE_SUPER_ADMIN') %}
-                        <td> <strong>{{ order.getUtilisateur().getUsername() }}</strong> </td>
-                    {% endif %}
-
-                    <td class="col-sm-1"><strong>Commande N° {{order.getId()}}</strong></td>
+                    <td class="col-sm-1">
+                        <strong>Commande N° {{order.getId()}}</strong>
+                        {% if order.paye %}
+                            <hr/>
+                            <span class="col-sm-12 label label-success">
+                                <span class="glyphicon glyphicon-ok-circle"></span> Commande payée !
+                            </span>
+                        {% endif %}
+                    </td>
 
                     <td class="col-sm-1">{{order.getLibelle()}}</td>
 

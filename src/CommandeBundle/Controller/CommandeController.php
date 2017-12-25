@@ -194,7 +194,7 @@ class CommandeController extends Controller
     public function commandesArchiveesAction(Request $request)
     {
         $archivedOrdersForPaginate = $this->em->getRepository(Commande::class)->getArchivedOrdersForPaginate();
-        
+
         $orders  = $this->paginator->paginate($archivedOrdersForPaginate, $request->query->get('page', 1),5);
 
         return $this->render(
