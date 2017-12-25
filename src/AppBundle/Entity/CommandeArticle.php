@@ -32,7 +32,7 @@ class CommandeArticle
     private $article;
     
     /**
-    * @ORM\ManyToOne(targetEntity="CommandeBundle\Entity\Commande", inversedBy="article")
+    * @ORM\ManyToOne(targetEntity="CommandeBundle\Entity\Commande", inversedBy="articles")
     * @ORM\JoinColumn(name="commande_id", referencedColumnName="id", nullable=false)
     */
     private $commande;
