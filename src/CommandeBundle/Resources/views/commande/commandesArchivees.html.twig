@@ -36,26 +36,7 @@
 
                         <!-- ACTIONS -->
                         <td class="row TEST col-sm-3">
-                            <!-- Génération de la facture -->
-                            {% if(order.getPaye() == true)%}
-                                <a href="{{path('générer-ultime-facture', {'idCommande': order.getId()})}}" class="col-sm-12">
-                                    <span class="glyphicon glyphicon-download-alt"></span> Télécharger facture
-                                </a>
-                            {% else %}
-
-                                <!-- Génération de la facture -->
-                                <div class="col-sm-12">
-                                    <a href="{{path('générer-facture',{'idCommande': order.getId()})}}">
-                                        <span class="glyphicon glyphicon-copy"></span> Génerer facture
-                                    </a>
-
-                                    <!-- Génération du devis -->
-                                    <a href="{{path('générer-devis',{'idCommande': order.getId()})}}">
-                                        / devis
-                                    </a>
-                                </div>
-
-                            {% endif %}
+                            <a href="{{ path('view-order', {'idCommande' : order.id}) }}"><span class="glyphicon glyphicon-eye-open"></span> Voir les détails</a>
                         </td>
                     </tr>
                 {% endfor %}
