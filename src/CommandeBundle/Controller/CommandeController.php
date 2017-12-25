@@ -201,6 +201,7 @@ class CommandeController extends Controller
         exit;
     }
 
+    //@todo redirect on view order url
     public function suppressionArticleAction(Request $request)
     {
         $order          = $this->commandeService->getOrderById($request->attributes->get('idCommande'));
@@ -256,6 +257,7 @@ class CommandeController extends Controller
         return $this->redirectToRoute('commande');
     }
 
+    //@todo redirect on view order url
     public function payeAction(Request $request)
     {
         $order = $this->commandeService->getOrderById($request->attributes->get('idCommande'));
@@ -308,7 +310,6 @@ class CommandeController extends Controller
 
     public function ajoutLotPopAction(Request $request)
     {
-        
         $idCommande = $request->attributes->get('idCommande');
 
         $form = $this->createForm(AjoutLotCommandeType::class, null, array(
@@ -337,7 +338,8 @@ class CommandeController extends Controller
 
         exit;
     }
-    
+
+    //@todo redirect on view order url
     public function suppressionLotAction(Request $request)
     {
         $order      = $this->commandeService->getOrderById($request->attributes->get('idCommande'));

@@ -6,7 +6,7 @@
 
     <div class="order-info" style="display:flex">
         <div class="panel panel-default" style="padding: 0; width: 40%; margin-right: 5%;">
-            <div class="panel-heading">Commande {{ order.id }} du {{ order.dateEvenement|date('d/m/Y') }} </div>
+            <div class="panel-heading">Commande <strong>{{ order.id }}</strong> du <strong>{{ order.dateEvenement|date('d/m/Y') }}</strong> </div>
             <div class="panel-body">
                 <h3>Client : </h3>
                 <p>{{ order.client.prenom }} {{ order.client.nom }}</p>
@@ -67,7 +67,7 @@
 
                 {% endif %}
 
-                {% if order.paye == 1 %}
+                {% if order.paye == 1 and order.archive == 0 %}
                     <!-- Archiver une commande -->
                     <a href="{{path('archiver-commande', {'idCommande': order.id})}}"
                        class="col-sm-12"
@@ -92,17 +92,18 @@
         </div>
     </div>
 
-    <section class="card card--secondary paper--1">
+    {% if order.archive == 0 %}
+        <section class="card card--secondary paper--1">
 
-        <h3 class="card__title">Détails de la commande</h3>
+            <h3 class="card__title">Détails de la commande</h3>
 
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th> Articles </th>
-            </tr>
-            </thead>
-            <tbody class="row">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th> Articles </th>
+                </tr>
+                </thead>
+                <tbody class="row">
 
                 {% set compteArticle = 0 %}
                 {% set total = 0 %}
@@ -131,7 +132,7 @@
                                     <strong>{{articleOrder.action}}</strong>
 
                                     {%if(order.paye == false)%}
-                                            <a href="{{path('suppression-article-commande',{'idArticle': articleOrder.article.id,'idCommande': order.id})}}">
+                                        <a href="{{path('suppression-article-commande',{'idArticle': articleOrder.article.id,'idCommande': order.id})}}">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </a>
                                     {%endif%}
@@ -211,9 +212,13 @@
                     </td>
 
                 </tr>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
 
-    </section>
+        </section>
+    {% else %}
+        <h3> Cette commande est archivée les articles sont donc indisponibles</h3>
+    {% endif %}
+
 
 {% endblock %}
