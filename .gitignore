@@ -8,3 +8,4 @@ var/sessions/prod/*
 var/sessions/*
 var/logs/*
 var/*
+web/data/factures/*

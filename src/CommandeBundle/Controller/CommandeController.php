@@ -201,7 +201,6 @@ class CommandeController extends Controller
         exit;
     }
 
-    //@todo redirect on view order url
     public function suppressionArticleAction(Request $request)
     {
         $order          = $this->commandeService->getOrderById($request->attributes->get('idCommande'));
@@ -212,7 +211,7 @@ class CommandeController extends Controller
 
         $this->addFlash('feedback', "L'article '".$article->getLibelle()."' à bien été enlevé de la commande '".$order->getLibelle()."' votre stock de '".$article->getLibelle()."' est désormais de ".$article->getQuantite());
          
-        return $this->redirectToRoute('commande');
+        return $this->redirectToRoute('view-order', array('idCommande' => $order->getId()));
         
     }
     
@@ -254,10 +253,9 @@ class CommandeController extends Controller
         $this->em->persist($order);
         $this->em->flush();
 
-        return $this->redirectToRoute('commande');
+        return $this->redirectToRoute('view-order', array('idCommande' => $order->getId()));
     }
 
-    //@todo redirect on view order url
     public function payeAction(Request $request)
     {
         $order = $this->commandeService->getOrderById($request->attributes->get('idCommande'));
@@ -273,7 +271,7 @@ class CommandeController extends Controller
 
         $this->addFlash('feedback', "La commande '".$order->getLibelle()."' à bien été déclarée comme étant payée");
 
-        return $this->redirectToRoute('commande');
+        return $this->redirectToRoute('view-order', array('idCommande' => $order->getId()));
     }
 
     public function versementAcomptePopAction(Request $request)
@@ -339,7 +337,6 @@ class CommandeController extends Controller
         exit;
     }
 
-    //@todo redirect on view order url
     public function suppressionLotAction(Request $request)
     {
         $order      = $this->commandeService->getOrderById($request->attributes->get('idCommande'));
@@ -350,7 +347,7 @@ class CommandeController extends Controller
 
         $this->addFlash('feedback', "Le lot '".$lot->getLibelle()."' à bien été enlevé de la commande '".$order->getLibelle());
 
-        return $this->redirectToRoute('commande');
+        return $this->redirectToRoute('view-order', array('idCommande' => $order->getId()));
     }
 
     //@todo old function useless now
