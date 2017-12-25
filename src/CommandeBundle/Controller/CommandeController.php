@@ -19,7 +19,6 @@ use CommandeBundle\Entity\Commande;
 use CommandeBundle\Entity\Annee;
 use AppBundle\Entity\CommandeLot;
 
-
 class CommandeController extends Controller
 {
 
@@ -28,39 +27,55 @@ class CommandeController extends Controller
     protected $invoiceService;
     protected $commandeService;
     protected $bookingService;
+    protected $paginator;
 
-    public function __construct(ContainerInterface $container, EntityManagerInterface $entityManager, InvoiceService $invoiceService,  CommandeService $commandeService, BookingService $bookingService)
+    public function __construct(ContainerInterface $container, EntityManagerInterface $entityManager, InvoiceService $invoiceService,  CommandeService $commandeService, BookingService $bookingService, $paginator)
     {
         $this->container        = $container;
         $this->em               = $entityManager;
         $this->invoiceService   = $invoiceService;
         $this->commandeService  = $commandeService;
         $this->bookingService   = $bookingService;
+        $this->paginator        = $paginator;
     }
 
     public function indexAction(Request $request)
     {
-        
-        $user = $this->getUser();
+        $curentPage = $request->query->get('page', 1);
+        $query      = $this->em->getRepository('CommandeBundle:Commande')->getOrdersForPaginate();
 
-        $query = $this->em->getRepository('CommandeBundle:Commande')->getOrdersForPaginate();
+        $orders     = $this->paginator->paginate($query, $curentPage, 5);
 
-        $commandes              = $this->get('knp_paginator')->paginate($query,$request->query->get('page', 1),5);
-        $commandesArticles      = $this->getDoctrine()->getRepository('AppBundle:CommandeArticle')->findAll();
-        $commandesLots          = $this->getDoctrine()->getRepository('AppBundle:CommandeLot')->findAll();
-        
         $form = $this->createForm(CommandeType::class, null, array(
-            "action"    => $this->generateUrl('ajout-commande'),
-            'attr'      => array('user' => $user))
+                "action"    => $this->generateUrl('ajout-commande'),
+                'attr'      => array('user' => null))
         );
 
         return $this->render(
             'CommandeBundle:commande:commande.html.twig',
             array(
                 'form'              => $form->createView(),
-                'commandes'         => $commandes,
-                'commandesArticles' => $commandesArticles,
-                'commandesLots'     => $commandesLots)
+                'orders'            => $orders
+            )
+        );
+    }
+
+    public function viewAction(Request $request)
+    {
+        $orderId    = $request->attributes->get('idCommande');
+        $order      = $this->em->getRepository(Commande::class)->findOneBy(['id' => $orderId]);
+
+        $form = $this->createForm(CommandeType::class, null, array(
+                "action"    => $this->generateUrl('ajout-commande'),
+                'attr'      => array('user' => null))
+        );
+
+        return $this->render(
+            'CommandeBundle:commande:order-details.html.twig',
+            array(
+                'form'          => $form->createView(),
+                'order'         => $order,
+            )
         );
     }
 

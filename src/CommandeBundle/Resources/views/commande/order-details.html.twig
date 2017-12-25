@@ -1,0 +1,219 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h3><a href="{{ path('commande') }}"><span class="glyphicon glyphicon-arrow-left"></span> Retour aux commandes</a></h3>
+
+    <div class="order-info" style="display:flex">
+        <div class="panel panel-default" style="padding: 0; width: 40%; margin-right: 5%;">
+            <div class="panel-heading">Commande {{ order.id }} du {{ order.dateEvenement|date('d/m/Y') }} </div>
+            <div class="panel-body">
+                <h3>Client : </h3>
+                <p>{{ order.client.prenom }} {{ order.client.nom }}</p>
+                <h3>Adresse client : </h3>
+                <p>{% if order.client.adresse %}{{ order.client.adresse }}</p>{% endif %}
+                <h3>Contact :</h3>
+                <section>
+                    {% if order.client.telephone %}<p><span class="glyphicon glyphicon-phone"></span> {{ order.client.telephone }}</p>{% endif %}
+                    {% if order.client.mail %}<p><span class="glyphicon glyphicon-envelope"></span> {{ order.client.mail }}</p>{% endif %}
+                </section>
+            </div>
+        </div>
+        <div class="panel panel-primary" style="padding: 0; width:55%;">
+            <div class="panel-heading">Actions</div>
+
+            <div class="panel-body">
+                {% if(order.paye == true)%}
+                    <span class="col-sm-12 label label-success">
+                    <span class="glyphicon glyphicon-ok-circle"></span> Commande payée !
+                </span>
+                {% elseif(order.paye == false) %}
+                    <a href="{{path('commande-paye', {'idCommande': order.id})}}" class="col-sm-12">
+                        <span class="glyphicon glyphicon-ok-circle"></span> Commande payée
+                    </a>
+
+                    <!-- Versement acompte -->
+                    {% if(order.acompte == 0)%}
+                        <a
+                                href="{{ path('versement-acompte-pop', {'idCommande': order.id})}}"
+                                class="pop-ajax col-sm-12"
+                                data-submit-close='true'
+                                data-submit-reload='true'
+                        >
+                            <span class="glyphicon glyphicon-piggy-bank"></span> Acompte versé
+                        </a>
+                    {% endif %}
+
+                {% endif %}
+
+
+                {% if(order.paye == 1)%}
+                    <a href="{{path('générer-ultime-facture', {'idCommande': order.id})}}" class="col-sm-12">
+                        <span class="glyphicon glyphicon-download-alt"></span> Télécharger facture
+                    </a>
+                {% else %}
+
+                    <!-- Génération de la facture -->
+                    <div class="col-sm-12">
+                        <a href="{{path('générer-facture',{'idCommande': order.id})}}">
+                            <span class="glyphicon glyphicon-copy"></span> Génerer facture
+                        </a>
+
+                        <!-- Génération du devis -->
+                        <a href="{{path('générer-devis',{'idCommande': order.id})}}">
+                            / devis
+                        </a>
+                    </div>
+
+                {% endif %}
+
+                {% if order.paye == 1 %}
+                    <!-- Archiver une commande -->
+                    <a href="{{path('archiver-commande', {'idCommande': order.id})}}"
+                       class="col-sm-12"
+                    >
+                        <span class="glyphicon glyphicon-folder-open"></span> Archiver la commande
+                    </a>
+
+                {% endif %}
+
+                <!-- Suppression de la commande -->
+                <a class=" col-sm-12 popconfirm"
+                   href="{{path('suppression-commande', {'idCommande': order.id})}}"
+                   data-confirm-title="Attention"
+                   data-confirm-content="Etes vous sur de vouloir supprimer la commande '{{order.libelle}}'"
+                   data-confirm-placement="bottom"
+                   data-confirm-yesBtn="<span class='glyphicon glyphicon-ok'></span> Oui"
+                   data-confirm-noBtn="<span class='glyphicon glyphicon-remove'></span> Non"
+                >
+                    <span class=" glyphicon glyphicon-trash"></span> Supprimer
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <section class="card card--secondary paper--1">
+
+        <h3 class="card__title">Détails de la commande</h3>
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th> Articles </th>
+            </tr>
+            </thead>
+            <tbody class="row">
+
+                {% set compteArticle = 0 %}
+                {% set total = 0 %}
+                {% set locationCommande = 0 %}
+                {% set retourArticle = 1 %}
+
+                <tr>
+
+                    <td class="col-sm-6">
+                        <ul>
+
+                            <!-- Boucle ARTICLE -->
+                            {% for articleOrder in order.articles %}
+                                <li>
+                                    <!-- Libelle article -->
+                                    {{articleOrder.article.libelle}}
+
+                                    <br/>
+
+                                    <!-- Quantité article -->
+                                    -> (x{{articleOrder.quantite}})
+                                    {% set compteArticle = articleOrder.article.prix * articleOrder.quantite %}
+                                    = {{compteArticle}}<span class="glyphicon glyphicon-euro"></span>
+
+                                    <!-- Action article -->
+                                    <strong>{{articleOrder.action}}</strong>
+
+                                    {%if(order.paye == false)%}
+                                            <a href="{{path('suppression-article-commande',{'idArticle': articleOrder.article.id,'idCommande': order.id})}}">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </a>
+                                    {%endif%}
+
+                                    {% set total = total+compteArticle %}
+                                </li>
+
+                            {% endfor %}
+
+
+                            <!-- Boucle LOT -->
+                            {% for orderLot in order.lots %}
+                                <li>
+                                    <!-- Libelle article -->
+                                    {{orderLot.lot.libelle}}
+
+                                    <br/>
+
+                                    <!-- Quantité article -->
+                                    -> (x{{orderLot.quantite}})
+                                    {% set compteArticle = orderLot.lot.prix * orderLot.quantite %}
+                                    = {{compteArticle}}<span class="glyphicon glyphicon-euro"></span>
+
+                                    {% set compteLot = orderLot.lot.prix * orderLot.quantite %}
+
+                                    <!-- Action article -->
+                                    <strong>{{orderLot.action}}</strong>
+
+                                    {%if(order.paye == false)%}
+                                        <a href="{{path('suppression-lot-commande',{'idLot': orderLot.lot.id,'idCommande': order.id})}}">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </a>
+                                    {%endif%}
+
+                                    {% set total = total+compteLot %}
+
+                                </li>
+
+                            {% endfor %}
+
+
+
+                            <!-- Ajout ARTICLE -->
+                            {%if(order.paye == false)%}
+                                <li class="POPOVER">
+                                    <a
+                                            href="{{ path('ajout-article-commande-pop', {'idCommande': order.id})}}"
+                                            class="pop-ajax"
+                                            data-submit-close='true'
+                                            data-submit-reload='true'
+                                    >
+                                        <span class="glyphicon glyphicon-plus"></span> Ajouter un article
+                                    </a>
+                                </li>
+                                <li class="POPOVER">
+                                    <a
+                                            href="{{ path('ajout-lot-commande-pop', {'idCommande': order.id})}}"
+                                            class="pop-ajax"
+                                            data-submit-close='true'
+                                            data-submit-reload='true'
+                                    >
+                                        <span class="glyphicon glyphicon-plus"></span> Ajouter un lot
+                                    </a>
+                                </li>
+
+                            {%endif%}
+                        </ul>
+                        <hr/>
+                        TOTAL : {{total}}<span class="glyphicon glyphicon-euro"></span><br/>
+                        {% if(order.acompte != 0) %}
+                            Acompte : {{order.acompte}} <span class="glyphicon glyphicon-euro"></span>
+                            <br/>
+                            {% set reste = total - order.acompte %}
+                            <hr/>
+                            Reste : {{reste}} <span class="glyphicon glyphicon-euro"></span>
+                        {% endif %}
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+
+    </section>
+
+{% endblock %}

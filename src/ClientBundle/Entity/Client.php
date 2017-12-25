@@ -3,6 +3,7 @@
 namespace ClientBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use UserBundle\Entity\User;
 
 /**
  * @ORM\Entity
@@ -18,35 +19,36 @@ class Client
      */
     private $id;
 
-
     /**
      * @ORM\Column(type="string")
      */
     private $nom;
-    
-    
+
     /**
      * @ORM\Column(type="string")
      */
     private $prenom;
-    
-    
+
     /**
      * @ORM\Column(type="string")
      */
     private $adresse;
-    
-    
+
     /**
      * @ORM\Column(type="string")
      */
     private $mail;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $telephone;
     
     /**
     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
     * @ORM\JoinColumn(nullable=true)
     */
-    private $utilisateur;
+    //private $utilisateur;
 
     /**
      * Get id
@@ -63,7 +65,7 @@ class Client
      *
      * @param \varchar $nom
      *
-     * @return Article
+     * @return Client
      */
     public function setNom($nom)
     {
@@ -82,15 +84,12 @@ class Client
         return $this->nom;
     }
     
-    
-    
-    
     /**
      * Set prenom
      *
      * @param \varchar $prenom
      *
-     * @return Article
+     * @return Client
      */
     public function setPrenom($prenom)
     {
@@ -115,7 +114,7 @@ class Client
      *
      * @param \varchar $adresse
      *
-     * @return Article
+     * @return Client
      */
     public function setAdresse($adresse)
     {
@@ -133,14 +132,13 @@ class Client
     {
         return $this->adresse;
     }
-    
-    
+
     /**
      * Set mail
      *
      * @param \varchar $mail
      *
-     * @return Article
+     * @return Client
      */
     public function setMail($mail)
     {
@@ -158,24 +156,34 @@ class Client
     {
         return $this->mail;
     }
-    
-    
-    
-    public function setUtilisateur(\UserBundle\Entity\User $utilisateur)
+
+    /**
+     * Set mail
+     *
+     * @param \varchar $mail
+     *
+     * @return Client
+     */
+    public function setTelephone($phone)
     {
-        $this->utilisateur = $utilisateur;
+        $this->telephone = $phone;
+
         return $this;
     }
 
-    public function getUtilisateur()
+    /**
+     * Get mail
+     *
+     * @return \varchar
+     */
+    public function getTelephone()
     {
-        return $this->utilisateur;
+        return $this->telephone;
     }
-    
-    
-    
+
     public function __toString()
     {
-        return $this->getNom();
+        return $this->getPrenom() . $this->getNom();
     }
+
 }

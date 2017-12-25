@@ -2,6 +2,10 @@ commande:
     path:   /commande
     defaults: {_controller: commande_bundle_controller_commande_controller:indexAction }
 
+view-order:
+    path:   /commande/{idCommande}
+    defaults: {_controller: commande_bundle_controller_commande_controller:viewAction }
+
 ajout-commande:
     path:   /commande/ajout-commande
     defaults: {_controller: commande_bundle_controller_commande_controller:ajoutAction }
