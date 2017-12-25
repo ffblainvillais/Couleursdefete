@@ -21,7 +21,6 @@ class AppKernel extends Kernel
             new CommandeBundle\CommandeBundle(),
             new ClientBundle\ClientBundle(),
             new FOS\UserBundle\FOSUserBundle(),
-            new ActionBundle\ActionBundle(),
             new DepenseBundle\DepenseBundle(),
             new VitrineBundle\VitrineBundle(),
             new PartenaireBundle\PartenaireBundle(),

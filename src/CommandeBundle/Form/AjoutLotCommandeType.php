@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use ArticleBundle\Entity\ArticleRepository;
+use CommandeBundle\Entity\Action;
 
 class AjoutLotCommandeType extends AbstractType
 {
@@ -36,7 +36,7 @@ class AjoutLotCommandeType extends AbstractType
             ->add('lot', EntityType::class,  array ('label' => 'Lot', 'class' => 'ArticleBundle:Lot'))                
             ->add('quantite', IntegerType::class)
                             
-            ->add('action', EntityType::class, array('class' => 'ActionBundle:Action','choice_label' => 'libelle'))
+            ->add('action', EntityType::class, array('class' => Action::class,'choice_label' => 'libelle'))
 
      
                             

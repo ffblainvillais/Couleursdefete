@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use CommandeBundle\Entity\Commande;
 use ArticleBundle\Entity\Article;
-use ActionBundle\Entity\Action;
+use CommandeBundle\Entity\Action;
 
 /**
  * @ORM\Entity
@@ -38,7 +38,7 @@ class CommandeArticle
     private $commande;
     
     /**
-    * @ORM\ManyToOne(targetEntity="ActionBundle\Entity\Action")
+    * @ORM\ManyToOne(targetEntity="CommandeBundle\Entity\Action")
     * @ORM\JoinColumn(nullable=false)
     */
     private $action;

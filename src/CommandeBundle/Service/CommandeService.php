@@ -10,7 +10,7 @@ use ArticleBundle\Entity\Lot;
 use CommandeBundle\Entity\Commande;
 use AppBundle\Entity\CommandeArticle;
 use AppBundle\Entity\CommandeLot;
-use ActionBundle\Entity\Action;
+use CommandeBundle\Entity\Action;
 
 class CommandeService{
 

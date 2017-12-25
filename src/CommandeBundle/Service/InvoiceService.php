@@ -5,6 +5,8 @@ namespace CommandeBundle\Service;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
+use CommandeBundle\Entity\Action;
+
 class InvoiceService {
 
     protected $em;
@@ -121,8 +123,8 @@ class InvoiceService {
     {
 
         $commande           = $this->getDoctrine()->getRepository('CommandeBundle:Commande')->findOneBy(['id' => $commandeId]);
-        $location           = $this->getDoctrine()->getRepository('ActionBundle:Action')->findOneBy(['libelle' => "Location"]);
-        $prestation         = $this->getDoctrine()->getRepository('ActionBundle:Action')->findOneBy(['libelle' => "Prestation"]);
+        $location           = $this->getDoctrine()->getRepository(Action::class)->findOneBy(['libelle' => "Location"]);
+        $prestation         = $this->getDoctrine()->getRepository(Action::class)->findOneBy(['libelle' => "Prestation"]);
 
         $aLocations     = array_merge(
             $this->getDoctrine()->getRepository('AppBundle:CommandeArticle')->findBy(['commande' => $commande, "action" => $location]),

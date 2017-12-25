@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use ArticleBundle\Entity\ArticleRepository;
+use CommandeBundle\Entity\Action;
 
 class AjoutArticleCommandeType extends AbstractType
 {
@@ -36,7 +37,7 @@ class AjoutArticleCommandeType extends AbstractType
                             
             ->add('quantite', IntegerType::class)
                             
-            ->add('action', EntityType::class, array('class' => 'ActionBundle:Action','choice_label' => 'libelle'))
+            ->add('action', EntityType::class, array('class' => Action::class,'choice_label' => 'libelle'))
 
      
                             

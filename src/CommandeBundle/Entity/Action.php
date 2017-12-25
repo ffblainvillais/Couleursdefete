@@ -1,6 +1,6 @@
 <?php
 
-namespace ActionBundle\Entity;
+namespace CommandeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -23,7 +23,6 @@ class Action
     private $libelle;
     
 
-    
     /**
      * Get id
      *
@@ -34,24 +33,27 @@ class Action
         return $this->id;
     }
 
-   
-    
+    /**
+     * @param $libelle
+     * @return $this
+     */
     public function setLibelle($libelle)
     {
         $this->libelle = $libelle;
         return $this;
     }
 
-
+    /**
+     * @return mixed
+     */
     public function getLibelle()
     {
         return $this->libelle;
     }
-    
-   
-    
 
-    
+    /**
+     * @return mixed
+     */
     public function __toString()
     {
         return $this->getLibelle();
