@@ -79,9 +79,33 @@ class CommandeController extends Controller
         );
     }
 
+    public function searchAction(Request $request)
+    {
+        $orderIdPost = $request->request->get('orderId');
+
+        if (!is_numeric($orderIdPost)) {
+
+            $this->addFlash('alert', "Vous devez specifier un nombre pour rechercher une commande");
+
+            return $this->redirectToRoute('commande');
+        }
+
+        $order = $this->commandeService->getOrderById($orderIdPost);
+        
+        if ($order instanceof Commande) {
+
+           return $this->redirectToRoute('view-order', array('idCommande' => $orderIdPost));
+
+        } else {
+
+            $this->addFlash('alert', "la commande '".$orderIdPost."' est introuvable");
+
+            return $this->redirectToRoute('commande');
+        }
+    }
+
     public function ajoutAction(Request $request)
     {
-
         $commande = new Commande();
         
         $user = $this->getUser();

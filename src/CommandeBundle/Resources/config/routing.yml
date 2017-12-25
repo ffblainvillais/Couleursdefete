@@ -6,6 +6,10 @@ view-order:
     path:   /commande/details/{idCommande}
     defaults: {_controller: commande_bundle_controller_commande_controller:viewAction }
 
+search-order:
+    path:   /commande/recherche
+    defaults: {_controller: commande_bundle_controller_commande_controller:searchAction }
+
 ajout-commande:
     path:   /commande/ajout-commande
     defaults: {_controller: commande_bundle_controller_commande_controller:ajoutAction }

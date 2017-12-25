@@ -41,6 +41,15 @@
         </div>
     {% endfor %}
 
+    <form class="well" action="{{ path('search-order') }}" method="post">
+        <h3><strong>Rechercher une commande</strong></h3>
+        <br/>
+
+        <label for="commande_number" style="width: 18%">Numero commande</label>
+        <input required type="text" id="commande_number" name="orderId" style="width: 25%"/>
+        <input type="submit" class="btn btn-primary" value="Rechercher" style="width: 10%"/>
+    </form>
+
 
     {% if orders == null %}
         <p>Il n'y à pas encore de commande</p>
