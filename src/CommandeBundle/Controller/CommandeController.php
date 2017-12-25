@@ -193,10 +193,9 @@ class CommandeController extends Controller
     
     public function commandesArchiveesAction(Request $request)
     {
-
         $archivedOrdersForPaginate = $this->em->getRepository(Commande::class)->getArchivedOrdersForPaginate();
-
-        $orders  = $this->get('knp_paginator')->paginate($archivedOrdersForPaginate,$request->query->get('page', 1),5);
+        
+        $orders  = $this->paginator->paginate($archivedOrdersForPaginate, $request->query->get('page', 1),5);
 
         return $this->render(
             'CommandeBundle:commande:commandesArchivees.html.twig',

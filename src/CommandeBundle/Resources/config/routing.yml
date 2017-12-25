@@ -3,7 +3,7 @@ commande:
     defaults: {_controller: commande_bundle_controller_commande_controller:indexAction }
 
 view-order:
-    path:   /commande/{idCommande}
+    path:   /commande/details/{idCommande}
     defaults: {_controller: commande_bundle_controller_commande_controller:viewAction }
 
 ajout-commande:
