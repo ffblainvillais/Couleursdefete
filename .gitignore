@@ -1,11 +1,6 @@
 var/cache/*
 vendor/*
-idea/*
 .idea/*
-/idea/*
-idea/sessions/*
-var/sessions/prod/*
-var/sessions/*
-var/logs/*
 var/*
 web/data/factures/*
+web/bundles/*
