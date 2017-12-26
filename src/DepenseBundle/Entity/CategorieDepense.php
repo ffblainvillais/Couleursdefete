@@ -51,7 +51,7 @@ class CategorieDepense
      *
      * @param \varchar $libelle
      *
-     * @return Article
+     * @return CategorieDepense
      */
     public function setLibelle($libelle)
     {
@@ -92,6 +92,11 @@ class CategorieDepense
     public function getSpents()
     {
         return $this->spents;
+    }
+
+    public function __toString()
+    {
+        return $this->getLibelle();
     }
 
 }

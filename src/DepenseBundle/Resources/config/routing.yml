@@ -1,30 +1,30 @@
 depense:
     path:   /depense
-    defaults: {_controller: DepenseBundle:Depense:index }
+    defaults: {_controller: depense_bundle_controller_depense_controller:indexAction }
 
 ajout-depense:
     path:   /depense/ajout-depense
-    defaults: {_controller: DepenseBundle:Depense:ajout }
+    defaults: {_controller: depense_bundle_controller_depense_controller:ajoutAction }
 
 ajout-categorie:
     path:   /depense/ajout-categorie
-    defaults: {_controller: DepenseBundle:Depense:ajoutCategorie }
+    defaults: {_controller: depense_bundle_controller_depense_controller:ajoutCategorieAction }
 
 suppression-depense:
     path: /depense/suppression-depense/{idDepense}
-    defaults: {_controller: DepenseBundle:Depense:suppression }
+    defaults: {_controller: depense_bundle_controller_depense_controller:suppressionAction }
 
 suppression-categorie:
     path: /depense/suppression-categorie/{idCategorie}
-    defaults: {_controller: DepenseBundle:Depense:suppressionCategorie }
+    defaults: {_controller: depense_bundle_controller_depense_controller:suppressionCategorieAction }
 
 modification-depense:
     path: /depense/modification-depense/{idDepense}
-    defaults: {_controller: DepenseBundle:Depense:modification }
+    defaults: {_controller: depense_bundle_controller_depense_controller:modificationAction }
 
 modification-pop-depense:
     path: /depense/modification-pop-depense/{idDepense}
-    defaults: {_controller: DepenseBundle:Depense:modificationPop }
+    defaults: {_controller: depense_bundle_controller_depense_controller:modificationPopAction }
 
 bilan:
     path:   /bilan

@@ -9,52 +9,39 @@ use DepenseBundle\Form\CategorieDepenseType;
 use DepenseBundle\Entity\Depense;
 use DepenseBundle\Entity\CategorieDepense;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use DepenseBundle\Service\SpentService;
 
 class DepenseController extends Controller
 {
-    
-   
+
+    protected $em;
+    protected $spentService;
+
+    public function __construct(ContainerInterface $container, EntityManagerInterface $entityManager, SpentService $spentService)
+    {
+        $this->container        = $container;
+        $this->em               = $entityManager;
+        $this->spentService     = $spentService;
+    }
+
     public function indexAction()
     {
-        
-        $repository = $this->getDoctrine()->getRepository('DepenseBundle:Depense');
-        
-        $categoriesDepense = $this->getDoctrine()->getRepository('DepenseBundle:CategorieDepense')->findAll();
-        
-        //partie multi utilisateur
-        /*foreach($this->getUser()->getRoles() as $role){
-            
-            if($role === "ROLE_SUPER_ADMIN"){
-                $articles = $repository->findAll();
-                break;
-            }
-            elseif($role === "ROLE_ADMIN"){
-                $articles = $repository->findBy(['utilisateur' => $this->getUser()]);
-                break;
-            }
-            //@todo selectionner les article du parent (de son admin)
-            else{
-                $articles = $repository->findBy(['utilisateur' => $this->getUser()]);
-                break;
-            }
-        }*/
-        
-        $depenses = $repository->findAll();
-        
-        $form = $this->createForm(DepenseType::class, null, array("action" => $this->generateUrl('ajout-depense')));
-        $formCategorie = $this->createForm(CategorieDepenseType::class, null, array("action" => $this->generateUrl('ajout-categorie')));
+        $categoriesDepense  = $this->em->getRepository(CategorieDepense::class)->findAll();
+        $form               = $this->createForm(DepenseType::class, null, array("action" => $this->generateUrl('ajout-depense')));
+        $formCategorie      = $this->createForm(CategorieDepenseType::class, null, array("action" => $this->generateUrl('ajout-categorie')));
 
         return $this->render(
             'DepenseBundle:depense:depense.html.twig',
-            array('depenses' => $depenses,
-                  'categories' => $categoriesDepense,
-                  'form' => $form->createView(),
-                  'formCategorie' => $formCategorie->createView(),
+            array(
+                  'categories'      => $categoriesDepense,
+                  'form'            => $form->createView(),
+                  'formCategorie'   => $formCategorie->createView(),
             )
         );
     }
-    
-    
+
     public function ajoutAction(Request $request)
     {
         $depense = new Depense();
@@ -80,8 +67,8 @@ class DepenseController extends Controller
             $annee = new Annee();
             $annee->setLibelle($anneeExplose);
             
-            $em->persist($annee);
-            $em->flush();
+            $this->em->persist($annee);
+            $this->em->flush();
         }
 
         $depense->setAnnee($annee);
@@ -89,9 +76,8 @@ class DepenseController extends Controller
         //multi-user
         //$depense->setUtilisateur($this->getUser());
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($depense);
-        $em->flush();
+        $this->em->persist($depense);
+        $this->em->flush();
 
         $this->addFlash('feedback', "la dépense '".$depense->getLibelle()."' à bien été enregistrée");
        
@@ -106,9 +92,8 @@ class DepenseController extends Controller
        
         $this->addFlash('feedback', "La dépense '".$depense->getLibelle()."' à bien été supprimé");
        
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($depense);
-        $em->flush();
+        $this->em->remove($depense);
+        $this->em->flush();
         
         return $this->redirectToRoute('depense');
     }
@@ -145,9 +130,8 @@ class DepenseController extends Controller
         
         $form->handleRequest($request);
 
-        $em = $this->getDoctrine()->getManager();
-        $em->merge($depense);
-        $em->flush();
+        $this->em->merge($depense);
+        $this->em->flush();
 
         $this->addFlash('feedback', "la dépense '".$depense->getLibelle()."' à bien été modifié");
         
@@ -167,9 +151,8 @@ class DepenseController extends Controller
 
         $categorieDepense = $form->getData();
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($categorieDepense);
-        $em->flush();
+        $this->em->persist($categorieDepense);
+        $this->em->flush();
 
         $this->addFlash('feedback', "la catégorie de dépense '".$categorieDepense->getLibelle()."' à bien été enregistrée");
 
@@ -184,9 +167,8 @@ class DepenseController extends Controller
 
         $this->deplaceDepensesDansDivers($categorieDepense);
 
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($categorieDepense);
-        $em->flush();
+        $this->em->remove($categorieDepense);
+        $this->em->flush();
 
         return $this->redirectToRoute('depense');
     }
@@ -195,18 +177,16 @@ class DepenseController extends Controller
 
         $depenses = $this->getDoctrine()->getRepository('DepenseBundle:Depense')->findBy(['categorie' => $categorieDepense]);
 
-        $em = $this->getDoctrine()->getManager();
-
         $aTrier = $this->getDoctrine()->getRepository('DepenseBundle:CategorieDepense')->findOneBy(['libelle' => 'A trier']);
 
         foreach ($depenses as $depense){
 
             $depense->setCategorie($aTrier);
 
-            $em->merge($depense);
+            $this->em->merge($depense);
         }
 
-        $em->flush();
+        $this->em->flush();
 
         return true;
     }

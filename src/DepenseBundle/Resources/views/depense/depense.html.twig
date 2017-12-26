@@ -43,7 +43,7 @@
     {% endfor %}
     
     
-    {% if depenses == null %}
+    {% if categories == null %}
         <p>Il n'y à pas encore de dépenses enregistrées</p>
     {% else %}
         {% set total = 0 %}
@@ -74,9 +74,6 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            {% if is_granted('ROLE_SUPER_ADMIN') %}
-                                                <th> Utilisateur </th>
-                                            {%endif%}
                                             <th> Dépense </th>
                                             <th> Montant </th>
                                             <th> Date </th>
@@ -85,44 +82,38 @@
                                         </tr>
                                     </thead> 
                                     <tbody>
-                                    {% for depense in depenses %}
-                                        {% if(depense.getCategorie().getId() == categorie.getId())%}
-                                            <tr>
-                                                {% if is_granted('ROLE_SUPER_ADMIN') %}
-                                                    <th> {{depense.getUtilisateur().getUsername()}} </th>
-                                                {%endif%}
-                                                <td>{{depense.getLibelle()}} </td>
-                                                <td> {{depense.getMontant()}}<span class="glyphicon glyphicon-euro"></span></td>
-                                                {% set totalCategorie = totalCategorie+depense.getMontant() %}
-                                                <td> {{depense.getDate()|date('d/m/Y')}}</td>
-                                                <td> {{depense.getCategorie()}}</td>
-                                                <td class="row MODAL"> 
+                                    {% for depense in categorie.spents %}
+                                        <tr>
+                                            <td>{{depense.getLibelle()}} </td>
+                                            <td> {{depense.getMontant()}}<span class="glyphicon glyphicon-euro"></span></td>
+                                            {% set totalCategorie = totalCategorie+depense.getMontant() %}
+                                            <td> {{depense.getDate()|date('d/m/Y')}}</td>
+                                            <td> {{depense.getCategorie()}}</td>
+                                            <td class="row MODAL">
 
-                                                    <a href="#" 
-                                                       class="col-sm-6"
-                                                       id="modifModal"
-                                                       data-toggle="modal" 
-                                                       data-target="#modalTest" 
-                                                       data-url="{{path('modification-pop-depense', {'idDepense': depense.getId()})}}"
-                                                    >
-                                                        <span class="glyphicon glyphicon-pencil"></span> Modifier
-                                                    </a>
+                                                <a href="#"
+                                                   class="col-sm-6"
+                                                   id="modifModal"
+                                                   data-toggle="modal"
+                                                   data-target="#modalTest"
+                                                   data-url="{{path('modification-pop-depense', {'idDepense': depense.getId()})}}"
+                                                >
+                                                    <span class="glyphicon glyphicon-pencil"></span> Modifier
+                                                </a>
 
-                                                    <a class=" col-sm-6 popconfirm" 
-                                                           href="{{path('suppression-depense', {'idDepense': depense.getId()})}}"
-                                                           data-confirm-title="Attention" 
-                                                           data-confirm-content="Etes vous sur de vouloir supprimer la dépense '{{depense.getLibelle()}}'"
-                                                           data-confirm-placement="bottom"
-                                                           data-confirm-yesBtn="<span class='glyphicon glyphicon-ok'></span> Oui"
-                                                           data-confirm-noBtn="<span class='glyphicon glyphicon-remove'></span> Non"
-                                                    >
-                                                        <span class=" glyphicon glyphicon-trash"></span> Supprimer 
-                                                    </a>
-                                                </td>
-                                            </tr>
+                                                <a class=" col-sm-6 popconfirm"
+                                                       href="{{path('suppression-depense', {'idDepense': depense.getId()})}}"
+                                                       data-confirm-title="Attention"
+                                                       data-confirm-content="Etes vous sur de vouloir supprimer la dépense '{{depense.getLibelle()}}'"
+                                                       data-confirm-placement="bottom"
+                                                       data-confirm-yesBtn="<span class='glyphicon glyphicon-ok'></span> Oui"
+                                                       data-confirm-noBtn="<span class='glyphicon glyphicon-remove'></span> Non"
+                                                >
+                                                    <span class=" glyphicon glyphicon-trash"></span> Supprimer
+                                                </a>
+                                            </td>
+                                        </tr>
 
-
-                                        {% endif %}
                                     {% endfor %}
                                     </tbody>
                                 </table>

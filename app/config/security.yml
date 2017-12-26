@@ -51,4 +51,7 @@ security:
         - { path: ^/commande, roles: ROLE_USER }
         - { path: ^/client, roles: ROLE_USER }
         - { path: ^/bilan, roles: ROLE_ADMIN }
+        - { path: ^/depense, roles: ROLE_ADMIN }
+        - { path: ^/temoignages, roles: ROLE_ADMIN }
+        - { path: ^/reservations, roles: ROLE_ADMIN }
         - { path: ^/utilisateur, roles: ROLE_SUPER_ADMIN }

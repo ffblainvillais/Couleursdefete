@@ -9,3 +9,6 @@ services:
         class: '%depense_bundle_controller_bilan_controller%'
         arguments: ['@service_container','@doctrine.orm.entity_manager', '@depense_bundle_service_spent_service', "@html2pdf_factory"]
 
+    depense_bundle_controller_depense_controller:
+            class: '%depense_bundle_controller_depense_controller%'
+            arguments: ['@service_container','@doctrine.orm.entity_manager', '@depense_bundle_service_spent_service']
