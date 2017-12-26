@@ -26,6 +26,7 @@ class InvoiceService {
      * @param int $commandeId
      * @param string $typeDocument
      * @return Response
+     * @throws \HTML2PDF_exception
      */
     public function getOrderPdf($commandeId, $typeDocument, $html)
     {
@@ -74,10 +75,11 @@ class InvoiceService {
     /**
      * Génere un fichier PDF correspondant à la commande donnée
      *
-     * @param string $html
-     * @param string $typeDocument
-     * @param int $commandeId
+     * @param $html
+     * @param $typeDocument
+     * @param $commandeId
      * @return Response
+     * @throws \HTML2PDF_exception
      */
     public function genererPdf($html, $typeDocument, $commandeId){
 
