@@ -4,7 +4,6 @@ namespace CommandeBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
-
 use CommandeBundle\Entity\Action;
 use CommandeBundle\Entity\Commande;
 use AppBundle\Entity\CommandeArticle;
@@ -13,11 +12,12 @@ use AppBundle\Entity\CommandeLot;
 class InvoiceService {
 
     protected $em;
-    
-    public function __construct(EntityManagerInterface $entityManager)
+    protected $html2Pdf;
+
+    public function __construct(EntityManagerInterface $entityManager, $html2Pdf)
     {
-        $this->em = $entityManager;
-        return $this;
+        $this->em           = $entityManager;
+        $this->html2Pdf     = $html2Pdf;
     }
 
     /**
@@ -84,7 +84,7 @@ class InvoiceService {
     public function genererPdf($html, $typeDocument, $commandeId){
 
         //on instancie la classe Html2Pdf_Html2Pdf avec le sens de la page, le format, la langue
-        $html2pdf = new \Html2Pdf_Html2Pdf('P','A4','fr');
+        $html2pdf = $this->html2Pdf->create();
 
         //SetDisplayMode définit la manière dont le document PDF va être affiché par l’utilisateur
         $html2pdf->pdf->SetDisplayMode('real');

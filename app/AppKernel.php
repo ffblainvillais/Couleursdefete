@@ -15,6 +15,9 @@ class AppKernel extends Kernel
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new Ensepar\Html2pdfBundle\EnseparHtml2pdfBundle(),
+
             new AppBundle\AppBundle(),
             new UserBundle\UserBundle(),
             new ArticleBundle\ArticleBundle(),
@@ -24,7 +27,7 @@ class AppKernel extends Kernel
             new DepenseBundle\DepenseBundle(),
             new VitrineBundle\VitrineBundle(),
             new PartenaireBundle\PartenaireBundle(),
-            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

@@ -3,7 +3,7 @@
 services:
     commande_bundle_service_invoice_service:
         class: '%commande_bundle_service_invoice_service%'
-        arguments: ['@doctrine.orm.entity_manager']
+        arguments: ['@doctrine.orm.entity_manager',"@html2pdf_factory"]
 
     commande_bundle_service_booking_service:
                 class: '%commande_bundle_service_booking_service%'

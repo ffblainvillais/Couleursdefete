@@ -21,12 +21,14 @@ class BilanController extends Controller
     protected $container;
     protected $em;
     protected $spentService;
+    protected $html2Pdf;
 
-    public function __construct(ContainerInterface $container, EntityManagerInterface $entityManager, SpentService $spentService)
+    public function __construct(ContainerInterface $container, EntityManagerInterface $entityManager, SpentService $spentService, $html2Pdf)
     {
         $this->container        = $container;
         $this->em               = $entityManager;
         $this->spentService     = $spentService;
+        $this->html2Pdf         = $html2Pdf;
     }
 
     public function indexAction()
@@ -54,14 +56,8 @@ class BilanController extends Controller
             "year"              => $year,
         ))->getContent();
 
-        $html2pdf = new \Html2Pdf_Html2Pdf('P','A4','fr', true, 'UTF-8', array(20, 15, 20, 15));
-
-        //SetDisplayMode définit la manière dont le document PDF va être affiché par l’utilisateur
-        //fullpage : affiche la page entière sur l'écran
-        //fullwidth : utilise la largeur maximum de la fenêtre
-        //real : utilise la taille réelle
+        $html2pdf = $this->html2Pdf->create();
         $html2pdf->pdf->SetDisplayMode('fullpage');
-
         $html2pdf->writeHTML($html);
 
         $content = $html2pdf->Output('', true);
