@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use ArticleBundle\Entity\ArticleRepository;
+use ArticleBundle\Repository\ArticleRepository;
 use CommandeBundle\Entity\Action;
 
 class AjoutArticleCommandeType extends AbstractType
@@ -31,7 +31,7 @@ class AjoutArticleCommandeType extends AbstractType
                 'class' => 'ArticleBundle:Article',
                 'query_builder' => function(ArticleRepository $ar)
                     {
-                        return $ar->getArticleDisponibleStock($this->user);
+                        return $ar->getArticleDisponibleStock();
                     },
             ))
                             

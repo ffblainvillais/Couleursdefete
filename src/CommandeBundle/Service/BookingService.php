@@ -4,7 +4,7 @@ namespace CommandeBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 
-use CommandeBundle\Entity\Reservation;
+use ArticleBundle\Entity\Reservation;
 use CommandeBundle\Entity\Commande;
 use ArticleBundle\Entity\Article;
 
@@ -118,13 +118,13 @@ class BookingService{
      * Reduces the amount of an Article booked for an Order
      *
      * @param Article $article
-     * @param Commande $order
+     * @param date $date
      * @param number $quantity
      * @return bool|Reservation|object
      */
-    public function removeQuantityBooking(Article $article, Commande $order, $quantity)
+    public function removeQuantityBooking(Article $article, $date, $quantity)
     {
-        $booking = $this->getBookingByArticleAndDate($article, $order->getDateEvenement());
+        $booking = $this->getBookingByArticleAndDate($article, $date);
 
         if ($booking) {
 

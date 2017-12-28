@@ -26,12 +26,11 @@ class ArticleRepository extends EntityRepository
         return $query;
     }
 
-    public function getArticleDisponibleStock($user)
+    public function getArticleDisponibleStock()
     {
         $qb = $this->createQueryBuilder('a')
-            ->where('a.quantite > :limite AND a.utilisateur = :user')
+            ->where('a.quantite > :limite')
             ->setParameter('limite', 0)
-            ->setParameter('user', $user)
             ->orderBy('a.libelle', 'ASC');
 
         return $qb;

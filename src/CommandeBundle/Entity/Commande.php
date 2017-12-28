@@ -24,7 +24,6 @@ class Commande
      */
     private $id;
 
-
     /**
      * @ORM\Column(type="string")
      */
@@ -64,7 +63,7 @@ class Commande
     private $utilisateur;
     
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
     private $acompte;
     

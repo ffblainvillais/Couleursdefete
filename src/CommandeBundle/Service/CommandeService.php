@@ -74,7 +74,7 @@ class CommandeService{
         if ($isPayed) {
 
             $this->remiseEnStock($commandeArticle->getArticle(), $commandeArticle->getQuantite());
-            $this->bookingService->removeQuantityBooking($commandeArticle->getArticle(), $commandeArticle->getCommande(), $commandeArticle->getQuantite());
+            $this->bookingService->removeQuantityBooking($commandeArticle->getArticle(), $commandeArticle->getCommande()->getDateEvenement(), $commandeArticle->getQuantite());
         }
         
         $this->em->remove($commandeArticle);
@@ -134,7 +134,7 @@ class CommandeService{
             foreach($articlesLot as $articleLot) {
 
                 $this->remiseEnStock($articleLot->getArticle(), $articleLot->getQuantite() * $quantityLot);
-                $this->bookingService->removeQuantityBooking($articleLot->getArticle(), $commandeLot->getCommande(), $articleLot->getQuantite() * $quantityLot);
+                $this->bookingService->removeQuantityBooking($articleLot->getArticle(), $commandeLot->getCommande()->getDateEvenement(), $articleLot->getQuantite() * $quantityLot);
 
             }
         }

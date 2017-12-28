@@ -1,26 +1,31 @@
 <?php
 
-// src/AppBundle/Entity/User.php
 namespace UserBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ORM\Entity
  * @ORM\Table(name="app_users")
  * @ORM\Entity(repositoryClass="UserBundle\Entity\UserRepository")
  */
 class User extends BaseUser
-//implements UserInterface, \Serializable
 {
     /**
-     * @ORM\Column(type="integer")
      * @ORM\Id
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
-    
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
-    
+    public function setLocked($bool)
+    {
+        return true;
+    }
 }
