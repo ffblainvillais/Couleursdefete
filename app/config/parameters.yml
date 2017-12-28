@@ -10,3 +10,4 @@ parameters:
     mailer_user: etrewebmaster
     mailer_password: etrewebmaster
     secret: 7f870240a4f6701e75a9253fcb8dbd7cae89b4d6
+
