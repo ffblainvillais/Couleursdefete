@@ -2,6 +2,11 @@
 
 namespace ArticleBundle\Controller;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use ArticleBundle\Service\ArticleService;
+use Knp\Component\Pager\Paginator;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use ArticleBundle\Form\ArticleType;
@@ -14,64 +19,47 @@ use ArticleBundle\Entity\LotArticle;
 
 class ArticleController extends Controller
 {
-    
-   
+    protected $container;
+    protected $em;
+    protected $articleService;
+    protected $paginator;
+
+    public function __construct(ContainerInterface $container, EntityManagerInterface $em, ArticleService $articleService, Paginator $paginator)
+    {
+        $this->container        = $container;
+        $this->em               = $em;
+        $this->articleService   = $articleService;
+        $this->paginator        = $paginator;
+    }
+
     public function indexAction(Request $request)
     {
-        
-        $repository = $this->getDoctrine()->getRepository('ArticleBundle:Article');
-        
-        foreach($this->getUser()->getRoles() as $role){
-            
-            if($role === "ROLE_SUPER_ADMIN"){
-                
-                $query = $repository->createQueryBuilder("a")
-                    ->orderBy("a.libelle",'ASC')
-                    ->getQuery();
-                
-                break;
-            }
-            elseif($role === "ROLE_ADMIN"){
-                
-                $query = $repository->createQueryBuilder("a")
-                    ->where('a.utilisateur = :user')
-                    ->setParameter('user', $this->getUser())
-                    ->orderBy("LOWER(a.libelle)",'ASC')
-                    ->getQuery();
-                
-                break;
-            }
-            //@todo selectionner les article du parent (de son admin)
-            /*else{
-                $articles = $repository->findBy(['utilisateur' => $this->getUser()]);
-                break;
-            }*/
-        }
-        
-        $articles  = $this->get('knp_paginator')->paginate($query,$request->query->get('page', 1),10);
-        
-        $lots = $this->getDoctrine()->getRepository('ArticleBundle:Lot')->findAll();
-        $articlesLots = $this->getDoctrine()->getRepository('ArticleBundle:LotArticle')->findAll();
-        
-        $form = $this->createForm(ArticleType::class, null, array("action" => $this->generateUrl('ajout-article')));
-        $formLot = $this->createForm(LotType::class, null, array("action" => $this->generateUrl('ajout-lot')));
+        $lots       = $this->em->getRepository(Lot::class)->findAll();
+
+        //2 paginations dans une même page = probleme, les pages défilent sur les 2 paginations en meme temps
+        //$querylot       = $this->em->getRepository(Lot::class)->getLotForPaginate();
+        //$lots           = $this->paginator->paginate($querylot, $request->query->get('page', 1),10);
+
+        $queryArticle   = $this->em->getRepository(Article::class)->getArticlesForPaginate();
+        $articles       = $this->paginator->paginate($queryArticle, $request->query->get('page', 1),10);
+
+        $form           = $this->createForm(ArticleType::class, null, array("action" => $this->generateUrl('ajout-article')));
+        $formLot        = $this->createForm(LotType::class, null, array("action" => $this->generateUrl('ajout-lot')));
 
         return $this->render(
             'ArticleBundle:article:article.html.twig',
-            array('articles' => $articles,
-                  'lots' => $lots,
-                  'articlesLots' => $articlesLots,
-                  'form' => $form->createView(),
-                  'formLot' => $formLot->createView())
+            array(
+                'articles'  => $articles,
+                'lots'      => $lots,
+                'form'      => $form->createView(),
+                'formLot'   => $formLot->createView()
+            )
         );
     }
     
-    
-    
-    
     public function ajoutAction(Request $request)
     {
-        $articleTest = $this->getDoctrine()->getRepository('ArticleBundle:Article')->findOneBy(['libelle' => $request->request->get('article')['libelle']]);
+        $articleTest = $this->em->getRepository('ArticleBundle:Article')->findOneBy(['libelle' => $request->request->get('article')['libelle']]);
 
         if($articleTest){
             
@@ -97,7 +85,7 @@ class ArticleController extends Controller
         
         $article->setUtilisateur($this->getUser());
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->em->getManager();
         $em->persist($article);
         $em->flush();
 
@@ -111,15 +99,15 @@ class ArticleController extends Controller
     
     public function suppressionAction(Request $request){
 
-        $article = $this->getDoctrine()->getRepository('ArticleBundle:Article')->findOneBy(['id' => $request->attributes->get('idArticle')]);
+        $article = $this->em->getRepository('ArticleBundle:Article')->findOneBy(['id' => $request->attributes->get('idArticle')]);
 
-        $commandeArticle = $this->getDoctrine()->getRepository('AppBundle:CommandeArticle')->findOneBy(['article' => $article]);
+        $commandeArticle = $this->em->getRepository('AppBundle:CommandeArticle')->findOneBy(['article' => $article]);
 
-        $reservations = $this->getDoctrine()->getRepository('CommandeBundle:Reservation')->findBy(['article' => $article]);
+        $reservations = $this->em->getRepository('CommandeBundle:Reservation')->findBy(['article' => $article]);
 
         foreach ($reservations as $reservation) {
 
-            $this->getDoctrine()->getManager()->remove($reservation);
+            $this->em->getManager()->remove($reservation);
         }
         
         if($commandeArticle){
@@ -131,7 +119,7 @@ class ArticleController extends Controller
         
         $this->addFlash('feedback', "L'article '".$article->getLibelle()."' à bien été supprimé");
        
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->em->getManager();
         $em->remove($article);
         $em->flush();
         
@@ -144,7 +132,7 @@ class ArticleController extends Controller
     {
         $idArticle = $request->attributes->get('idArticle');
         
-        $repository = $this->getDoctrine()->getRepository('ArticleBundle:Article');
+        $repository = $this->em->getRepository('ArticleBundle:Article');
         $article = $repository->findOneBy(['id' => $idArticle]);
         
         $form = $this->createForm(ArticleType::class, null, array("action" => $this->generateUrl('modification-article', array('idArticle' => $idArticle))));
@@ -161,7 +149,7 @@ class ArticleController extends Controller
     
     public function modificationAction(Request $request)
     {
-        $repository = $this->getDoctrine()->getRepository('ArticleBundle:Article');
+        $repository = $this->em->getRepository('ArticleBundle:Article');
         
         $article = $repository->findOneBy(['id' => $request->attributes->get('idArticle')]);
         
@@ -171,7 +159,7 @@ class ArticleController extends Controller
         
         $form->handleRequest($request);
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->em->getManager();
         $em->merge($article);
         $em->flush();
 
@@ -187,7 +175,7 @@ class ArticleController extends Controller
     
     public function ajoutLotAction(Request $request){
         
-        $lotTest = $this->getDoctrine()->getRepository('ArticleBundle:Lot')->findOneBy(['libelle' => $request->request->get('lot')['libelle']]);
+        $lotTest = $this->em->getRepository('ArticleBundle:Lot')->findOneBy(['libelle' => $request->request->get('lot')['libelle']]);
 
         if($lotTest){
             
@@ -207,7 +195,7 @@ class ArticleController extends Controller
         
         $lot = $form->getData();
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->em->getManager();
         $em->persist($lot);
         $em->flush();
 
@@ -221,11 +209,11 @@ class ArticleController extends Controller
     
     public function suppressionLotAction(Request $request){
 
-        $lot = $this->getDoctrine()->getRepository('ArticleBundle:Lot')->findOneBy(['id' => $request->attributes->get('idLot')]);
+        $lot = $this->em->getRepository('ArticleBundle:Lot')->findOneBy(['id' => $request->attributes->get('idLot')]);
         
         $this->addFlash('feedbackLot', "Le lot '".$lot->getLibelle()."' à bien été supprimé");
        
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->em->getManager();
         $em->remove($lot);
         $em->flush();
         
@@ -238,7 +226,7 @@ class ArticleController extends Controller
     {
         $idLot = $request->attributes->get('idLot');
         
-        $lot = $this->getDoctrine()->getRepository('ArticleBundle:Lot')->findOneBy(['id' => $idLot]);
+        $lot = $this->em->getRepository('ArticleBundle:Lot')->findOneBy(['id' => $idLot]);
         
         $form = $this->createForm(LotType::class, null, array("action" => $this->generateUrl('modification-lot', array('idLot' => $idLot))));
         
@@ -254,7 +242,7 @@ class ArticleController extends Controller
     
     public function modificationLotAction(Request $request)
     {
-        $lot = $this->getDoctrine()->getRepository('ArticleBundle:Lot')->findOneBy(['id' => $request->attributes->get('idLot')]);
+        $lot = $this->em->getRepository('ArticleBundle:Lot')->findOneBy(['id' => $request->attributes->get('idLot')]);
         
         $form = $this->createForm(LotType::class);
         
@@ -262,7 +250,7 @@ class ArticleController extends Controller
         
         $form->handleRequest($request);
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->em->getManager();
         $em->merge($lot);
         $em->flush();
 
@@ -300,10 +288,10 @@ class ArticleController extends Controller
         
         $formPost = $request->request->get('ajout_article_lot');
 
-        $lot = $this->getDoctrine()->getRepository('ArticleBundle:Lot')->findOneBy(['id' => $request->attributes->get('idLot')]);
-        $article = $this->getDoctrine()->getRepository('ArticleBundle:Article')->findOneBy(['id' => $formPost['article']]);
+        $lot = $this->em->getRepository('ArticleBundle:Lot')->findOneBy(['id' => $request->attributes->get('idLot')]);
+        $article = $this->em->getRepository('ArticleBundle:Article')->findOneBy(['id' => $formPost['article']]);
 
-        $lotArticle = $this->getDoctrine()->getRepository('ArticleBundle:LotArticle')->findOneBy(['article' => $article, 'lot' => $lot]);
+        $lotArticle = $this->em->getRepository('ArticleBundle:LotArticle')->findOneBy(['article' => $article, 'lot' => $lot]);
         
         //si l'article est déjà dans la commande on change la quantite 
         if($lotArticle){
@@ -324,7 +312,7 @@ class ArticleController extends Controller
         
         $this->addFlash('feedbackLot', "L'article '".$article->getLibelle()."' à bien été rajouté au lot '".$lot->getLibelle()."'");
         
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->em->getManager();
         $em->persist($lotArticle);
         $em->flush();
         
@@ -339,13 +327,13 @@ class ArticleController extends Controller
         $idArticle = $request->attributes->get('idArticle');
         $idLot = $request->attributes->get('idLot');
         
-        $lot = $this->getDoctrine()->getRepository('ArticleBundle:Lot')->findOneBy(['id' => $idLot]);
-        $article = $this->getDoctrine()->getRepository('ArticleBundle:Article')->findOneBy(['id' => $idArticle]);
-        $lotArticle = $this->getDoctrine()->getRepository('ArticleBundle:LotArticle')->findOneBy(['article' => $article, 'lot' => $lot]);
+        $lot = $this->em->getRepository('ArticleBundle:Lot')->findOneBy(['id' => $idLot]);
+        $article = $this->em->getRepository('ArticleBundle:Article')->findOneBy(['id' => $idArticle]);
+        $lotArticle = $this->em->getRepository('ArticleBundle:LotArticle')->findOneBy(['article' => $article, 'lot' => $lot]);
         
         $this->addFlash('feedbackLot', "L'article '".$article->getLibelle()."' à bien été enlevé du lot '".$lot->getLibelle()."'");
         
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->em->getManager();
         $em->remove($lotArticle);
         $em->flush();
         
@@ -357,7 +345,7 @@ class ArticleController extends Controller
 
         $dateDuJour = date("Y-m-d");
 
-        $repository = $this->getDoctrine()->getRepository('CommandeBundle:Reservation');
+        $repository = $this->em->getRepository('CommandeBundle:Reservation');
 
         $queryReservations = $repository->createQueryBuilder("r")
             ->orderBy("LOWER(r.date)",'ASC')
@@ -384,7 +372,7 @@ class ArticleController extends Controller
 
         $dateDuJour = date("Y-m-d");
 
-        $repository = $this->getDoctrine()->getRepository('CommandeBundle:Reservation');
+        $repository = $this->em->getRepository('CommandeBundle:Reservation');
 
         $queryReservations = $repository->createQueryBuilder("r")
             ->leftJoin('r.article', 'a')

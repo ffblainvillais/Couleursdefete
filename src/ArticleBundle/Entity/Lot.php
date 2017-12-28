@@ -2,12 +2,14 @@
 
 namespace ArticleBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use ArticleBundle\Entity\Article;
+use ArticleBundle\Entity\LotArticle;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="Lot")
+ * @ORM\Entity(repositoryClass="ArticleBundle\Repository\LotRepository")
  */
 class Lot
 {
@@ -17,7 +19,6 @@ class Lot
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
 
     /**
      * @ORM\Column(type="string")
@@ -29,7 +30,17 @@ class Lot
      */
     private $prix;
 
-    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="ArticleBundle\Entity\LotArticle", mappedBy="lot")
+     */
+    private $lotArticles;
+
+    public function __construct()
+    {
+        $this->lotArticles = new ArrayCollection();
+    }
     
     /**
      * Get id
@@ -46,7 +57,7 @@ class Lot
      *
      * @param \varchar $libelle
      *
-     * @return Commande
+     * @return Lot
      */
     public function setLibelle($libelle)
     {
@@ -64,14 +75,13 @@ class Lot
     {
         return $this->libelle;
     }
-    
-    
+
     /**
      * Set prix
      *
      * @param \float $prix
      *
-     * @return Article
+     * @return Lot
      */
     public function setPrix($prix)
     {
@@ -89,10 +99,31 @@ class Lot
     {
         return $this->prix;
     }
-    
-    
-    
-    
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLotArticles()
+    {
+        return $this->lotArticles;
+    }
+
+    /**
+     * @param \ArticleBundle\Entity\LotArticle $lotArticle
+     */
+    public function addLotArticles(LotArticle $lotArticle)
+    {
+        $this->lotArticles[] = $lotArticle;
+    }
+
+    /**
+     * @param \ArticleBundle\Entity\LotArticle $lotArticle
+     */
+    public function removeLotArticle(LotArticle $lotArticle)
+    {
+        $this->lotArticles->removeElement($lotArticle);
+    }
+
     public function __toString()
     {
         return $this->getLibelle();

@@ -38,9 +38,6 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    {% if is_granted('ROLE_SUPER_ADMIN') %}
-                        <th> Utilisateur </th>
-                    {%endif%}
                     <th> Article </th>
                     <th> Description </th>
                     <th> Quantite </th>
@@ -51,9 +48,6 @@
             <tbody>
             {% for article in articles %}
                 <tr class="rows">
-                    {% if is_granted('ROLE_SUPER_ADMIN') %}
-                        <th> {{article.getUtilisateur().getUsername()}} </th>
-                    {%endif%}
                     <td>{{article.getLibelle()}} </td>
                     <td> {{article.getDescription()}}</td>
                     <td> {{article.getQuantite()}}</td>
@@ -85,11 +79,13 @@
             {% endfor %}
             </tbody>
         </table>
+
+        <div class="navigation">
+            {{ knp_pagination_render(articles) }}
+        </div>
     {% endif %}
             
-            <div class="navigation">
-                {{ knp_pagination_render(articles) }}
-            </div>
+
             
             
         <!-- AJOUT LOT ARTICLE -->
@@ -137,19 +133,15 @@
                     <td class="col-sm-5" >{{lot.getLibelle()}} </td>
                     <td class="col-sm-4">
                         <ul>
-                            
-                            {% for articleLot in articlesLots %}
-                                {% if(articleLot.getLot() == lot) %}
-                                    <li>
-                                        <!-- Libelle article -->
-                                        {{articleLot.getArticle}} ({{articleLot.getQuantite()}})
-       
-                                        <a href="{{path('suppression-article-lot',{'idArticle': articleLot.getArticle.getId(),'idLot': lot.getId()})}}">
-                                            <span class="glyphicon glyphicon-remove"></span>
-                                        </a>
-                                    </li>
-                                    
-                                {%endif%}
+                            {% for articleLot in lot.lotArticles %}
+                                <li>
+                                    <!-- Libelle article -->
+                                    {{articleLot.getArticle}} ({{articleLot.getQuantite()}})
+
+                                    <a href="{{path('suppression-article-lot',{'idArticle': articleLot.getArticle.getId(),'idLot': lot.getId()})}}">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </a>
+                                </li>
                             {% endfor %}
                             
                             <li class="POPOVER">
@@ -193,6 +185,10 @@
             {% endfor %}
             </tbody>
         </table>
+
+            {# <div class="navigation">
+                {{ knp_pagination_render(lots) }}
+            </div> #}
         {% endif %}
 
         <!-- FENETRE MODAL MODIFICATION ARTICLE-->

@@ -1,51 +1,51 @@
 article:
     path:   /article
-    defaults: {_controller: ArticleBundle:Article:index }
+    defaults: {_controller: article_bundle_controller_article_controller:indexAction }
 
 ajout-article:
     path:   /article/ajout-article
-    defaults: {_controller: ArticleBundle:Article:ajout }
+    defaults: {_controller: article_bundle_controller_article_controller:ajoutAction }
 
 suppression-article:
     path: /article/suppression-article/{idArticle}
-    defaults: {_controller: ArticleBundle:Article:suppression }
+    defaults: {_controller: article_bundle_controller_article_controller:suppressionAction }
 
 modification-article:
     path: /article/modification-article/{idArticle}
-    defaults: {_controller: ArticleBundle:Article:modification }
+    defaults: {_controller: article_bundle_controller_article_controller:modificationAction }
 
 modification-pop-article:
     path: /article/modification-pop-article/{idArticle}
-    defaults: {_controller: ArticleBundle:Article:modificationPop }
+    defaults: {_controller: article_bundle_controller_article_controller:modificationPopAction }
 
 ajout-lot:
     path:   /article/ajout-lot
-    defaults: {_controller: ArticleBundle:Article:ajoutLot }
+    defaults: {_controller: article_bundle_controller_article_controller:ajoutLotAction }
 
 suppression-lot:
     path: /article/suppression-lot/{idLot}
-    defaults: {_controller: ArticleBundle:Article:suppressionLot }
+    defaults: {_controller: article_bundle_controller_article_controller:suppressionLotAction }
 
 modification-lot:
     path: /article/modification-Lot/{idLot}
-    defaults: {_controller: ArticleBundle:Article:modificationLot }
+    defaults: {_controller: article_bundle_controller_article_controller:modificationLotAction }
 
 modification-pop-lot:
     path: /article/modification-pop-lot/{idLot}
-    defaults: {_controller: ArticleBundle:Article:modificationPopLot }
+    defaults: {_controller: article_bundle_controller_article_controller:modificationPopLotAction }
 
 ajout-article-lot-pop:
     path:   /article/ajout-article-lot-pop/{idLot}
-    defaults: {_controller: ArticleBundle:Article:ajoutArticlePop }
+    defaults: {_controller: article_bundle_controller_article_controller:ajoutArticlePopAction }
 
 ajout-article-lot:
     path:   /article/ajout-article-lot/{idLot}
-    defaults: {_controller: ArticleBundle:Article:ajoutArticle }
+    defaults: {_controller: article_bundle_controller_article_controller:ajoutArticleAction }
 
 suppression-article-lot:
     path:   /article/suppression-article-lot/{idArticle}/{idLot}
-    defaults: {_controller: ArticleBundle:Article:suppressionArticle }
+    defaults: {_controller: article_bundle_controller_article_controller:suppressionArticleAction }
 
 reservation:
     path: /reservations
-    defaults: {_controller: ArticleBundle:Article:indexReservation }
+    defaults: {_controller: article_bundle_controller_article_controller:indexReservationAction }

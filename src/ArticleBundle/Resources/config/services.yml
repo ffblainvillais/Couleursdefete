@@ -4,3 +4,7 @@ services:
     article_bundle_service_article_service:
         class: '%article_bundle_service_article_service%'
         arguments: ['@doctrine.orm.entity_manager']
+
+    article_bundle_controller_article_controller:
+        class: '%article_bundle_controller_article_controller%'
+        arguments: ['@service_container', '@doctrine.orm.entity_manager', '@article_bundle_service_article_service', '@knp_paginator']

@@ -1,2 +1,3 @@
 parameters:
     article_bundle_service_article_service: ArticleBundle\Service\ArticleService
+    article_bundle_controller_article_controller: ArticleBundle\Controller\ArticleController
