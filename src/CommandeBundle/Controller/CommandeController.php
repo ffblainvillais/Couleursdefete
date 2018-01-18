@@ -54,6 +54,7 @@ class CommandeController extends Controller
         return $this->render(
             'CommandeBundle:commande:commande.html.twig',
             array(
+                'viewOrdersOrdered' => true,
                 'form'              => $form->createView(),
                 'orders'            => $orders
             )
@@ -214,8 +215,24 @@ class CommandeController extends Controller
         return $this->redirectToRoute('view-order', array('idCommande' => $order->getId()));
         
     }
-    
+
     public function commandesArchiveesAction(Request $request)
+    {
+        $curentPage = $request->query->get('page', 1);
+        $query      = $this->em->getRepository('CommandeBundle:Commande')->getArchivedOrdersForPaginate();
+
+        $orders     = $this->paginator->paginate($query, $curentPage, 5);
+
+        return $this->render(
+            'CommandeBundle:commande:commande.html.twig',
+            array(
+                'viewOrdersOrdered' => false,
+                'orders'            => $orders
+            )
+        );
+    }
+    
+    /*public function commandesArchiveesAction(Request $request)
     {
         $archivedOrdersForPaginate = $this->em->getRepository(Commande::class)->getArchivedOrdersForPaginate();
 
@@ -227,7 +244,7 @@ class CommandeController extends Controller
                 'orders' => $orders,
             )
         );
-    }
+    }*/
 
     public function archiverAction(Request $request)
     {

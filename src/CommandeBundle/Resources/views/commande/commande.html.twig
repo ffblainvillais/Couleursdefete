@@ -2,29 +2,42 @@
 
 {% block body %}
 
-    <h2> Commandes </h2>
 
+
+    {% if viewOrdersOrdered %}
+        <h2> Commandes </h2>
+    {% else %}
+        <h2> Commandes Archivées</h2>
+        <a href="{{ path('commande') }}"><span class="glyphicon glyphicon-arrow-left"></span> Retour aux commandes</a>
+    {% endif %}
     <!-- AJOUT COMMANDE -->
     <div>
-        <p class="row">
-            <span class="col-sm-4">Nouvelle Commande : </span>
-            <!--path('ajout-article-pop') <a href="" class="btn btn-primary ajax-modal" data-submit-reload='true' > <span class="glyficon glyficon-plus"></span> Ajouter un Article ! </a>-->
-            <button type="button" class="btn btn-primary col-sm-3" data-toggle="modal" data-target="#modalAjout">
-                <span class="glyphicon glyphicon-plus"></span> nouvelle Commande
-            </button>
-        </p>
-        <p class="row MODAL">
-            <span class="col-sm-4">Voir les commandes archivées : </span>
-            <a href="#"
-               class="col-sm-3 btn btn-info"
-               id="modifModal"
-               data-toggle="modal"
-               data-target="#modalTest"
-               data-url="{{path('voir-commandes-archivees')}}"
-            >
-                <span class="glyphicon glyphicon-book"></span> Commandes archivées
-            </a>
-        </p>
+        {% if viewOrdersOrdered %}
+            <p class="row">
+                <span class="col-sm-4">Nouvelle Commande : </span>
+                <!--path('ajout-article-pop') <a href="" class="btn btn-primary ajax-modal" data-submit-reload='true' > <span class="glyficon glyficon-plus"></span> Ajouter un Article ! </a>-->
+                <button type="button" class="btn btn-primary col-sm-3" data-toggle="modal" data-target="#modalAjout">
+                    <span class="glyphicon glyphicon-plus"></span> nouvelle Commande
+                </button>
+            </p>
+            <p class="row MODAL">
+                <span class="col-sm-4">Voir les commandes archivées : </span>
+                <a href="{{path('voir-commandes-archivees')}}">
+                    <button type="button" class="btn btn-info col-sm-3">
+                        <span class="glyphicon glyphicon-book"></span> Commandes archivées
+                    </button>
+                </a>
+                {#<a href="#"
+                   class="col-sm-3 btn btn-info"
+                   id="modifModal"
+                   data-toggle="modal"
+                   data-target="#modalTest"
+                   data-url="{{path('voir-commandes-archivees')}}"
+                >
+                    <span class="glyphicon glyphicon-book"></span> Commandes archivées
+                </a>#}
+            </p>
+        {% endif %}
     </div>
 
     <!-- FLASH MESSAGE -->
@@ -124,23 +137,25 @@
         </div>
     </div>
 
-
-    <!-- FENETRE MODAL AJOUT-->
-    <div class="modal fade" id="modalAjout" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h3 class="modal-title" id="myModalLabel">Creation de commande</h3>
-                </div>
-                <div class="modal-body">
-                    {{ form_start(form) }}
-                    {{ form_widget(form) }}
-                    {{ form_end(form) }}
+    {% if viewOrdersOrdered %}
+        <!-- FENETRE MODAL AJOUT-->
+        <div class="modal fade" id="modalAjout" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 class="modal-title" id="myModalLabel">Creation de commande</h3>
+                    </div>
+                    <div class="modal-body">
+                        {{ form_start(form) }}
+                        {{ form_widget(form) }}
+                        {{ form_end(form) }}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    {% endif %}
+
 
 
 
