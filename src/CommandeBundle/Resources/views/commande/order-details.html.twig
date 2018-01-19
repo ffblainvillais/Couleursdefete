@@ -2,7 +2,11 @@
 
 {% block body %}
 
-    <h3><a href="{{ path('commande') }}"><span class="glyphicon glyphicon-arrow-left"></span> Retour aux commandes</a></h3>
+    {% if order.archive == 1 %}
+        <h3><a href="{{ path('voir-commandes-archivees') }}"><span class="glyphicon glyphicon-arrow-left"></span> Retour aux commandes archivées</a></h3>
+    {% else %}
+        <h3><a href="{{ path('commande') }}"><span class="glyphicon glyphicon-arrow-left"></span> Retour aux commandes</a></h3>
+    {% endif %}
 
     <div class="order-info" style="display:flex">
         <div class="panel panel-default" style="padding: 0; width: 40%; margin-right: 5%;">

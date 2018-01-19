@@ -240,6 +240,20 @@ class CommandeService{
         $this->em->flush();
 
     }
+
+    /**
+     * Set an Commande as payed and calculate the total amount
+     *
+     * @param Commande $order
+     * @return Commande
+     */
+    public function payeOrder(Commande $order)
+    {
+        $order->setPaye(true);
+        $order->setMontantTotal($this->getTotalAmountOrder($order));
+
+        return $order;
+    }
     
     /**
      * Archived an Order
@@ -271,82 +285,32 @@ class CommandeService{
     }
 
     /**
-     * Puts the status back to each item and puts them back in the stock for all OrderArticle on a Order
-     *
+     * Return the total amount of an order berfore archiving
+     * 
      * @param Commande $order
+     * @return float|int
      */
-    /*public function retourLocation(Commande $order)
+    public function getTotalAmountOrder(Commande $order)
     {
-        $orderArticles = $this->getArticlesOrderByOrder($order);
+        $articlesOrder = $this->getArticlesOrderByOrder($order);
+        
+        $amountTotal = 0;
 
-        foreach ($orderArticles as $orderArticle) {
+        foreach($articlesOrder as $articleOrder){
 
-            if ($orderArticle->getAction() && $orderArticle->getAction()->getLibelle() == self::LOCATION) {
-
-                $orderArticleReturned = $this->retourArticle($orderArticle);
-
-                $this->em->persist($orderArticleReturned);
-            }
+            $amountTotal += $articleOrder->getArticle()->getPrix() * $articleOrder->getQuantite();
         }
 
-        $this->em->flush();
-    }*/
+        $commandesLot = $this->getArticleLotFromOrder($order);
 
-    /**
-     * Puts the status back to each item and puts them back in the stock
-     *
-     * @param CommandeArticle $orderArticle
-     * @return bool
-     */
-    /*private function retourArticle(CommandeArticle $orderArticle)
-    {
-        if ($orderArticle->getRetour() == false) {
+        foreach($commandesLot as $commandeLot){
 
-            $article = $orderArticle->getArticle();
+            $amountTotal += $commandeLot->getLot()->getprix() * $commandeLot->getQuantite();
 
-            $article->setQuantite($article->getQuantite() + $orderArticle->getQuantite());
-
-            $orderArticle->setRetour(true);
-
-            return $orderArticle;
-        }
-        return false;
-    }*/
-
-    //@todo reste le depart en location des lots !!!
-    /*public function departLocation(Commande $order)
-    {
-        $orderArticles = $this->getArticlesOrderByOrder($order);
-
-        foreach ($orderArticles as $orderArticle) {
-
-            if ($orderArticle->getAction() && $orderArticle->getAction()->getLibelle() == self::LOCATION) {
-
-                $orderArticleLocated = $this->departArticle($orderArticle);
-
-                $this->em->persist($orderArticleLocated);
-            }
         }
 
-        $this->em->flush();
-    }*/
-
-    /*private function departArticle(CommandeArticle $orderArticle)
-    {
-        if($orderArticle->getRetour() == true){
-
-            //on déduis les articles du stock
-            $article = $orderArticle->getArticle();
-
-            $article->setQuantite($article->getQuantite() - $orderArticle->getQuantite());
-
-            $orderArticle->setRetour(false);
-
-            return $orderArticle;
-        }
-
-        return false;
-    }*/
+        return $amountTotal;
+    }
 
     /**
      * Return Order from this id

@@ -22,7 +22,7 @@
         <!-- Commandes -->
         {%for order in orders%}
 
-            <h3> <strong>{{order.getLibelle()}}</strong> - {{order.getDate()|date('j/m/Y')}} {% if order.paye == 1 %} PAYEE {% else %} NON PAYEE {% endif %}</h3>
+            <h3> <strong>Commande {{order.id}}</strong> - {{order.getDate()|date('j/m/Y')}} {% if order.paye == 1 %} PAYEE {% else %} NON PAYEE {% endif %} {% if order.archive == 1 %} ET ARCHIVEE {% else %} ET NON ARCHIVEE {% endif %}</h3>
 
             <table style="border: solid black 1px; width:600px;">
 
@@ -33,39 +33,56 @@
                     <th style="border: solid black 2px;"> Montant TTC </th>
                 </tr>
 
-                {% set total = 0 %}
 
-                {%for articleOrder in order.getArticles %}
-                    <tr>
-                        <td style="width: 400px"> {{articleOrder.getArticle()}} </td>
-                        <td style="text-align: right;"> {{articleOrder.getQuantite()}} </td>
-                        <td style="text-align: right;"> {{articleOrder.getArticle().getPrix()}} €</td>
+                {% if order.archive == 1 %}
 
-                        {% set compteArticle = articleOrder.getArticle.getPrix()*articleOrder.getQuantite() %}
-                        {% set total = total+compteArticle %}
+                    {% if order.montantTotal %}
+                        {% set total = order.montantTotal %}
+                    {% else %}
+                        {% set total = 0 %}
+                    {% endif %}
 
-                        <td style="text-align: right;"> {{compteArticle}} €</td>
-                    </tr>
-                {%endfor%}
+                {% else %}
 
-                {%for lotOrder in order.getLots%}
-                    <tr>
-                        <td style="width: 400px"> {{lotOrder.getLot()}} </td>
-                        <td style="text-align: right;"> {{lotOrder.getQuantite()}} </td>
-                        <td style="text-align: right;"> {{lotOrder.getLot().getPrix()}} €</td>
+                    {% set total = 0 %}
 
-                        {% set compteArticle = lotOrder.getLot().getPrix()*lotOrder.getQuantite() %}
-                        {% set total = total+compteArticle %}
+                    {%for articleOrder in order.getArticles %}
+                        <tr>
+                            <td style="width: 400px"> {{articleOrder.getArticle()}} </td>
+                            <td style="text-align: right;"> {{articleOrder.getQuantite()}} </td>
+                            <td style="text-align: right;"> {{articleOrder.getArticle().getPrix()}} €</td>
 
-                        <td style="text-align: right;"> {{compteArticle}} €</td>
-                    </tr>
-                {%endfor%}
+                            {% set compteArticle = articleOrder.getArticle.getPrix()*articleOrder.getQuantite() %}
+                            {% set total = total+compteArticle %}
 
-                {% if order.paye == 0 %}
+                            <td style="text-align: right;"> {{compteArticle}} €</td>
+                        </tr>
+                    {%endfor%}
 
-                    {% set total = order.acompte %}
+                    {%for lotOrder in order.getLots%}
+                        <tr>
+                            <td style="width: 400px"> {{lotOrder.getLot()}} </td>
+                            <td style="text-align: right;"> {{lotOrder.getQuantite()}} </td>
+                            <td style="text-align: right;"> {{lotOrder.getLot().getPrix()}} €</td>
+
+                            {% set compteArticle = lotOrder.getLot().getPrix()*lotOrder.getQuantite() %}
+                            {% set total = total+compteArticle %}
+
+                            <td style="text-align: right;"> {{compteArticle}} €</td>
+                        </tr>
+                    {%endfor%}
+
+                    {% if order.paye == 0 %}
+                        {% set total = order.acompte %}
+                    {% endif %}
 
                 {% endif %}
+
+
+
+
+
+
 
                 {% set totalRecetteAnnee = totalRecetteAnnee+total %}
 

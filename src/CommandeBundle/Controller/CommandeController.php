@@ -281,7 +281,7 @@ class CommandeController extends Controller
         $this->bookingService->bookingPayedOrder($order);
         $this->commandeService->removeFromStock($order);
 
-        $order->setPaye(true);
+        $order = $this->commandeService->payeOrder($order);
 
         $this->em->persist($order);
         $this->em->flush();

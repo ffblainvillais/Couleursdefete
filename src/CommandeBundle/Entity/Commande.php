@@ -96,7 +96,11 @@ class Commande
      * @ORM\Column(type="string")
      */
     private $type_evenement;
-    
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $montantTotal;
 
     public function __construct()
     {
@@ -399,6 +403,22 @@ class Commande
     public function getLots()
     {
         return $this->lots;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMontantTotal()
+    {
+        return $this->montantTotal;
+    }
+
+    /**
+     * @param mixed $montantTotal
+     */
+    public function setMontantTotal($montantTotal)
+    {
+        $this->montantTotal = $montantTotal;
     }
 
     /**
