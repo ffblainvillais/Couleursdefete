@@ -20,6 +20,7 @@ class ClientType extends AbstractType
             ->add('prenom')
             ->add('adresse')
             ->add('mail')
+            ->add('telephone')
             ->add('submit', SubmitType::class, array('label' => 'Valider', 'attr' => array('class' => 'btn btn-primary' )))
             ->getForm()
         ;
